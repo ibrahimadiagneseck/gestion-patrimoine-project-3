@@ -13,14 +13,24 @@
             <form class="form" #ArticleBonEntreeForm="ngForm" (ngSubmit)="ajouterArticleBonEntree(ArticleBonEntreeForm)">
             
                 <div class="row g-4 mb-3">
-                    <div class="col-3 mx-auto form-group">
+                    <div class="col-3 mx-auto form-group" *ngIf="typeObjets && typeObjets[1]; else emptyTypeObjet">
                         <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
                         <select id="codeTypeObjet" name="codeTypeObjet" required [ngModel]="typeObjets[1]" class="form-select text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                             <option [ngValue]="typeObjets[1]">
-                                {{ typeObjets[1]!.libelleTypeObjet }}
+                                {{ typeObjets[1].libelleTypeObjet }}
                             </option>
                         </select>
                     </div>
+                    
+                    <ng-template #emptyTypeObjet>
+                        <div class="col-3 mx-auto form-group">
+                            <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
+                            <select id="codeTypeObjet" name="codeTypeObjet" required class="form-select text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
+                                <option value="">Chaine vide par défaut</option>
+                            </select>
+                        </div>
+                    </ng-template>
+                    
 
                     <!-- <div class="col-3 mx-auto form-group">
                         <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
@@ -102,7 +112,7 @@
                         <select id="codeTypeVehicule" name="codeTypeVehicule" required ngModel
                             class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                             <option *ngFor="let typeVehicule of typeVehicules" [ngValue]="typeVehicule">
-                                {{ typeVehicule!.libelleTypeVehicule }}
+                                {{ typeVehicule?.libelleTypeVehicule }}
                             </option>
                         </select>
                     </div>
@@ -117,7 +127,7 @@
                         <select id="codeMarque" name="codeMarque" required ngModel
                             class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                             <option *ngFor="let marqueVehicule of marqueVehicules" [ngValue]="marqueVehicule">
-                                {{ marqueVehicule!.libelleMarque }}
+                                {{ marqueVehicule?.libelleMarque }}
                             </option>
                         </select>
                     </div>
@@ -133,7 +143,7 @@
                         <select id="codeEtat" name="codeEtat" required ngModel
                             class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                             <option *ngFor="let etatVehicule of etatVehicules" [ngValue]="etatVehicule">
-                                {{ etatVehicule!.libelleEtat }}
+                                {{ etatVehicule?.libelleEtat }}
                             </option>
                         </select>
                     </div>
@@ -143,7 +153,7 @@
                         <select id="codeTypeEnergie" name="codeTypeEnergie" required ngModel
                             class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                             <option *ngFor="let typeEnergie of typeEnergies" [ngValue]="typeEnergie">
-                                {{ typeEnergie!.libelleTypeEnergie }}
+                                {{ typeEnergie?.libelleTypeEnergie }}
                             </option>
                         </select>
                     </div>
@@ -156,7 +166,7 @@
                         <select id="codePays" name="codePays" required ngModel
                             class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                             <option *ngFor="let LePays of pays" [ngValue]="LePays">
-                                {{ LePays!.libellePays}}
+                                {{ LePays?.libellePays}}
                             </option>
                         </select>
                     </div>

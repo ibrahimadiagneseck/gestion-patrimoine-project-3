@@ -18,13 +18,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 // import { MatTableExporterModule } from 'mat-table-exporter';
 import { ComposantModule } from 'src/app/composant/composant.module';
-import { ReceptionVehiculeListeComponent } from './vehicules/reception-vehicule-liste/reception-vehicule-liste.component';
-import { ConsultationVehiculeListeComponent } from './vehicules/consultation-vehicule-liste/consultation-vehicule-liste.component';
-import { ReceptionVehiculeAjouterBonEntreeComponent } from './vehicules/reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
-import { ReceptionVehiculeDetailComponent } from './vehicules/reception-vehicule-detail/reception-vehicule-detail.component';
-import { ConsultationVehiculeDetailComponent } from './vehicules/consultation-vehicule-detail/consultation-vehicule-detail.component';
-import { ReceptionVehiculeListeDetailComponent } from './vehicules/reception-vehicule-liste-detail/reception-vehicule-liste-detail.component';
-import { ReceptionVehiculeAjouterArticleComponent } from './vehicules/reception-vehicule-ajouter-article/reception-vehicule-ajouter-article.component';
+import { ReceptionVehiculeListeComponent } from './vehicules/reception/reception-vehicule-liste/reception-vehicule-liste.component';
+import { ConsultationVehiculeListeComponent } from './vehicules/consultation/consultation-vehicule-liste/consultation-vehicule-liste.component';
+import { ReceptionVehiculeAjouterBonEntreeComponent } from './vehicules/reception/reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
+import { ReceptionVehiculeDetailComponent } from './vehicules/reception/reception-vehicule-detail/reception-vehicule-detail.component';
+import { ConsultationVehiculeDetailComponent } from './vehicules/consultation/consultation-vehicule-detail/consultation-vehicule-detail.component';
+import { ReceptionVehiculeListeDetailComponent } from './vehicules/reception/reception-vehicule-liste-detail/reception-vehicule-liste-detail.component';
+import { ReceptionVehiculeAjouterArticleComponent } from './vehicules/reception/reception-vehicule-ajouter-article/reception-vehicule-ajouter-article.component';
 
 
 @NgModule({

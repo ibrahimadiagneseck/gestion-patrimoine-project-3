@@ -17,7 +17,7 @@ import { MyDate } from 'src/app/model/my-date.model';
 import { SecteurActivite } from 'src/app/model/secteur-activite.model';
 import { SecteurActiviteService } from 'src/app/services/secteur-activite.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PopupSecteurActiviteComponent } from '../popup-secteur-activite/popup-secteur-activite.component';
+import { PopupSecteurActiviteComponent } from '../../secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
 
 @Component({
   selector: 'app-prestataire-ajouter',

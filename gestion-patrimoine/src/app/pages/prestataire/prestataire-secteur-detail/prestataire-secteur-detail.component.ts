@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Prestataires } from 'src/app/model/prestataires.model';
-import { PopupConfirmationSupprimerComponent } from 'src/app/composant/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
+import { PopupConfirmationSupprimerComponent } from 'src/app/composant/supprimer/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
 
 @Component({
   selector: 'app-prestataire-secteur-detail',

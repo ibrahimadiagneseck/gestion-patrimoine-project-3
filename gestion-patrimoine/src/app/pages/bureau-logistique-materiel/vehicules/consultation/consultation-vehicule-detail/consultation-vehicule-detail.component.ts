@@ -1,20 +1,18 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PopupConfirmationSupprimerComponent } from 'src/app/composant/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
+import { PopupConfirmationSupprimerComponent } from 'src/app/composant/supprimer/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
 import { Vehicule } from 'src/app/model/vehicule.model';
-import { MyDateService } from 'src/app/services/my-date.service';
-import { MyDate } from 'src/app/model/my-date.model';
 
 @Component({
-  selector: 'app-reception-vehicule-liste-detail',
+  selector: 'app-consultation-vehicule-detail',
   // standalone: true,
   // imports: [CommonModule],
-  templateUrl: './reception-vehicule-liste-detail.component.html',
-  styleUrl: './reception-vehicule-liste-detail.component.css'
+  templateUrl: './consultation-vehicule-detail.component.html',
+  styleUrl: './consultation-vehicule-detail.component.css'
 })
-export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy, AfterViewInit  {
+export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   public numeroBE: string = '';
   public dateBonEntree: string = '';
@@ -22,6 +20,7 @@ export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy,
   public dateBL: string = '';
   public numeroBL: string = '';
   public lieuDeLivraison: string = '';
+
   
 
   @ViewChild('dataVehicule') data: any;
@@ -35,17 +34,19 @@ export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy,
       this.dateBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.dateBL;
       this.numeroBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.numeroBL;
       this.lieuDeLivraison = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.lieuDeLivraison;
+      // this.numeroSerie = this.data.vehicule.numeroSerie;
 
-      console.log(this.data.vehicule.numeroSerie);
+      // Déclencher manuellement la détection des changements si nécessaire
+      this.cdr.detectChanges();
     }
   }
 
   private subscriptions: Subscription[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<ReceptionVehiculeListeDetailComponent>,
+    public dialogRef: MatDialogRef<ConsultationVehiculeDetailComponent>,
     private matDialog: MatDialog,
-    private myDateService: MyDateService
+    private cdr: ChangeDetectorRef // Ajout de ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -82,18 +83,6 @@ export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy,
 
   popupFermer(): void {
     this.dialogRef.close();
-  }
-
-  myDateStringFormatter(date: MyDate | string | undefined): string {
-    if (!date) {
-      return '';
-    }
-  
-    if (typeof date === 'string') {
-      return this.myDateService.formatterMyDateFromString(date);
-    } else {
-      return this.myDateService.formatterMyDate(date);
-    }
   }
 
 }

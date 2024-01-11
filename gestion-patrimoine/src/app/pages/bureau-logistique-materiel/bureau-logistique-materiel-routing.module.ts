@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthKeyClockGuard } from 'src/app/routeGuards/auth.route';
-import { ReceptionVehiculeListeComponent } from './vehicules/reception-vehicule-liste/reception-vehicule-liste.component';
-import { ConsultationVehiculeListeComponent } from './vehicules/consultation-vehicule-liste/consultation-vehicule-liste.component';
-import { ReceptionVehiculeDetailComponent } from './vehicules/reception-vehicule-detail/reception-vehicule-detail.component';
+import { ReceptionVehiculeListeComponent } from './vehicules/reception/reception-vehicule-liste/reception-vehicule-liste.component';
+import { ConsultationVehiculeListeComponent } from './vehicules/consultation/consultation-vehicule-liste/consultation-vehicule-liste.component';
+import { ReceptionVehiculeDetailComponent } from './vehicules/reception/reception-vehicule-detail/reception-vehicule-detail.component';
 
 const routes: Routes = [
   

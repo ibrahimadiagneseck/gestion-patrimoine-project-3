@@ -88,7 +88,7 @@
                     <div class="row g-4 mb-3">
                         <div class="col-12 mx-auto">
                             <span class="fw-bold">Prestataire</span>
-                            <div class="text-input"> {{ presataire.raisonSociale }} </div>
+                            <div class="text-input"> {{ raisonSociale }} </div>
                         </div>
                     </div>
                 </form>
@@ -100,13 +100,13 @@
         <div class="container px-3 py-2">
             <div class="row">
                 <div class="col-12 text-end">
-                    <!-- <button (click)="supprimerVehiculeById(data.vehicule.numeroSerie)"  type="button" class="btn btn-mybrown fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour supprimer">
+                    <button (click)="supprimerVehiculeById(numeroSerie)"  type="button" class="btn btn-mybrown fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour supprimer">
                         Supprimer
                     </button>
 
                     <button  type="button" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
                         Modifier
-                    </button> -->
+                    </button>
 
                     <button (click)="popupFermer()" type="button" class="btn btn-mysecondary fw-bold mx-2"
                         data-bs-toggle="tooltip" title="cliquer ici pour retourner">

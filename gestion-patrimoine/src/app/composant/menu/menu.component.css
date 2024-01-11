@@ -5,7 +5,7 @@
     background-color: #fff; /* Couleur de fond du bouton */
     color: black; /* Couleur du texte */
     padding: 10px 20px; /* Espacement interne */
-    border: none;
+    border: 1px solid #fff;
     /* border: 1px solid #e7e7e7; */
     /* border-radius: 5px; */
     /* text-align: left; */
