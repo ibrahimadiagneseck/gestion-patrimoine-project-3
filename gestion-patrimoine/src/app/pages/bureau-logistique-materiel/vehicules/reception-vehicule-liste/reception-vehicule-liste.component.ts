@@ -13,7 +13,7 @@ import { BonEntree } from 'src/app/model/bon-entree.model';
 import { ArticleBonEntree } from 'src/app/model/article-bon-entree.model';
 import { ArticleBonEntreeService } from 'src/app/services/article-bon-entree.service';
 import { BonEntreeService } from 'src/app/services/bon-entree.service';
-import { ReceptionVehiculeAjouterBordereauLivraisonBonEntreeComponent } from '../reception-vehicule-ajouter-bordereau-livraison-bon-entree/reception-vehicule-ajouter-bordereau-livraison-bon-entree.component';
+import { ReceptionVehiculeAjouterBonEntreeComponent } from '../reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
 import { Router } from '@angular/router';
 
 import * as CryptoJS from 'crypto-js';
@@ -304,7 +304,7 @@ export class ReceptionVehiculeListeComponent implements OnInit, OnDestroy {
 
   popupAjouterBordereauLivraisonBonEntree(): void {
     const dialogRef = this.matDialog.open(
-      ReceptionVehiculeAjouterBordereauLivraisonBonEntreeComponent,
+      ReceptionVehiculeAjouterBonEntreeComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',

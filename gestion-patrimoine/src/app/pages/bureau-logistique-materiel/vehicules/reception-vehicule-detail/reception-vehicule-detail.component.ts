@@ -19,7 +19,7 @@ import { Vehicule } from 'src/app/model/vehicule.model';
 import { ReceptionVehiculeListeDetailComponent } from '../reception-vehicule-liste-detail/reception-vehicule-liste-detail.component';
 import { VehiculeService } from 'src/app/services/vehicule.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ReceptionVehiculeAjouterArticleBonEntreeVehiculeComponent } from '../reception-vehicule-ajouter-article-bon-entree-vehicule/reception-vehicule-ajouter-article-bon-entree-vehicule.component';
+import { ReceptionVehiculeAjouterArticleComponent } from '../reception-vehicule-ajouter-article/reception-vehicule-ajouter-article.component';
 import { MyDate } from 'src/app/model/my-date.model';
 import { MyDateService } from 'src/app/services/my-date.service';
 
@@ -284,7 +284,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   popupAjouterArticleBonEntreeVehicule(): void {
     const dialogRef = this.matDialog.open(
-      ReceptionVehiculeAjouterArticleBonEntreeVehiculeComponent,
+      ReceptionVehiculeAjouterArticleComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',
