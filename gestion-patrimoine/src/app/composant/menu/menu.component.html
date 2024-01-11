@@ -1,0 +1,61 @@
+<div class="container-fluid bg-mywhite h-100">
+    <div class="row">
+
+      <ul style="list-style-type: none; margin: 0; padding: 0;">
+        <li class="my-2">
+          <button [routerLink]="'/accueil'" class="menu-button" href="#">
+            <mat-icon class="me-4" fontIcon="home"></mat-icon> Accueil
+          </button>
+        </li>
+
+        <li class="my-2">
+          <button class="collapsible menu-button">
+            <mat-icon class="me-4">directions_car</mat-icon> Véhicule <mat-icon class="fa-solid fa-chevron-down ms-auto">expand_more</mat-icon>
+          </button>
+
+          <div class="content">
+            <button [routerLink]="'/reception-vehicule'" class="menu-button" href="#" style="padding-left: 90px;">
+              Ajouter Réception
+            </button>
+            <button [routerLink]="'/reception-vehicule'" class="menu-button" href="#" style="padding-left: 90px;">
+              Consultation Réception
+            </button>
+            <button [routerLink]="'/maintenance-vehicule'" class="menu-button" href="#" style="padding-left: 90px;">
+              Maintenance
+            </button>
+            <button [routerLink]="'/dotation-vehicule'" class="menu-button" href="#" style="padding-left: 90px;">
+              Dotation
+            </button>
+            <button [routerLink]="'/consultation-vehicule'" class="menu-button" href="#" style="padding-left: 90px;">
+              Consultation
+            </button>
+          </div>
+        </li>
+
+        <li class="my-2">
+          <button class="menu-button" [routerLink]="'/prestataire'">
+            <!-- <mat-icon class="me-4">work</mat-icon> Prestataire -->
+            <mat-icon class="me-4">contact_mail</mat-icon> Prestataire
+
+          </button>
+        </li>
+
+        <li class="my-2">
+          <button class="collapsible menu-button">
+            <!-- <mat-icon class="me-4">person</mat-icon> Utilisateur <mat-icon class="fa-solid fa-chevron-down ms-auto">expand_more</mat-icon> -->
+            <mat-icon class="me-4">person_add</mat-icon> Utilisateur <mat-icon class="fa-solid fa-chevron-down ms-auto">expand_more</mat-icon>
+          </button>
+
+          <div class="content">
+            <button [routerLink]="'/gestion-utilisateur'" class="menu-button" href="#" style="padding-left: 90px;">
+              Fonction
+            </button>
+            <button class="menu-button" href="#" style="padding-left: 90px;">
+              Rôle
+            </button>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>

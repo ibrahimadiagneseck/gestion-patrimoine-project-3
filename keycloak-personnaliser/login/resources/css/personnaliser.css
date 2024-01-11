@@ -1,0 +1,58 @@
+header.login-pf-header {
+    margin-top: 20%;
+}
+
+input.pf-c-form-control {
+    border: 2px solid #f0dd99;
+    /* outline: 1px solid #f0dd99; */
+}
+
+input.pf-c-form-control:focus {
+    outline: 2px solid #f0dd99;
+}
+
+div.forgot-password span a {
+    color: black;
+}
+
+.pf-c-button.pf-m-primary {
+    font-weight: bold;
+    color: #000;
+    background-color: #f0dd99;
+}
+
+/*.pf-c-button.pf-m-block {
+    width: 50%;
+    margin-left: auto;
+}
+*/
+
+
+#kc-form-login {
+    padding: 0 12%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* Keep the original order for form groups */
+.form-group {
+    order: 0;
+}
+
+/* Move the kc-form-buttons down */
+#kc-form-buttons {
+    order: 2;
+}
+
+/* Move the forgot-password down */
+.login-pf-settings {
+    margin-top: 20px;
+    order: 3;
+}
+
+
+
+
+

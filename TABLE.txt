@@ -1,0 +1,118 @@
+CREATE TABLE PROFIL (
+    CODEPROFIL VARCHAR(6) PRIMARY KEY,
+    LIBELLERPROFIL VARCHAR(50)
+);
+
+CREATE TABLE UTILISATEUR (
+    MATRICULEAGENT VARCHAR(7) PRIMARY KEY,
+    MOTDEPASSE VARCHAR(255),
+    CODEPROFIL VARCHAR(6),
+    CODESECTION VARCHAR(3),
+    FOREIGN KEY (CODEPROFIL) REFERENCES PROFIL(CODEPROFIL),
+    FOREIGN KEY (CODESECTION) REFERENCES SECTIONS(CODESECTION)
+);
+
+Format :
+Matricule : 613693H , 506234B, 622543E ;
+Code agent : D2273, D3485, D2814
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('admin', 'Administrateur’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('csa', 'Chef Section Armement’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('asa', 'Agent Section Armement’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('csg', 'Chef Section Garage’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('asg', 'Agent Section Garage’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('csm', 'Chef Section Matériel’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('asm', 'Agent Section Matériel’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('blm', 'Chef BLM’);
+
+INSERT INTO public.profil(
+codeprofil, libellerprofil)
+VALUES ('dlf', 'Directeur LF');
+------------------------------------------------------
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
+
+const key = 'TUc0emRqRXpkdw==';
+
+// @Pipe({name: 'encrypted'})
+// export class EncryptPipe implements PipeTransform {
+//   transform(value: string) {
+//     if (value) {
+//       return CryptoJS.AES.encrypt(value, key).toString();
+//     }
+//   }
+// }
+
+// @Pipe({name: 'decrypted'})
+// export class DecryptPipe implements PipeTransform {
+//   transform(encrypted: string) {
+//     if (encrypted) {
+//       const decrypted = CryptoJS.AES.decrypt(encrypted, key);
+//       return decrypted.toString(CryptoJS.enc.Utf8);
+//     }
+//   }
+// }
+
+
+@Pipe({ name: 'encrypted' })
+export class EncryptPipe implements PipeTransform {
+  transform(value: string): string {
+    if (value) {
+      return CryptoJS.AES.encrypt(value, key).toString();
+    } else {
+      // Handle the case where 'value' is undefined or falsy
+      return ''; // You can return a default value or throw an error
+    }
+  }
+}
+
+@Pipe({ name: 'decrypted' })
+export class DecryptPipe implements PipeTransform {
+  transform(encrypted: string): string {
+    if (encrypted) {
+      const decrypted = CryptoJS.AES.decrypt(encrypted, key);
+      return decrypted.toString(CryptoJS.enc.Utf8);
+    } else {
+      // Handle the case where 'encrypted' is undefined or falsy
+      return ''; // You can return a default value or throw an error
+    }
+  }
+}
+
+
+
+
+
+@CreationTimestamp
+@Column(name = "created_at")
+private Date createdAt;
+
+@UpdateTimestamp
+@Column(name = "updated_at")
+private Date updatedAt;
