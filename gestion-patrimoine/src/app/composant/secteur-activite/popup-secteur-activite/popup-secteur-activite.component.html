@@ -13,7 +13,7 @@
                 <div class="col-3" *ngFor="let secteurActivite of secteurActivites;">
                     <label class="option_item bg-myprimary">
                         <!-- <input type="checkbox" class="checkbox" [value]="secteurActivite" (change)="onCheckboxChange($event)"> -->
-                        <input type="checkbox" class="checkbox" [checked]="isChecked(secteurActivite)" (change)="onCheckboxChange($event, secteurActivite)">
+                        <input type="checkbox" class="checkbox" [checked]="isChecked(secteurActivite, secteurActivitesSelected)" (change)="onCheckboxChange($event, secteurActivite)">
 
                         <div class="option_inner fond">
                             <div class="tickmark"></div>
@@ -26,6 +26,7 @@
                     </label>
                 </div>
             </div>
+
 
             <div class="row">
                 <div class="col-12 text-end">

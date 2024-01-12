@@ -211,6 +211,8 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
     const value: string = event.target.value;
     if (value) {
       this.dataSource.filter = value.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
     }
   }
 

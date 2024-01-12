@@ -21,14 +21,13 @@ import { BonEntreeAjouterComponent } from './bon-entree/bon-entree-ajouter/bon-e
 import { ArticleBonEntreeAjouterComponent } from './article-bon-entree/article-bon-entree-ajouter/article-bon-entree-ajouter.component';
 import { BordereauLivraisonAjouterComponent } from './bordereau-livraison/bordereau-livraison-ajouter/bordereau-livraison-ajouter.component';
 import { VehiculeAjouterComponent } from './vehicule/vehicule-ajouter/vehicule-ajouter.component';
-import { PrestataireAjouterComponent } from './prestataire/prestataire-ajouter/prestataire-ajouter.component';
-import { PopupSecteurActiviteComponent } from './secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
 import { BonEntreeDetailComponent } from './bon-entree/bon-entree-detail/bon-entree-detail.component';
 import { ArticleBonEntreeDetailComponent } from './article-bon-entree/article-bon-entree-detail/article-bon-entree-detail.component';
 import { BordereauLivraisonDetailComponent } from './bordereau-livraison/bordereau-livraison-detail/bordereau-livraison-detail.component';
 import { VehiculeDetailComponent } from './vehicule/vehicule-detail/vehicule-detail.component';
 import { PrestataireDetailComponent } from './prestataire/prestataire-detail/prestataire-detail.component';
 import { SecteurActiviteDetailComponent } from './secteur-activite/secteur-activite-detail/secteur-activite-detail.component';
+import { PopupSecteurActiviteComponent } from './secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
 
 
 
@@ -54,7 +53,6 @@ import { SecteurActiviteDetailComponent } from './secteur-activite/secteur-activ
     VehiculeAjouterComponent,
     VehiculeDetailComponent,
 
-    PrestataireAjouterComponent,
     PrestataireDetailComponent,
 
     SecteurActiviteDetailComponent,
@@ -96,7 +94,6 @@ import { SecteurActiviteDetailComponent } from './secteur-activite/secteur-activ
     VehiculeAjouterComponent,
     VehiculeDetailComponent,
 
-    PrestataireAjouterComponent,
     PrestataireDetailComponent,
 
     SecteurActiviteDetailComponent,

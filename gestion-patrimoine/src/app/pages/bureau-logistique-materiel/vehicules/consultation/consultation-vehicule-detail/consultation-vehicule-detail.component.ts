@@ -20,6 +20,7 @@ export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, A
   public dateBL: string = '';
   public numeroBL: string = '';
   public lieuDeLivraison: string = '';
+  public libelleArticleBonEntree: string = '';
 
   
 
@@ -35,6 +36,7 @@ export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, A
       this.numeroBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.numeroBL;
       this.lieuDeLivraison = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.lieuDeLivraison;
       // this.numeroSerie = this.data.vehicule.numeroSerie;
+      this.libelleArticleBonEntree = this.data.vehicule.identifiantBE.libelleArticleBonEntree;
 
       // Déclencher manuellement la détection des changements si nécessaire
       this.cdr.detectChanges();

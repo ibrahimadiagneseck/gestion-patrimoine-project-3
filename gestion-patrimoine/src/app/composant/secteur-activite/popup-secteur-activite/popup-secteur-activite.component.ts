@@ -8,7 +8,7 @@ import { Prestataires } from 'src/app/model/prestataires.model';
 
 
 @Component({
-  selector: 'app-popup-secteur-activite', 
+  selector: 'app-popup-secteur-activite',
   // standalone: true,
   // imports: [CommonModule],
   templateUrl: './popup-secteur-activite.component.html',
@@ -18,8 +18,9 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
 
   checkArray: FormArray | undefined;
   public secteurActiviteForm!: FormGroup;
-  
+
   public secteurActivitesSelect: SecteurActivite[] = [];
+  public secteurActivitesSelected: SecteurActivite[] = [];
 
   public secteurActivites: SecteurActivite[] = [];
   public secteurActivite: SecteurActivite = new SecteurActivite();
@@ -32,7 +33,7 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<PopupSecteurActiviteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { secteurActivites: SecteurActivite[], prestataire: Prestataires },
+    @Inject(MAT_DIALOG_DATA) public data: { secteurActivites: SecteurActivite[], prestataire: Prestataires, secteurActivitesSelected: SecteurActivite[] },
     private matDialog: MatDialog,
     private fb: FormBuilder,
 
@@ -47,7 +48,8 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.secteurActivites = this.data.secteurActivites;
-    this.prestataire  = this.data.prestataire; 
+    this.prestataire = this.data.prestataire;
+    this.secteurActivitesSelected = this.data.secteurActivitesSelected;
     // console.log(this.secteurActivites);
   }
 
@@ -57,24 +59,53 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
   }
 
 
-  isChecked(secteurActivite: SecteurActivite): boolean {
-    // Implémentez la logique pour déterminer si la case à cocher doit être cochée
-    // Par exemple, retournez true si secteurActivite est sélectionné, sinon false
-    // À adapter selon votre logique métier
+  // isChecked(secteurActivite: SecteurActivite): boolean {
+  //   // Implémentez la logique pour déterminer si la case à cocher doit être cochée
+  //   // Par exemple, retournez true si secteurActivite est sélectionné, sinon false
+  //   // À adapter selon votre logique métier
+
+  //   if (this.checkArray && this.checkArray.controls.length > 0) {
+  //     // Utilisez some pour vérifier si secteurActivite existe dans le FormArray
+  //     return this.checkArray.controls.some(control => control.value === secteurActivite);
+  //   }
+  //   // Si le FormArray est undefined ou vide, retournez false
+  //   return false;
+  // }
+
+  // isChecked(secteurActivite: SecteurActivite, secteurActivitesSelected: SecteurActivite[]): boolean {
+  //   if (this.checkArray && this.checkArray.controls.length > 0) {
+  //       // Utilisez some pour vérifier si secteurActivite existe dans le FormArray
+  //       return this.checkArray.controls.some(control => control.value === secteurActivite);
+  //   } 
+
+  //   // Vérifie si secteurActivite existe dans la liste secteurActivitesSelected
+  //   if (secteurActivitesSelected) {
+  //     return secteurActivitesSelected.some(selected => {
+  //         // Comparaison des identifiants uniques, à adapter selon votre modèle
+  //         return selected.libelleSecteurActivite === secteurActivite.libelleSecteurActivite;
+  //     });
+ 
+  //   } else {
+  //     return false;
+  //   }
     
-    if (this.checkArray && this.checkArray.controls.length > 0) {
-      // Utilisez some pour vérifier si secteurActivite existe dans le FormArray
-      return this.checkArray.controls.some(control => control.value === secteurActivite);
-    }
-    // Si le FormArray est undefined ou vide, retournez false
-    return false;
-  }
+  // }
+
+  isChecked(secteurActivite: SecteurActivite, secteurActivitesSelected: SecteurActivite[]): boolean {
+    // Vérifie si secteurActivite existe dans la liste secteurActivitesSelected
+    return secteurActivitesSelected.some(selected => {
+        // Comparaison des identifiants uniques, à adapter selon votre modèle
+        return selected.libelleSecteurActivite === secteurActivite.libelleSecteurActivite;
+    });
+}
+
+
 
 
 
   onCheckboxChange(event: any, secteurActivite: SecteurActivite) {
     this.checkArray = this.secteurActiviteForm.get('checkArray') as FormArray;
-  
+
     if (event.target.checked) {
       if (this.checkArray) {
         this.checkArray.push(new FormControl(secteurActivite));
@@ -85,13 +116,13 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
       this.checkArray.removeAt(index);
       // console.log(this.checkArray.value);
     }
-  
+
     this.secteurActivitesSelect = this.checkArray.value;
     // console.log(this.secteurActivitesSelect);
   }
-  
 
-  
+
+
 
 
   popupFermer(): void {

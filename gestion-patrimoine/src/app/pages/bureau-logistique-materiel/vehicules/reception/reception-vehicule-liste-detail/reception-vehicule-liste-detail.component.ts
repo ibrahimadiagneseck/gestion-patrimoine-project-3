@@ -23,6 +23,7 @@ export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy,
   public numeroBL: string = '';
   public lieuDeLivraison: string = '';
   public numeroSerie: string = '';
+  public libelleArticleBonEntree: string = '';
   
 
   @ViewChild('dataVehicule') data: any;
@@ -37,6 +38,7 @@ export class ReceptionVehiculeListeDetailComponent implements OnInit, OnDestroy,
       this.numeroBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.numeroBL;
       this.lieuDeLivraison = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.lieuDeLivraison;
       this.numeroSerie = this.data.vehicule.numeroSerie;
+      this.libelleArticleBonEntree = this.data.vehicule.identifiantBE.libelleArticleBonEntree;
 
       // Déclencher manuellement la détection des changements si nécessaire
       this.cdr.detectChanges();

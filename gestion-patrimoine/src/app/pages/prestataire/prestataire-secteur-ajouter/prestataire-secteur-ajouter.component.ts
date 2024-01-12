@@ -1,7 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NgForm } from '@angular/forms';
+import { Prestataires } from 'src/app/model/prestataires.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SecteurActivite } from 'src/app/model/secteur-activite.model';
+import { PopupSecteurActiviteComponent } from 'src/app/composant/secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
+import { SecteurActiviteService } from 'src/app/services/secteur-activite.service';
+import { PrestatairesService } from 'src/app/services/prestataires.service';
 
 @Component({
   selector: 'app-prestataire-secteur-ajouter',
@@ -12,21 +19,54 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
 
+  public secteurActivitesSelect: SecteurActivite[] = [];
+
+  public secteurActivites: SecteurActivite[] = [];
+  public secteurActivite: SecteurActivite = new SecteurActivite();
+
+  public prestataires: Prestataires[] = [];
+  public prestataire: Prestataires = new Prestataires();
+
   private subscriptions: Subscription[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<PrestataireSecteurAjouterComponent>
+    public dialogRef: MatDialogRef<PrestataireSecteurAjouterComponent>,
+    private secteurActiviteService: SecteurActiviteService,
+    private prestatairesService: PrestatairesService,
+    private matDialog: MatDialog,
   ) {}
 
 
   ngOnInit(): void {
-
+    this.listeSecteurActivites();
   }
 
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+  public listeSecteurActivites(): void {
+
+    const subscription = this.secteurActiviteService.listeSecteurActivites().subscribe({
+      next: (response: SecteurActivite[]) => {
+        this.secteurActivites = response;
+        console.log(this.secteurActivites);
+        
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+
+
 
   popupFermer(): void {
     this.dialogRef.close();
@@ -44,6 +84,80 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
     this.clickButton('prestataire-form');
   }
 
+
+  // --------------------------------------------------------------------------
+  
+  // pour executer ajouterBonEntree
+  public submitBonEntreeForm(): void { 
+    this.clickButton('prestataire-form')
+  }
+
+  public ajouterPrestataire(prestataireForm: NgForm): void {
+
+    // -------------------------------------------------------------------------- METHODE 1
+    // const formData = this.prestatairesService.createPrestatairesFormData(prestataireForm.value);
+
+    // this.subscriptions.push(this.prestatairesService.ajouterPrestatairesRequestParam(formData).subscribe({
+    //     next: (response: Prestataires) => {
+    //       console.log(response);
+          
+    //     },
+    //     error: (errorResponse: HttpErrorResponse) => {
+
+    //     }
+    //   })
+    // );
+
+    // -------------------------------------------------------------------------- METHODE 2
+
+    // SECTEUR ACTIVITE
+    prestataireForm.value.secteurActivite = this.secteurActivitesSelect;
+
+    console.log(prestataireForm.value);
+    
+    
+    this.subscriptions.push(this.prestatairesService.ajouterPrestataires(prestataireForm.value).subscribe({
+        next: (response: Prestataires) => {
+          console.log(response);
+          this.popupFermer();
+          
+        },
+        error: (errorResponse: HttpErrorResponse) => {
+
+        }
+      })
+    );
+  }
+  // --------------------------------------------------------------------------
+
+
+  popupSecteurActivite(secteurActivites: SecteurActivite[], prestataires: Prestataires, secteurActivitesSelect?: SecteurActivite[]): void {
+    const dialogRef = this.matDialog.open(
+      PopupSecteurActiviteComponent,
+      {
+        width: '80%',
+        // height: '80%',
+        enterAnimationDuration: '100ms',
+        exitAnimationDuration: '100ms',
+        data:  {
+          secteurActivites: secteurActivites,
+          prestataires: prestataires,
+          secteurActivitesSelected: secteurActivitesSelect
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(() => {
+      // ----------------------------------
+      // Accéder à this.secteurActivitesForm après la fermeture du popup
+      if (dialogRef.componentInstance instanceof PopupSecteurActiviteComponent) {
+        this.secteurActivitesSelect = dialogRef.componentInstance.secteurActivitesSelect;
+        console.log(this.secteurActivitesSelect);
+      }
+      // ----------------------------------
+      this.ngOnInit();
+    });
+  }
 
 
   // onSubmit(): void {
