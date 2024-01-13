@@ -51,6 +51,19 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
     this.prestataire = this.data.prestataire;
     this.secteurActivitesSelected = this.data.secteurActivitesSelected;
     // console.log(this.secteurActivites);
+
+    if (this.secteurActivitesSelected && this.secteurActivitesSelected.length > 0) {
+      // If secteurActivitesSelected is not empty, initialize checkArray with its values
+      this.checkArray = this.fb.array(this.secteurActivitesSelected.map(secteur => new FormControl(secteur)));
+    } else {
+      // If secteurActivitesSelected is empty, initialize an empty FormArray
+      this.checkArray = this.fb.array([]);
+    }
+  
+    this.secteurActiviteForm = this.fb.group({
+      checkArray: this.checkArray
+    });
+    
   }
 
 
@@ -92,12 +105,25 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
   // }
 
   isChecked(secteurActivite: SecteurActivite, secteurActivitesSelected: SecteurActivite[]): boolean {
+    // Vérifie si secteurActivite existe dans le FormArray
+    if (this.checkArray && this.checkArray.controls.length > 0) {
+        const isAlreadyChecked = this.checkArray.controls.some(control => control.value === secteurActivite);
+        if (isAlreadyChecked) {
+            return true;
+        }
+    }
+
     // Vérifie si secteurActivite existe dans la liste secteurActivitesSelected
-    return secteurActivitesSelected.some(selected => {
-        // Comparaison des identifiants uniques, à adapter selon votre modèle
-        return selected.libelleSecteurActivite === secteurActivite.libelleSecteurActivite;
-    });
-}
+    if (secteurActivitesSelected && secteurActivitesSelected.length > 0) {
+        return secteurActivitesSelected.some(selected => {
+            // Comparaison des identifiants uniques, à adapter selon votre modèle
+            return selected.libelleSecteurActivite === secteurActivite.libelleSecteurActivite;
+        });
+    }
+
+    return false;
+  }
+
 
 
 
@@ -109,16 +135,16 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
     if (event.target.checked) {
       if (this.checkArray) {
         this.checkArray.push(new FormControl(secteurActivite));
-        // console.log(this.checkArray.value);
+        console.log(this.checkArray.value);
       }
     } else {
       const index = this.checkArray.controls.findIndex(x => x.value === secteurActivite);
       this.checkArray.removeAt(index);
-      // console.log(this.checkArray.value);
+      console.log(this.checkArray.value);
     }
 
     this.secteurActivitesSelect = this.checkArray.value;
-    // console.log(this.secteurActivitesSelect);
+    console.log(this.secteurActivitesSelect);
   }
 
 
