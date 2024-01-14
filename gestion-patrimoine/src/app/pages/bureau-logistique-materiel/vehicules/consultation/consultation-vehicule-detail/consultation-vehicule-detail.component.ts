@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PopupConfirmationSupprimerComponent } from 'src/app/composant/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
+import { PopupConfirmationSupprimerComponent } from 'src/app/composant/supprimer/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
 import { Vehicule } from 'src/app/model/vehicule.model';
 
 @Component({
@@ -16,10 +16,11 @@ export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, A
 
   public numeroBE: string = '';
   public dateBonEntree: string = '';
-  public presataire: any = '';
+  public raisonSociale: any = '';
   public dateBL: string = '';
   public numeroBL: string = '';
   public lieuDeLivraison: string = '';
+  public libelleArticleBonEntree: string = '';
 
   
 
@@ -30,12 +31,15 @@ export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, A
     if (this.data) {
       this.numeroBE = this.data.vehicule.identifiantBE.identifiantBE.numeroBE;
       this.dateBonEntree = this.data.vehicule.identifiantBE.identifiantBE.dateBonEntree;
-      this.presataire = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.ninea;
+      this.raisonSociale = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.ninea.raisonSociale;
       this.dateBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.dateBL;
       this.numeroBL = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.numeroBL;
       this.lieuDeLivraison = this.data.vehicule.identifiantBE.identifiantBE.identifiantBL.lieuDeLivraison;
+      // this.numeroSerie = this.data.vehicule.numeroSerie;
+      this.libelleArticleBonEntree = this.data.vehicule.identifiantBE.libelleArticleBonEntree;
 
-      console.log(this.data.vehicule.numeroSerie);
+      // Déclencher manuellement la détection des changements si nécessaire
+      this.cdr.detectChanges();
     }
   }
 
@@ -44,6 +48,7 @@ export class ConsultationVehiculeDetailComponent implements OnInit, OnDestroy, A
   constructor(
     public dialogRef: MatDialogRef<ConsultationVehiculeDetailComponent>,
     private matDialog: MatDialog,
+    private cdr: ChangeDetectorRef // Ajout de ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

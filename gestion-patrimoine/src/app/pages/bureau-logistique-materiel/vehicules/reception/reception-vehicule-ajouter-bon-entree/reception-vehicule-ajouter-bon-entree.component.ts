@@ -80,9 +80,17 @@ export class ReceptionVehiculeAjouterBonEntreeComponent implements OnInit, OnDes
     private securiteService: SecuriteService,
     private router: Router,
     private matDialog: MatDialog,
-    public dialogRef: MatDialogRef<ReceptionVehiculeAjouterBonEntreeComponent>
+    public dialogRef: MatDialogRef<ReceptionVehiculeAjouterBonEntreeComponent>,
+    private notificationService: NotificationService,
   ) {}
 
+  private sendNotification(type: NotificationType, message: string, titre?: string): void {
+    if (message) {
+      this.notificationService.showAlert(type, message, titre);
+    } else {
+      this.notificationService.showAlert(type, 'Une erreur s\'est produite. Veuillez réessayer.', titre);
+    }
+  }
 
   ngOnInit(): void {
     this.listePrestataires();
@@ -329,6 +337,8 @@ export class ReceptionVehiculeAjouterBonEntreeComponent implements OnInit, OnDes
           console.log(this.bonEntree);
           this.popupFermer();
           this.goToAjouterArticle(this.bonEntree)
+          // this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie`);
         },
         error: (errorResponse: HttpErrorResponse) => {
 

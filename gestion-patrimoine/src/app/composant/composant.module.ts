@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
 import { EnteteComponent } from './entete/entete.component';
 import { MenuComponent } from './menu/menu.component';
-import { PopupConfirmationSupprimerComponent } from './popup-confirmation-supprimer/popup-confirmation-supprimer.component';
+import { PopupConfirmationSupprimerComponent } from './supprimer/popup-confirmation-supprimer/popup-confirmation-supprimer.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,18 +17,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
-import { BonEntreeAjouterComponent } from './bon-entree-ajouter/bon-entree-ajouter.component';
-import { ArticleBonEntreeAjouterComponent } from './article-bon-entree-ajouter/article-bon-entree-ajouter.component';
-import { BordereauLivraisonAjouterComponent } from './bordereau-livraison-ajouter/bordereau-livraison-ajouter.component';
-import { VehiculeAjouterComponent } from './vehicule-ajouter/vehicule-ajouter.component';
-import { PrestataireAjouterComponent } from './prestataire-ajouter/prestataire-ajouter.component';
-import { PopupSecteurActiviteComponent } from './popup-secteur-activite/popup-secteur-activite.component';
-import { BonEntreeDetailComponent } from './bon-entree-detail/bon-entree-detail.component';
-import { ArticleBonEntreeDetailComponent } from './article-bon-entree-detail/article-bon-entree-detail.component';
-import { BordereauLivraisonDetailComponent } from './bordereau-livraison-detail/bordereau-livraison-detail.component';
-import { VehiculeDetailComponent } from './vehicule-detail/vehicule-detail.component';
-import { PrestataireDetailComponent } from './prestataire-detail/prestataire-detail.component';
-import { SecteurActiviteDetailComponent } from './secteur-activite-detail/secteur-activite-detail.component';
+import { BonEntreeAjouterComponent } from './bon-entree/bon-entree-ajouter/bon-entree-ajouter.component';
+import { ArticleBonEntreeAjouterComponent } from './article-bon-entree/article-bon-entree-ajouter/article-bon-entree-ajouter.component';
+import { BordereauLivraisonAjouterComponent } from './bordereau-livraison/bordereau-livraison-ajouter/bordereau-livraison-ajouter.component';
+import { VehiculeAjouterComponent } from './vehicule/vehicule-ajouter/vehicule-ajouter.component';
+import { BonEntreeDetailComponent } from './bon-entree/bon-entree-detail/bon-entree-detail.component';
+import { ArticleBonEntreeDetailComponent } from './article-bon-entree/article-bon-entree-detail/article-bon-entree-detail.component';
+import { BordereauLivraisonDetailComponent } from './bordereau-livraison/bordereau-livraison-detail/bordereau-livraison-detail.component';
+import { VehiculeDetailComponent } from './vehicule/vehicule-detail/vehicule-detail.component';
+import { PrestataireDetailComponent } from './prestataire/prestataire-detail/prestataire-detail.component';
+import { SecteurActiviteDetailComponent } from './secteur-activite/secteur-activite-detail/secteur-activite-detail.component';
+import { PopupSecteurActiviteComponent } from './secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
 
 
 
@@ -54,7 +53,6 @@ import { SecteurActiviteDetailComponent } from './secteur-activite-detail/secteu
     VehiculeAjouterComponent,
     VehiculeDetailComponent,
 
-    PrestataireAjouterComponent,
     PrestataireDetailComponent,
 
     SecteurActiviteDetailComponent,
@@ -96,7 +94,6 @@ import { SecteurActiviteDetailComponent } from './secteur-activite-detail/secteu
     VehiculeAjouterComponent,
     VehiculeDetailComponent,
 
-    PrestataireAjouterComponent,
     PrestataireDetailComponent,
 
     SecteurActiviteDetailComponent,

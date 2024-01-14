@@ -5,9 +5,9 @@ import { ErreurComponent } from './pages/erreur/erreur.component';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { AuthKeyClockGuard } from './routeGuards/auth.route';
 import { PrestataireSecteurListeComponent } from './pages/prestataire/prestataire-secteur-liste/prestataire-secteur-liste.component';
-import { ReceptionVehiculeListeComponent } from './pages/bureau-logistique-materiel/vehicules/reception-vehicule-liste/reception-vehicule-liste.component';
-import { ConsultationVehiculeListeComponent } from './pages/bureau-logistique-materiel/vehicules/consultation-vehicule-liste/consultation-vehicule-liste.component';
-import { ReceptionVehiculeDetailComponent } from './pages/bureau-logistique-materiel/vehicules/reception-vehicule-detail/reception-vehicule-detail.component';
+import { ReceptionVehiculeListeComponent } from './pages/bureau-logistique-materiel/vehicules/reception/reception-vehicule-liste/reception-vehicule-liste.component';
+import { ConsultationVehiculeListeComponent } from './pages/bureau-logistique-materiel/vehicules/consultation/consultation-vehicule-liste/consultation-vehicule-liste.component';
+import { ReceptionVehiculeDetailComponent } from './pages/bureau-logistique-materiel/vehicules/reception/reception-vehicule-detail/reception-vehicule-detail.component';
 
 const routes: Routes = [
 

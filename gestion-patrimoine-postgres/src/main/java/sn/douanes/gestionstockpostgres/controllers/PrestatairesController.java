@@ -105,9 +105,11 @@ public class PrestatairesController {
 
     @PutMapping("/ModifierPrestataires")
     @ResponseBody
-    public Prestataires ModifierPrestataires(@RequestBody Prestataires p) {
+    public ResponseEntity<Prestataires> ModifierPrestataires(@RequestBody Prestataires prestataires) {
 
-        return prestatairesService.updatePrestataires(p);
+        Prestataires updatePrestataires = prestatairesService.updatePrestataires(prestataires);
+        // Retourner l'entité Prestataires avec le statut 201 Created
+        return new ResponseEntity<>(updatePrestataires, OK);
     }
 
     @DeleteMapping("SupprimerPrestatairesById/{ninea}")

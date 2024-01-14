@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { ReceptionVehiculeAjouterBonEntreeComponent } from '../reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
+import { ReceptionVehiculeAjouterBonEntreeComponent } from '../../reception/reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
 import { ConsultationVehiculeDetailComponent } from '../consultation-vehicule-detail/consultation-vehicule-detail.component';
 
 @Component({
