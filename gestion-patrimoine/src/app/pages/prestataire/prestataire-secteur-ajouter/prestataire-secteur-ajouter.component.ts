@@ -9,6 +9,8 @@ import { SecteurActivite } from 'src/app/model/secteur-activite.model';
 import { PopupSecteurActiviteComponent } from 'src/app/composant/secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
 import { SecteurActiviteService } from 'src/app/services/secteur-activite.service';
 import { PrestatairesService } from 'src/app/services/prestataires.service';
+import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-prestataire-secteur-ajouter',
@@ -33,9 +35,17 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<PrestataireSecteurAjouterComponent>,
     private secteurActiviteService: SecteurActiviteService,
     private prestatairesService: PrestatairesService,
+    private notificationService: NotificationService,
     private matDialog: MatDialog,
   ) {}
 
+  private sendNotification(type: NotificationType, message: string, titre?: string): void {
+    if (message) {
+      this.notificationService.showAlert(type, message, titre);
+    } else {
+      this.notificationService.showAlert(type, 'Une erreur s\'est produite. Veuillez réessayer.', titre);
+    }
+  }
 
   ngOnInit(): void {
     this.listeSecteurActivites();
@@ -120,7 +130,7 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
         next: (response: Prestataires) => {
           console.log(response);
           this.popupFermer();
-          
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
         },
         error: (errorResponse: HttpErrorResponse) => {
 
