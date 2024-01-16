@@ -21,6 +21,7 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
 
   public secteurActivitesSelect: SecteurActivite[] = [];
   public secteurActivitesSelected: SecteurActivite[] = [];
+  public secteurActivitesSelectedBefore: SecteurActivite[] = [];
 
   public secteurActivites: SecteurActivite[] = [];
   public secteurActivite: SecteurActivite = new SecteurActivite();
@@ -36,7 +37,6 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: { secteurActivites: SecteurActivite[], prestataire: Prestataires, secteurActivitesSelected: SecteurActivite[] },
     private matDialog: MatDialog,
     private fb: FormBuilder,
-
   ) {
 
   }
@@ -47,8 +47,9 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.secteurActivites = this.data.secteurActivites;
     this.prestataire = this.data.prestataire;
-    this.secteurActivitesSelected = this.data.secteurActivitesSelected;
-    // console.log(this.secteurActivites);
+    this.secteurActivitesSelectedBefore = this.secteurActivitesSelected = this.data.secteurActivitesSelected;
+    console.log(this.secteurActivitesSelectedBefore);
+    
 
     if (this.secteurActivitesSelected && this.secteurActivitesSelected.length > 0) {
       // If secteurActivitesSelected is not empty, initialize checkArray with its values
@@ -59,14 +60,24 @@ export class PopupSecteurActiviteComponent implements OnInit, OnDestroy {
     }
   
     this.secteurActiviteForm = this.fb.group({
-      checkArray: this.checkArray
+      checkArray: this.checkArray,
     });
+
+    this.secteurActivitesSelect = this.checkArray.value;
+
     
   }
 
 
   validerSecteurActivites(): void {
     this.popupFermer()
+  }
+
+  retourner(): void {
+    this.secteurActivitesSelect = this.secteurActivitesSelectedBefore;
+    // console.log(this.secteurActivitesSelect);
+    
+    this.popupFermer();
   }
 
 

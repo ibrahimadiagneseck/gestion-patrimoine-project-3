@@ -172,8 +172,6 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     const subscription = this.articleBonEntreeService.listeArticleBonEntrees().subscribe({
       next: (response: ArticleBonEntree[]) => {
         this.articleBonEntrees = response;
-        // this.listeVehicules();
-        this.listeBonEntrees();
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -187,24 +185,6 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
 
 
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-  public listeBonEntrees(): void {
-
-    const subscription = this.bonEntreeService.listeBonEntrees().subscribe({
-      next: (response: BonEntree[]) => {
-        this.bonEntrees = response;
-
-      },
-      error: (errorResponse: HttpErrorResponse) => {
-        // console.log(errorResponse);
-      },
-    });
-
-    this.subscriptions.push(subscription);
-  }
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------
   public listeVehicules(): void {
