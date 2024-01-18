@@ -262,14 +262,14 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   
 
-  popupAjouterArticleBonEntreeVehicule(): void {
+  popupAjouterArticleBonEntreeVehicule(bonEntree: BonEntree | undefined): void {
     const dialogRef = this.matDialog.open(
       ReceptionVehiculeAjouterArticleComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',
         exitAnimationDuration: '100ms',
-        data: this.bonEntree
+        data: bonEntree
       }
     );
 

@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import sn.douanes.gestionstockpostgres.entities.HttpResponse;
 import sn.douanes.gestionstockpostgres.entities.Prestataires;
 import sn.douanes.gestionstockpostgres.entities.SecteurActivite;
+import sn.douanes.gestionstockpostgres.exception.entities.PrestatairesExistException;
+import sn.douanes.gestionstockpostgres.exception.entities.PrestatairesNotFoundException;
 import sn.douanes.gestionstockpostgres.services.PrestatairesService;
 
 import static org.springframework.http.HttpStatus.OK;
+import static sn.douanes.gestionstockpostgres.constants.ApplicationConstants.PRESTATAIRES_DELETED_SUCCESSFULLY;
 
 
 @RestController
@@ -23,7 +26,6 @@ import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin("http://localhost:4200")
 public class PrestatairesController {
 
-    public static final String PRESTATAIRES_DELETED_SUCCESSFULLY = "Suppression réussie de ";
 
     @Autowired
     PrestatairesService prestatairesService;
@@ -60,7 +62,7 @@ public class PrestatairesController {
 
     @PostMapping("/AjouterPrestataires")
     @ResponseBody
-    public ResponseEntity<Prestataires> AjouterPrestataires(@RequestBody Prestataires prestataires) {
+    public ResponseEntity<?> AjouterPrestataires(@RequestBody Prestataires prestataires) throws PrestatairesExistException {
         // Assurez-vous que SecteurActivite n'est pas null pour éviter la NullPointerException
 //        if (prestataires.getSecteurActivite() != null) {
 //            // Récupérer les entités SecteurActivite associées à Prestataires
@@ -81,11 +83,37 @@ public class PrestatairesController {
 //            prestataires.setSecteurActivite(secteurActivites);
 //        }
 
+       /* if (prestatairesService.getPrestatairesById(prestataires.getNinea()) == null) {
+            return new ResponseEntity<>("Le prestataire existe déjà.", HttpStatus.CONFLICT); // HttpStatus.CONFLICT indique un conflit
+        }*/
+
         // Enregistrer l'entité Prestataires avec ses associations
-        Prestataires savedPrestataires = prestatairesService.savePrestataires(prestataires);
+        // Prestataires savedPrestataires = prestatairesService.ajouterPrestataires(prestataires.getNinea(), prestataires.getRaisonSociale(), prestataires.getNumeroTelephone(), prestataires.getAdresseEmail(), prestataires.getAdresse(), prestataires.getSecteurActivite());
 
         // Retourner l'entité Prestataires avec le statut 201 Created
-        return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
+        // return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
+
+        // return ResponseEntity.badRequest().body("L'utilisateur avec le nom d'utilisateur '" + username + "' existe déjà.");
+        // return ResponseEntity.ok("Utilisateur ajouté avec succès.");
+
+
+        try {
+            // Enregistrer l'entité Prestataires avec ses associations
+            Prestataires savedPrestataires = prestatairesService.ajouterPrestataires(
+                    prestataires.getNinea(),
+                    prestataires.getRaisonSociale(),
+                    prestataires.getNumeroTelephone(),
+                    prestataires.getAdresseEmail(),
+                    prestataires.getAdresse(),
+                    prestataires.getSecteurActivite());
+
+            // Retourner l'entité Prestataires avec le statut 201 Created
+            return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
+        } catch (PrestatairesExistException e) {
+            // Capturer l'exception PrestatairesExistException
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage() + " " + prestataires.getNinea());
+        }
+
     }
 
 
@@ -96,16 +124,17 @@ public class PrestatairesController {
             @RequestParam("numeroTelephone") Integer numeroTelephone,
             @RequestParam("adresseEmail") String adresseEmail,
             @RequestParam("adresse") String adresse
-    ) {
+    ) throws PrestatairesExistException {
         Set<SecteurActivite> secteurActivite = new HashSet<>();
         Prestataires prestataires = prestatairesService.ajouterPrestataires(ninea, raisonSociale, numeroTelephone, adresseEmail, adresse, secteurActivite);
+
         return new ResponseEntity<>(prestataires, OK);
     }
 
 
     @PutMapping("/ModifierPrestataires")
     @ResponseBody
-    public ResponseEntity<Prestataires> ModifierPrestataires(@RequestBody Prestataires prestataires) {
+    public ResponseEntity<Prestataires> ModifierPrestataires(@RequestBody Prestataires prestataires) throws PrestatairesNotFoundException {
 
         Prestataires updatePrestataires = prestatairesService.updatePrestataires(prestataires);
         // Retourner l'entité Prestataires avec le statut 201 Created

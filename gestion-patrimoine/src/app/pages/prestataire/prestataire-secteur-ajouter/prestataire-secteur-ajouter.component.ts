@@ -132,7 +132,9 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
           this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
         },
         error: (errorResponse: HttpErrorResponse) => {
-
+          // console.log(errorResponse);
+          
+          this.sendNotification(NotificationType.ERROR, errorResponse.error);
         }
       })
     );
