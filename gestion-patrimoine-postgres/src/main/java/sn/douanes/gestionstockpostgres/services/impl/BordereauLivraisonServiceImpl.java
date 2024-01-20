@@ -28,6 +28,9 @@ public class BordereauLivraisonServiceImpl implements BordereauLivraisonService 
 
     @Override
     public BordereauLivraison updateBordereauLivraison(BordereauLivraison b) {
+        b.setDateEnregistrement(new Timestamp(System.currentTimeMillis()));
+        // b.setIdentifiantBL(genererIdentifiantBE(b.getCodeSection().getCodeSection(), genererDateEnregistrement(b.getDateEnregistrement())));
+
         return bordereauLivraisonRepository.save(b);
     }
 

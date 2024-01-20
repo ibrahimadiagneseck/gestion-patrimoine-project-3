@@ -31,8 +31,8 @@ export class BordereauLivraisonService {
     return this.httpClient.post<BordereauLivraison>(`${this.urlServeur}/AjouterRequestParamBordereauLivraison`, formData);
   }
 
-  public modifierBordereauLivraison(formData: FormData): Observable<BordereauLivraison> {
-    return this.httpClient.put<BordereauLivraison>(`${this.urlServeur}/ModifierBordereauLivraison`, formData);
+  public modifierBordereauLivraison(bordereauLivraison: BordereauLivraison): Observable<BordereauLivraison> {
+    return this.httpClient.put<BordereauLivraison>(`${this.urlServeur}/ModifierBordereauLivraison`, bordereauLivraison);
   }
 
   public supprimerBordereauLivraisonById(identifiantBL: string): Observable<CustomHttpRespone> {

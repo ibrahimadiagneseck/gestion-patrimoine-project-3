@@ -283,7 +283,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
 
         this.dataSource = new MatTableDataSource<BonEntree>(this.bonEntrees.map((item) => ({
           ...item,
-          raisonSociale: item.identifiantBL.ninea.raisonSociale,
+          raisonSociale: item.identifiantBL.ninea ? item.identifiantBL.ninea.raisonSociale : '---',
           rowNombreArticleBonEntree: this.nombreArticleBonEntree(item, this.articleBonEntrees)
         })).sort((a, b) => a.rowNombreArticleBonEntree - b.rowNombreArticleBonEntree));
     

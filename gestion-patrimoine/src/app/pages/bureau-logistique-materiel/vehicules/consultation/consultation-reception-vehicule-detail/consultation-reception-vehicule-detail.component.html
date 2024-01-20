@@ -51,7 +51,7 @@
                     
                             <div class="col-7 mx-auto">
                                 <span class="fw-bold">Prestataire</span>
-                                <div class="text-input text-uppercase"> {{ bonEntree?.identifiantBL?.ninea?.raisonSociale }} </div>
+                                <div class="text-input text-uppercase"> {{ bonEntree?.identifiantBL?.ninea ? bonEntree?.identifiantBL?.ninea?.raisonSociale : '---' }} </div>
                             </div>
                     
                         </div>
