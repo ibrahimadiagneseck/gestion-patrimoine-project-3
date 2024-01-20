@@ -96,7 +96,7 @@
         <div class="container px-3 py-2">
             <div class="row">
                 <div class="col-12 text-end">
-                    <button (click)="submitForm()" type="button" [disabled]="PrestataireForm.invalid" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
+                    <button (click)="submitForm()" type="button" [disabled]="PrestataireForm.invalid || !(secteurActivitesSelect && secteurActivitesSelect.length > 0)" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
                         Valider
                     </button>
         

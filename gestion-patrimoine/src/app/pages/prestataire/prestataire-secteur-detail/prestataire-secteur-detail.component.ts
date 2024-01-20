@@ -72,6 +72,7 @@ export class PrestataireSecteurDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // console.log(this.prestataire);
     this.listeSecteurActivites();
+    
   }
   
 
@@ -212,7 +213,7 @@ export class PrestataireSecteurDetailComponent implements OnInit, OnDestroy {
       // Accéder à this.secteurActivitesForm après la fermeture du popup
       if (dialogRef.componentInstance instanceof PopupSecteurActiviteComponent) {
         this.secteurActivitesSelect = dialogRef.componentInstance.secteurActivitesSelect;
-        console.log(this.secteurActivitesSelect);
+        // console.log(this.secteurActivitesSelect);
         this.prestataire.secteurActivite = this.secteurActivitesSelect;
       }
       // ----------------------------------

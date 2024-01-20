@@ -27,12 +27,14 @@ import { ReceptionVehiculeListeDetailComponent } from './vehicules/reception/rec
 import { ReceptionVehiculeAjouterArticleComponent } from './vehicules/reception/reception-vehicule-ajouter-article/reception-vehicule-ajouter-article.component';
 import { ConsultationReceptionVehiculeListeComponent } from './vehicules/consultation/consultation-reception-vehicule-liste/consultation-reception-vehicule-liste.component';
 import { ConsultationReceptionVehiculeDetailComponent } from './vehicules/consultation/consultation-reception-vehicule-detail/consultation-reception-vehicule-detail.component';
+import { ReceptionVehiculeModifierBonEntreeComponent } from './vehicules/reception/reception-vehicule-modifier-bon-entree/reception-vehicule-modifier-bon-entree.component';
 
 
 @NgModule({
   declarations: [
     
     ReceptionVehiculeAjouterBonEntreeComponent,
+    ReceptionVehiculeModifierBonEntreeComponent,
     ReceptionVehiculeAjouterArticleComponent,
     ReceptionVehiculeDetailComponent,
     ReceptionVehiculeListeComponent,

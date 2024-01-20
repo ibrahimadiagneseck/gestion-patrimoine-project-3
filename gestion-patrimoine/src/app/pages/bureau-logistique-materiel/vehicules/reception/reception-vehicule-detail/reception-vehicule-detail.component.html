@@ -51,7 +51,7 @@
                     
                             <div class="col-7 mx-auto">
                                 <span class="fw-bold">Prestataire</span>
-                                <div class="text-input text-uppercase"> {{ bonEntree?.identifiantBL?.ninea?.raisonSociale }} </div>
+                                <div class="text-input text-uppercase"> {{ bonEntree?.identifiantBL?.ninea ? bonEntree?.identifiantBL?.ninea?.raisonSociale : '---' }} </div>
                             </div>
                     
                         </div>
@@ -117,12 +117,12 @@
                             <div class="col-12 text-end">
                                 <button type="button" class="btn btn-mybrown me-2">Supprimer</button>
                 
-                                <button (click)="popupAjouterArticleBonEntreeVehicule()" type="button" class="btn btn-mysecondary fw-bold mx-2"
+                                <button (click)="popupAjouterArticle(bonEntree)" type="button" class="btn btn-mysecondary fw-bold mx-2"
                                     data-bs-toggle="tooltip" title="cliquer ici pour ajouter artticle">
                                     Ajouter véhicule
                                 </button>
                 
-                                <button type="button" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip"
+                                <button (click)="popupModifierBonEntree(bonEntree)" type="button" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip"
                                     title="cliquer ici pour modifier">
                                     Modifier
                                 </button>

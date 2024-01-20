@@ -60,7 +60,6 @@ public class BonEntreeServiceImpl implements BonEntreeService {
     ) {
 
         BonEntree bonEntree = new BonEntree();
-
         bonEntree.setIdentifiantBE(genererIdentifiantBE(identifiantBL.getCodeSection().getCodeSection(), genererDateEnregistrement(identifiantBL.getDateEnregistrement())));
 
         bonEntree.setNumeroBE(numeroBE);

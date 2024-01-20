@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReceptionVehiculeAjouterArticleComponent } from '../reception-vehicule-ajouter-article/reception-vehicule-ajouter-article.component';
 import { MyDate } from 'src/app/model/my-date.model';
 import { MyDateService } from 'src/app/services/my-date.service';
+import { ReceptionVehiculeModifierBonEntreeComponent } from '../reception-vehicule-modifier-bon-entree/reception-vehicule-modifier-bon-entree.component';
 
 
 
@@ -172,8 +173,6 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     const subscription = this.articleBonEntreeService.listeArticleBonEntrees().subscribe({
       next: (response: ArticleBonEntree[]) => {
         this.articleBonEntrees = response;
-        // this.listeVehicules();
-        this.listeBonEntrees();
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -187,24 +186,6 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
 
 
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-  public listeBonEntrees(): void {
-
-    const subscription = this.bonEntreeService.listeBonEntrees().subscribe({
-      next: (response: BonEntree[]) => {
-        this.bonEntrees = response;
-
-      },
-      error: (errorResponse: HttpErrorResponse) => {
-        // console.log(errorResponse);
-      },
-    });
-
-    this.subscriptions.push(subscription);
-  }
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------
   public listeVehicules(): void {
@@ -282,14 +263,30 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   
 
-  popupAjouterArticleBonEntreeVehicule(): void {
+  popupAjouterArticle(bonEntree: BonEntree | undefined): void {
     const dialogRef = this.matDialog.open(
       ReceptionVehiculeAjouterArticleComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',
         exitAnimationDuration: '100ms',
-        data: this.bonEntree
+        data: bonEntree
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
+  popupModifierBonEntree(bonEntree: BonEntree | undefined): void {
+    const dialogRef = this.matDialog.open(
+      ReceptionVehiculeModifierBonEntreeComponent,
+      {
+        width: '80%',
+        enterAnimationDuration: '100ms',
+        exitAnimationDuration: '100ms',
+        data: bonEntree
       }
     );
 

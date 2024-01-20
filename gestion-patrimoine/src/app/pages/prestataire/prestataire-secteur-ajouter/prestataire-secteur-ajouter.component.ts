@@ -63,7 +63,7 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
     const subscription = this.secteurActiviteService.listeSecteurActivites().subscribe({
       next: (response: SecteurActivite[]) => {
         this.secteurActivites = response;
-        console.log(this.secteurActivites);
+        // console.log(this.secteurActivites);
         
       },
       error: (errorResponse: HttpErrorResponse) => {
@@ -125,7 +125,6 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
 
     console.log(prestataireForm.value);
     
-    
     this.subscriptions.push(this.prestatairesService.ajouterPrestataires(prestataireForm.value).subscribe({
         next: (response: Prestataires) => {
           console.log(response);
@@ -133,7 +132,9 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
           this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
         },
         error: (errorResponse: HttpErrorResponse) => {
-
+          // console.log(errorResponse);
+          
+          this.sendNotification(NotificationType.ERROR, errorResponse.error);
         }
       })
     );
@@ -162,7 +163,7 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
       // Accéder à this.secteurActivitesForm après la fermeture du popup
       if (dialogRef.componentInstance instanceof PopupSecteurActiviteComponent) {
         this.secteurActivitesSelect = dialogRef.componentInstance.secteurActivitesSelect;
-        console.log(this.secteurActivitesSelect);
+        // console.log(this.secteurActivitesSelect);
       }
       // ----------------------------------
       this.ngOnInit();
