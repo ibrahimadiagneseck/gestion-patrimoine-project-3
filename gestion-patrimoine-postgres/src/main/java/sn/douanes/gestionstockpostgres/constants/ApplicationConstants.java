@@ -9,7 +9,7 @@ public class ApplicationConstants {
 //    public static final String EMAIL_ALREADY_EXISTS = "Email already exists";
 
     // PRESTATAIRES
-    public static final String PRESTATAIRES_DELETED_SUCCESSFULLY = "Suppression réussie de ";
+    public static final String PRESTATAIRES_DELETED_SUCCESSFULLY = "Suppression réussie du prestataire";
     public static final String NO_PRESTATAIRES_FOUND_BY_NINEA = "Auccun prestataire n'est trouver par: ";
     public static final String PRESTATAIRES_ALREADY_EXISTS = "Ce prestataire existe déja:";
 

@@ -3,6 +3,9 @@ package sn.douanes.gestionstockpostgres.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "sections")
@@ -23,8 +26,11 @@ public class Sections {
     @Column(name = "libelle_section", length = 100)
     private String libelleSection;
 
-    @ManyToOne
-    @JoinColumn(name = "code_unite_douaniere")
-    private UniteDouaniere codeUniteDouaniere;
+//    @ManyToOne
+//    @JoinColumn(name = "code_unite_douaniere")
+//    private UniteDouaniere codeUniteDouaniere;
 
+    // @OneToMany(mappedBy = "sections", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToMany(mappedBy = "sections", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<UniteDouaniere> uniteDouanieres = new ArrayList<>();
 }

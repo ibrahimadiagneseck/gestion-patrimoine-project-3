@@ -1,50 +1,109 @@
 package sn.douanes.gestionstockpostgres.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sn.douanes.gestionstockpostgres.entities.BonPour;
+import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.repositories.BonPourRepository;
 import sn.douanes.gestionstockpostgres.services.BonPourService;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Service
 public class BonPourServiceImpl implements BonPourService {
 
     @Autowired
-    BonPourRepository bonPourRepository;
+    BonPourRepository BonPourRepository;
 
     @Override
     public BonPour saveBonPour(BonPour b) {
-        return bonPourRepository.save(b);
+        return BonPourRepository.save(b);
     }
+
 
     @Override
     public BonPour updateBonPour(BonPour b) {
-        return bonPourRepository.save(b);
+        return BonPourRepository.save(b);
     }
 
     @Override
     public void deleteBonPour(BonPour b) {
-        bonPourRepository.delete(b);
+        BonPourRepository.delete(b);
     }
 
     @Override
     public void deleteBonPourById(String id) {
-        bonPourRepository.deleteById(id);
+        BonPourRepository.deleteById(id);
     }
 
     @Override
-    public BonPour getBonPour(String id) {
-        return bonPourRepository.findById(id).get();
+    public BonPour getBonPourById(String id) {
+        return BonPourRepository.findById(id).isPresent() ? BonPourRepository.findById(id).get() : null;
     }
 
     @Override
     public List<BonPour> getAllBonPours() {
-        return bonPourRepository.findAll();
+        return BonPourRepository.findAll();
+    }
+
+    @Override
+    public BonPour ajouterBonPour(
+            String identifiantBP,
+            String descriptionBP,
+            Integer numeroCourrielOrigine,
+            Date dateCourrielOrigine,
+            String etatBP,
+            String objectCourrielOrigine,
+            Integer numeroArriveDLF,
+            Date dateArriveDLF,
+            Integer numeroArriveBLM,
+            Date dateArriveBLM,
+            Integer numeroArriveSection,
+            Date dateArriveSection,
+            String observationBP,
+            UniteDouaniere codeUniteDouaniere,
+            Sections codeSection,
+            Agent matriculeAgent
+    ) {
+
+        BonPour bonPour = new BonPour();
+        bonPour.setDateEnregistrement(new Timestamp(System.currentTimeMillis()));
+        bonPour.setIdentifiantBP(genererIdentifiantBE(codeSection.getCodeSection(), genererDateEnregistrement(bonPour.getDateEnregistrement())));
+
+        bonPour.setDescriptionBP(descriptionBP);
+        bonPour.setNumeroCourrielOrigine(numeroCourrielOrigine);
+        bonPour.setDateCourrielOrigine(dateCourrielOrigine);
+        bonPour.setEtatBP(etatBP);
+        bonPour.setObservationBP(objectCourrielOrigine);
+        bonPour.setNumeroArriveDLF(numeroArriveDLF);
+        bonPour.setDateArriveDLF(dateArriveDLF);
+        bonPour.setNumeroArriveBLM(numeroArriveBLM);
+        bonPour.setDateArriveBLM(dateArriveBLM);
+        bonPour.setNumeroArriveSection(numeroArriveSection);
+        bonPour.setDateArriveSection(dateArriveSection);
+        bonPour.setObservationBP(observationBP);
+        bonPour.setCodeUniteDouaniere(codeUniteDouaniere);
+        bonPour.setCodeSection(codeSection);
+        bonPour.setMatriculeAgent(matriculeAgent);
+
+
+        return BonPourRepository.save(bonPour);
     }
 
 
+    private String genererIdentifiantBE(String codeSection, String dateEnregistrement) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        return "BP" + codeSection + dateEnregistrement;
+    }
+
+
+    private String genererDateEnregistrement(Timestamp dateEnregistrement) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        return dateEnregistrement.toLocalDateTime().format(formatter);
+    }
 
 }

@@ -15,6 +15,6 @@ public interface SectionsService {
     List<Sections> getAllSectionss();
 
 
-    Sections ajouterSections(String codeSection, String libelleSection, UniteDouaniere codeUniteDouaniere);
+    Sections ajouterSections(String codeSection, String libelleSection);
 
 }

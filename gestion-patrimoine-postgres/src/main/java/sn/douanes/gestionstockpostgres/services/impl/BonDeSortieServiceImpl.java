@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sn.douanes.gestionstockpostgres.entities.BonDeSortie;
 import sn.douanes.gestionstockpostgres.repositories.BonDeSortieRepository;
-import sn.douanes.gestionstockpostgres.services.BonDeSortieService;
 
 
 @Service

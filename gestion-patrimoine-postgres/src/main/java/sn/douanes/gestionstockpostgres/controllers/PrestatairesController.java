@@ -62,7 +62,7 @@ public class PrestatairesController {
 
     @PostMapping("/AjouterPrestataires")
     @ResponseBody
-    public ResponseEntity<Prestataires> AjouterPrestataires(@RequestBody Prestataires prestataires) throws PrestatairesExistException {
+    public ResponseEntity<?> AjouterPrestataires(@RequestBody Prestataires prestataires) throws PrestatairesExistException {
         // Assurez-vous que SecteurActivite n'est pas null pour éviter la NullPointerException
 //        if (prestataires.getSecteurActivite() != null) {
 //            // Récupérer les entités SecteurActivite associées à Prestataires
@@ -114,12 +114,16 @@ public class PrestatairesController {
 //            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage() + " " + prestataires.getNinea());
 //        }
 
-        // Enregistrer l'entité Prestataires avec ses associations
-        Prestataires savedPrestataires = prestatairesService.savePrestataires(prestataires);
+        try {
+            // Enregistrer l'entité Prestataires avec ses associations
+            Prestataires savedPrestataires = prestatairesService.savePrestataires(prestataires);
 
-        // Retourner l'entité Prestataires avec le statut 201 Created
-        return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
-
+            // Retourner l'entité Prestataires avec le statut 201 Created
+            return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
+        } catch (PrestatairesExistException e) {
+            // Capturer l'exception PrestatairesExistException
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage() + " " + prestataires.getNinea());
+        }
     }
 
 
@@ -151,7 +155,8 @@ public class PrestatairesController {
     public ResponseEntity<HttpResponse> SupprimerPrestatairesById(@PathVariable("ninea") String ninea) {
 
         prestatairesService.deletePrestatairesById(ninea);
-        return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY + ninea);
+        // return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY + ninea);
+        return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY);
     }
 
 

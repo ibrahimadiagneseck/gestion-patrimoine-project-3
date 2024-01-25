@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sn.douanes.gestionstockpostgres.entities.ArticleBonSortie;
-import sn.douanes.gestionstockpostgres.entities.BonDeSortie;
 import sn.douanes.gestionstockpostgres.entities.HttpResponse;
-import sn.douanes.gestionstockpostgres.services.BonDeSortieService;
 
 import static org.springframework.http.HttpStatus.OK;
 

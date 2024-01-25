@@ -1,36 +1,42 @@
 package sn.douanes.gestionstockpostgres.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @Entity
 @Table(name = "bon_pour")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class BonPour {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "numero_bon_pour", nullable = false, updatable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String numeroBonPour;
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // @Column(name = "identifiant_b_l", nullable = false, updatable = false)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "identifiant_b_p", length = 25)
+    private String identifiantBP;
 
+    @Column(name = "description_b_p", length = 100)
+    private String descriptionBP;
 
-    @Column(name = "numero_courrier_origine")
-    private Integer numeroCourrierOrigine;
+    @Column(name = "numero_courriel_origine")
+    private Integer numeroCourrielOrigine;
 
-    @Column(name = "date_courrier_origine")
-    private Date dateCourrierOrigine;
+    @Column(name = "date_courriel_origine")
+    private Date dateCourrielOrigine;
 
+    @Column(name = "etat_b_p", length = 10)
+    private String etatBP;
 
-    @Column(name = "etat_bon_pour")
-    private String etatBonPour;
-
-
-    @Column(name = "object_courrier_origine")
-    private String objectCourrierOrigine;
+    @Column(name = "object_courriel_origine")
+    private String objectCourrielOrigine;
 
     @Column(name = "numero_arrive_d_l_f")
     private Integer numeroArriveDLF;
@@ -38,10 +44,10 @@ public class BonPour {
     @Column(name = "date_arrive_d_l_f")
     private Date dateArriveDLF;
 
-    @Column(name = "numero_arrive_d_l_m")
+    @Column(name = "numero_arrive_b_l_m")
     private Integer numeroArriveBLM;
 
-    @Column(name = "date_arrive_d_l_m")
+    @Column(name = "date_arrive_b_l_m")
     private Date dateArriveBLM;
 
     @Column(name = "numero_arrive_section")
@@ -50,140 +56,30 @@ public class BonPour {
     @Column(name = "date_arrive_section")
     private Date dateArriveSection;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "code_unite_douaniere", referencedColumnName = "code_unite_douaniere")
+    @Column(name = "observation_b_p")
+    private String observationBP;
+
+    @ManyToOne
+    @JoinColumn(name = "code_unite_douaniere")
     private UniteDouaniere codeUniteDouaniere;
 
+    @ManyToOne
+    @JoinColumn(name = "code_section")
+    private Sections codeSection;
 
-    public BonPour() {
-    }
 
-    public BonPour(String numeroBonPour, Integer numeroCourrierOrigine, Date dateCourrierOrigine, String etatBonPour, String objectCourrierOrigine, Integer numeroArriveDLF, Date dateArriveDLF, Integer numeroArriveBLM, Date dateArriveBLM, Integer numeroArriveSection, Date dateArriveSection, UniteDouaniere codeUniteDouaniere) {
-        this.numeroBonPour = numeroBonPour;
-        this.numeroCourrierOrigine = numeroCourrierOrigine;
-        this.dateCourrierOrigine = dateCourrierOrigine;
-        this.etatBonPour = etatBonPour;
-        this.objectCourrierOrigine = objectCourrierOrigine;
-        this.numeroArriveDLF = numeroArriveDLF;
-        this.dateArriveDLF = dateArriveDLF;
-        this.numeroArriveBLM = numeroArriveBLM;
-        this.dateArriveBLM = dateArriveBLM;
-        this.numeroArriveSection = numeroArriveSection;
-        this.dateArriveSection = dateArriveSection;
-        this.codeUniteDouaniere = codeUniteDouaniere;
-    }
+    @Column(name = "date_enregistrement")
+    private Timestamp dateEnregistrement;
 
-    public String getNumeroBonPour() {
-        return numeroBonPour;
-    }
 
-    public void setNumeroBonPour(String numeroBonPour) {
-        this.numeroBonPour = numeroBonPour;
-    }
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "matricule_agent", referencedColumnName = "matricule_agent"),
+            @JoinColumn(name = "code_corps_agent", referencedColumnName = "code_corps_agent")
+    })
+    private Agent matriculeAgent;
 
-    public Integer getNumeroCourrierOrigine() {
-        return numeroCourrierOrigine;
-    }
 
-    public void setNumeroCourrierOrigine(Integer numeroCourrierOrigine) {
-        this.numeroCourrierOrigine = numeroCourrierOrigine;
-    }
 
-    public Date getDateCourrierOrigine() {
-        return dateCourrierOrigine;
-    }
 
-    public void setDateCourrierOrigine(Date dateCourrierOrigine) {
-        this.dateCourrierOrigine = dateCourrierOrigine;
-    }
-
-    public String getEtatBonPour() {
-        return etatBonPour;
-    }
-
-    public void setEtatBonPour(String etatBonPour) {
-        this.etatBonPour = etatBonPour;
-    }
-
-    public String getObjectCourrierOrigine() {
-        return objectCourrierOrigine;
-    }
-
-    public void setObjectCourrierOrigine(String objectCourrierOrigine) {
-        this.objectCourrierOrigine = objectCourrierOrigine;
-    }
-
-    public Integer getNumeroArriveDLF() {
-        return numeroArriveDLF;
-    }
-
-    public void setNumeroArriveDLF(Integer numeroArriveDLF) {
-        this.numeroArriveDLF = numeroArriveDLF;
-    }
-
-    public Date getDateArriveDLF() {
-        return dateArriveDLF;
-    }
-
-    public void setDateArriveDLF(Date dateArriveDLF) {
-        this.dateArriveDLF = dateArriveDLF;
-    }
-
-    public Integer getNumeroArriveBLM() {
-        return numeroArriveBLM;
-    }
-
-    public void setNumeroArriveBLM(Integer numeroArriveBLM) {
-        this.numeroArriveBLM = numeroArriveBLM;
-    }
-
-    public Date getDateArriveBLM() {
-        return dateArriveBLM;
-    }
-
-    public void setDateArriveBLM(Date dateArriveBLM) {
-        this.dateArriveBLM = dateArriveBLM;
-    }
-
-    public Integer getNumeroArriveSection() {
-        return numeroArriveSection;
-    }
-
-    public void setNumeroArriveSection(Integer numeroArriveSection) {
-        this.numeroArriveSection = numeroArriveSection;
-    }
-
-    public Date getDateArriveSection() {
-        return dateArriveSection;
-    }
-
-    public void setDateArriveSection(Date dateArriveSection) {
-        this.dateArriveSection = dateArriveSection;
-    }
-
-    public UniteDouaniere getCodeUniteDouaniere() {
-        return codeUniteDouaniere;
-    }
-
-    public void setCodeUniteDouaniere(UniteDouaniere codeUniteDouaniere) {
-        this.codeUniteDouaniere = codeUniteDouaniere;
-    }
-
-    @Override
-    public String toString() {
-        return "BonPour{" +
-                "numeroBonPour='" + numeroBonPour + '\'' +
-                ", numeroCourrierOrigine=" + numeroCourrierOrigine +
-                ", dateCourrierOrigine=" + dateCourrierOrigine +
-                ", etatBonPour='" + etatBonPour + '\'' +
-                ", objectCourrierOrigine='" + objectCourrierOrigine + '\'' +
-                ", numeroArriveDLF=" + numeroArriveDLF +
-                ", dateArriveDLF=" + dateArriveDLF +
-                ", numeroArriveBLM=" + numeroArriveBLM +
-                ", dateArriveBLM=" + dateArriveBLM +
-                ", numeroArriveSection=" + numeroArriveSection +
-                ", dateArriveSection=" + dateArriveSection +
-                ", codeUniteDouaniere=" + codeUniteDouaniere +
-                '}';
-    }
 }

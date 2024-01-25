@@ -116,3 +116,14 @@ private Date createdAt;
 @UpdateTimestamp
 @Column(name = "updated_at")
 private Date updatedAt;
+
+
+
+
+
+private final UniteDouaniereSectionsRepository uniteDouaniereSectionsRepository;
+
+    @Autowired
+    public UniteDouaniereSectionsServiceImpl(UniteDouaniereSectionsRepository uniteDouaniereSectionsRepository) {
+        this.uniteDouaniereSectionsRepository = uniteDouaniereSectionsRepository;
+    }

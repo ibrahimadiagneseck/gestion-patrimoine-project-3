@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "unite_douaniere")
@@ -42,5 +45,22 @@ public class UniteDouaniere {
     @ManyToOne
     @JoinColumn(name = "code_type_unite_douaniere")
     private TypeUniteDouaniere codeTypeUniteDouaniere;
+
+
+//    @ManyToOne
+//    @JoinColumn(name = "code_section")
+//    private Sections codeSection;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "unite_douaniere_sections",
+            joinColumns = @JoinColumn(name = "code_unite_douaniere"),
+            inverseJoinColumns = @JoinColumn(name = "code_section")
+    )
+    private Set<Sections> sections = new HashSet<>();
 
 }

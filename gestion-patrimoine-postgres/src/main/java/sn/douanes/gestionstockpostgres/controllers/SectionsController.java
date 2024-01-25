@@ -40,7 +40,7 @@ public class SectionsController {
             @RequestParam("numeroBE") String libelleSection,
             @RequestParam("numeroBE") UniteDouaniere codeUniteDouaniere
     ) {
-        Sections sections = sectionsService.ajouterSections(codeSection, libelleSection, codeUniteDouaniere);
+        Sections sections = sectionsService.ajouterSections(codeSection, libelleSection);
         return new ResponseEntity<>(sections, OK);
     }
 
