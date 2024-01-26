@@ -1,12 +1,12 @@
 package sn.douanes.gestionstockpostgres.controllers;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sn.douanes.gestionstockpostgres.entities.ArticleBonSortie;
-import sn.douanes.gestionstockpostgres.entities.HttpResponse;
+import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.services.ArticleBonSortieService;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -30,8 +30,8 @@ public class ArticleBonSortieController {
 
     @PostMapping("/AjouterArticleBonSortie")
     @ResponseBody
-    public ArticleBonSortie AjouterArticleBonSortie(@RequestBody ArticleBonSortie a) {
-        return articleBonSortieService.saveArticleBonSortie(a);
+    public ArticleBonSortie AjouterArticleBonEntree(@RequestBody ArticleBonSortie articleBonSortie) {
+        return articleBonSortieService.ajouterArticleBonSortie(articleBonSortie.getIdentifiantBS(), articleBonSortie.getCodeArticleBonSortie(), articleBonSortie.getLibelleArticleBonSortie(), articleBonSortie.getQuantiteAccordee(), articleBonSortie.getDateArticleBonSortie(), articleBonSortie.getIdentifiantBE(), articleBonSortie.getMatriculeAgent());
     }
 
     @PutMapping("/ModifierArticleBonSortie")
@@ -40,9 +40,12 @@ public class ArticleBonSortieController {
         return articleBonSortieService.updateArticleBonSortie(a);
     }
 
-    @DeleteMapping("SupprimerArticleBonSortieById/{id}")
-    public void SupprimerArticleBonSortieById(@PathVariable("id") String codeArticleBonSortie) {
-        articleBonSortieService.deleteArticleBonSortieById(codeArticleBonSortie);
+    @DeleteMapping("SupprimerArticleBonSortieById/{codeArticleBonPour}/{identifiantBP}")
+    public void SupprimerArticleBonSortie(
+            @PathVariable("codeArticleBonPour") String codeArticleBonSortie,
+            @PathVariable("identifiantBP") BonDeSortie identifiantBS
+    ) {
+        articleBonSortieService.deleteArticleBonSortieById(codeArticleBonSortie, identifiantBS);
     }
 
 

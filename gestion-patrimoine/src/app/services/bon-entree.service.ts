@@ -83,8 +83,8 @@ export class BonEntreeService {
     return this.httpClient.put<BonEntree>(`${this.urlServeur}/ModifierBonEntree`, formData);
   }
 
-  public supprimerBonEntreeById(numeroSerie: string): Observable<CustomHttpRespone> {
-    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerBonEntreeById/${numeroSerie}`);
+  public supprimerBonEntreeById(identifiantBE: string): Observable<CustomHttpRespone> {
+    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerBonEntreeById/${identifiantBE}`);
   }
 
   public recupererBonEntreeById(idIdentifiantBE: string): Observable<BonEntree> {

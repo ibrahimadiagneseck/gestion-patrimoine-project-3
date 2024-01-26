@@ -6,6 +6,7 @@ import sn.douanes.gestionstockpostgres.entities.keys.ArticleBonSortieId;
 import sn.douanes.gestionstockpostgres.entities.keys.DotationVehiculeId;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @IdClass(DotationVehiculeId.class)
@@ -19,7 +20,7 @@ public class DotationVehicule {
 
     @Id
     @Column(name = "date_dotation")
-    private Date dateDotation;
+    private Timestamp dateDotation;
 
     @Id
     @ManyToOne(cascade = CascadeType.ALL)

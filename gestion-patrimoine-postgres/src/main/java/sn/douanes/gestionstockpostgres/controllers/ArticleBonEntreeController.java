@@ -55,7 +55,7 @@ public class ArticleBonEntreeController {
         return articleBonEntreeService.updateArticleBonEntree(a);
     }
 
-    @DeleteMapping("SupprimerArticleBonEntreeById/{codeArticleBonEntree}")
+    @DeleteMapping("SupprimerArticleBonEntreeById/{codeArticleBonEntree}/{identifiantBE}")
     public void SupprimerArticleBonEntree(
             @PathVariable("codeArticleBonEntree") String codeArticleBonEntree,
             @PathVariable("identifiantBE") BonEntree identifiantBE

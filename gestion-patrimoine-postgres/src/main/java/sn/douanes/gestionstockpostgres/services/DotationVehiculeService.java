@@ -14,7 +14,7 @@ public interface DotationVehiculeService {
     DotationVehicule getDotationVehiculeById(Date dateDotation, Vehicule numeroSerie);
     List<DotationVehicule> getAllDotationVehicules();
 
-    DotationVehicule ajouterDotationVehicule(Vehicule numeroSerie, Date dateDotation, ArticleBonSortie identifiantBS, Agent matriculeAgent);
+    DotationVehicule ajouterDotationVehicule(Vehicule numeroSerie, ArticleBonSortie identifiantBS, Agent matriculeAgent);
 
 
 }

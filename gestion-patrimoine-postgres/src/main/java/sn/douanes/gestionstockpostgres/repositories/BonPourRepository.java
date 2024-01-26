@@ -6,6 +6,5 @@ import sn.douanes.gestionstockpostgres.entities.BonPour;
 
 
 @Repository
-
 public interface BonPourRepository extends JpaRepository<BonPour, String> {
 }
