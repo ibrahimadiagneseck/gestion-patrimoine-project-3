@@ -31,6 +31,7 @@ public class BonDeSortieController {
     }
 
 
+
     @PostMapping("/AjouterBonDeSortie")
     @ResponseBody
     public BonDeSortie AjouterBonDeSortie(@RequestBody BonDeSortie bonDeSortie) {

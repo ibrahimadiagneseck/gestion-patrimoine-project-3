@@ -24,10 +24,10 @@ export class BonDeSortie {
     descriptionBS = '',
     dateBS = new MyDate(),
     observationBS = '',
-    codeUniteDouaniere = new UniteDouaniere;
-    codeSection = new Sections;
-    identifiantBP = new BonPour;
-    matriculeAgent = new Agent;
+    codeUniteDouaniere = new UniteDouaniere,
+    codeSection = new Sections,
+    identifiantBP = new BonPour,
+    matriculeAgent = new Agent
   ) {
     this.identifiantBS = identifiantBS;
     this.numeroBS = numeroBS;

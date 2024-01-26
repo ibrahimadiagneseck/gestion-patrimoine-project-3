@@ -40,10 +40,10 @@ public class ArticleBonSortieController {
         return articleBonSortieService.updateArticleBonSortie(a);
     }
 
-    @DeleteMapping("SupprimerArticleBonSortieById/{codeArticleBonPour}/{identifiantBP}")
+    @DeleteMapping("SupprimerArticleBonSortieById/{codeArticleBonSortie}/{identifiantBS}")
     public void SupprimerArticleBonSortie(
-            @PathVariable("codeArticleBonPour") String codeArticleBonSortie,
-            @PathVariable("identifiantBP") BonDeSortie identifiantBS
+            @PathVariable("codeArticleBonSorties") String codeArticleBonSortie,
+            @PathVariable("identifiantBS") BonDeSortie identifiantBS
     ) {
         articleBonSortieService.deleteArticleBonSortieById(codeArticleBonSortie, identifiantBS);
     }

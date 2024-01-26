@@ -6,11 +6,9 @@ import { Vehicule } from "./vehicule.model";
 
 export class DotationVehicule {
 
-
   public numeroSerie: Vehicule;
   public identifiantBS: ArticleBonSortie
   public matriculeAgent: Agent;
-
 
   constructor(
     numeroSerie = new Vehicule(),

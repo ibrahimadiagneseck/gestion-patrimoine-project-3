@@ -22,8 +22,6 @@ public class BonPourController {
 
     @Autowired
     BonPourService bonPourService;
-//    @Autowired
-//    BordereauLivraisonService bordereauLivraisonService;
 
 
     @GetMapping("/BonPours")
@@ -41,8 +39,6 @@ public class BonPourController {
     }
 
 
-
-
     @PutMapping("/ModifierBonPour")
     @ResponseBody
     public BonPour ModifierBonPour(@RequestBody BonPour b) {
@@ -50,13 +46,13 @@ public class BonPourController {
     }
 
     @DeleteMapping("SupprimerBonPourById/{id}")
-    public void SupprimerBonPourById(@PathVariable("id") String identifiantBE) {
-        bonPourService.deleteBonPourById(identifiantBE);
+    public void SupprimerBonPourById(@PathVariable("id") String identifiantBP) {
+        bonPourService.deleteBonPourById(identifiantBP);
     }
 
     @GetMapping("RecupererBonPourById/{id}")
-    public BonPour RecupererBonPourById(@PathVariable("id") String identifiantBE) {
-        return bonPourService.getBonPourById(identifiantBE);
+    public BonPour RecupererBonPourById(@PathVariable("id") String identifiantBP) {
+        return bonPourService.getBonPourById(identifiantBP);
     }
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
