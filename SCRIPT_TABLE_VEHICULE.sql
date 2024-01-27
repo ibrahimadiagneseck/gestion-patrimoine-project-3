@@ -132,6 +132,17 @@ CREATE TABLE prestataires_secteur (
     CONSTRAINT FK_prestataires_secteur_secteur_activite FOREIGN KEY (code_secteur_activite) REFERENCES secteur_activite(code_secteur_activite)
 );
 
+
+CREATE TABLE sections (
+    code_section VARCHAR(3),
+    libelle_section VARCHAR(100),
+    -- code_unite_douaniere VARCHAR(3),
+    PRIMARY KEY (code_section)
+    -- CONSTRAINT FK_section_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere)
+);
+
+
+
 CREATE TABLE unite_douaniere (
     code_unite_douaniere VARCHAR(3),
     nom_unite_douaniere VARCHAR(255),
@@ -145,13 +156,14 @@ CREATE TABLE unite_douaniere (
 );
 
 
-CREATE TABLE sections (
-    code_section VARCHAR(3),
-    libelle_section VARCHAR(100),
+CREATE TABLE unite_douaniere_sections (
     code_unite_douaniere VARCHAR(3),
-    PRIMARY KEY (code_section),
-    CONSTRAINT FK_section_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere)
+    code_section VARCHAR(3),
+    PRIMARY KEY (code_unite_douaniere, code_section),
+    CONSTRAINT FK_unite_douaniere_sections_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere),
+    CONSTRAINT FK_unite_douaniere_sections_sections FOREIGN KEY (code_section) REFERENCES sections(code_section)
 );
+
 
 CREATE TABLE type_objet (
     code_type_objet VARCHAR(5),
@@ -259,6 +271,107 @@ CREATE TABLE vehicule (
 );
 
 
+------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE TABLE  bon_pour  (
+    identifiant_b_p  VARCHAR(25), 
+    description_b_p  VARCHAR(100), 
+    numero_courriel_origine INT,
+    date_courriel_origine DATE,
+    etat_b_p  VARCHAR(10),
+    object_courriel_origine VARCHAR(255),
+    numero_arrive_d_l_f INT,
+    date_arrive_d_l_f DATE,
+    numero_arrive_b_l_m INT,
+    date_arrive_b_l_m DATE,
+    numero_arrive_section INT,
+    date_arrive_section DATE,
+    code_unite_douaniere VARCHAR(3),
+    observation_b_p  VARCHAR(255), 
+    code_section VARCHAR(3),
+    date_enregistrement  Timestamp,
+    matricule_agent  VARCHAR(7),
+    code_corps_agent VARCHAR(3),
+    PRIMARY KEY (identifiant_b_p),
+    CONSTRAINT FK_bon_pour_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere),
+    CONSTRAINT FK_bon_de_sortie_sections FOREIGN KEY (code_section) REFERENCES sections(code_section),
+    CONSTRAINT FK_bon_de_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+    
+);
+
+
+
+CREATE TABLE  article_bon_pour  (
+    identifiant_b_p VARCHAR(25), 
+    code_article_bon_pour VARCHAR(25),
+    libelle_article_bon_pour VARCHAR(100), 
+    quantite_demandee INT,
+    code_type_objet VARCHAR(5),
+    matricule_agent  VARCHAR(7),
+    code_corps_agent VARCHAR(3),
+    PRIMARY KEY (identifiant_b_p, code_article_bon_pour),
+    CONSTRAINT FK_article_bon_pour_bon_pour FOREIGN KEY (identifiant_b_p) REFERENCES bon_pour(identifiant_b_p),
+    CONSTRAINT FK_article_bon_pour_type_objet FOREIGN KEY (code_type_objet) REFERENCES type_objet(code_type_objet),   
+    CONSTRAINT FK_article_bon_pour_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+);
+
+
+
+CREATE TABLE  bon_de_sortie  (
+    identifiant_b_s  VARCHAR(25), -- exemple : BSSG202311121243214 (SG+heure en timestamp)
+    numero_b_s  VARCHAR(100), 
+    description_b_s VARCHAR(255),
+    date_b_s DATE,
+    observation_b_s VARCHAR(255),
+    code_unite_douaniere VARCHAR(3),
+    code_section VARCHAR(3),
+    date_enregistrement  Timestamp,
+    identifiant_b_p VARCHAR(25), 
+    code_article_bon_pour VARCHAR(25),
+    matricule_agent  VARCHAR(7),
+    code_corps_agent VARCHAR(3),
+    PRIMARY KEY (identifiant_b_s),
+    CONSTRAINT FK_bon_de_sortie_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere),
+    CONSTRAINT FK_bon_de_sortie_article_bon_pour FOREIGN KEY (identifiant_b_p, code_article_bon_pour) REFERENCES article_bon_pour(identifiant_b_p, code_article_bon_pour),
+    CONSTRAINT FK_bon_de_sortie_sections FOREIGN KEY (code_section) REFERENCES sections(code_section),
+    CONSTRAINT FK_bon_de_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+);
+
+
+CREATE TABLE  article_bon_sortie  (
+    identifiant_b_s VARCHAR(25), 
+    code_article_bon_sortie VARCHAR(25),
+    libelle_article_bon_sortie VARCHAR(100), 
+    quantite_accordee INT,
+    date_article_bon_sortie DATE,
+    identifiant_b_e VARCHAR(25), 
+    code_article_bon_entree VARCHAR(25),
+    matricule_agent  VARCHAR(7),
+    code_corps_agent VARCHAR(3),
+    PRIMARY KEY (identifiant_b_s, code_article_bon_sortie),
+    CONSTRAINT FK_article_bon_sortie_bon_de_sortie FOREIGN KEY (identifiant_b_s) REFERENCES bon_de_sortie(identifiant_b_s),
+    CONSTRAINT FK_article_bon_sortie_article_bon_entree FOREIGN KEY (identifiant_b_e, code_article_bon_entree) REFERENCES article_bon_entree(identifiant_b_e, code_article_bon_entree),
+    CONSTRAINT FK_article_bon_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+);
+
+
+CREATE TABLE  dotation_vehicule (
+    numero_serie VARCHAR(30),
+    date_dotation TIMESTAMP,
+    identifiant_b_s VARCHAR(25), 
+    code_article_bon_sortie VARCHAR(25),
+    matricule_agent  VARCHAR(7),
+    code_corps_agent VARCHAR(3),
+    PRIMARY KEY (numero_serie, date_dotation),
+    CONSTRAINT FK_dotation_vehicule_vehicule FOREIGN KEY (numero_serie) REFERENCES vehicule(numero_serie),
+    CONSTRAINT FK_dotation_vehicule_article_bon_sortie FOREIGN KEY (identifiant_b_s, code_article_bon_sortie) REFERENCES article_bon_sortie(identifiant_b_s, code_article_bon_sortie),
+    CONSTRAINT FK_dotation_vehicule FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+);
+
+
 
 
 ----------------------------------------------------------------------------------------------------
@@ -296,17 +409,27 @@ VALUES ('BUR', 'BUREAU CENTRAL'),
        ('BRI', 'BRIGADE MOBILE');
 
 
+INSERT INTO sections (code_section, libelle_section)
+VALUES 
+    ('SA', 'SECTION ARMEMENT'),
+    ('SM', 'SECTION MATERIEL'),
+    ('SG', 'SECTION GARAGE');
+
+
 INSERT INTO unite_douaniere (code_unite_douaniere, nom_unite_douaniere, effectif_unite_douaniere, nombre_arme, nombre_automobile, nombre_materiel, code_type_unite_douaniere)
 VALUES 
     ('06K', 'BUREAU DE LA LOGISTIQUE ET DE LA MAINTENANCE', 10, 3, 5, 20, 'BUR'),
     ('06Z', 'BUREAU DE LA PROGRAMMATION ET DES FINANCES', 10, 3, 5, 20, 'BUR');
 
 
-INSERT INTO sections (code_section, libelle_section, code_unite_douaniere)
+INSERT INTO unite_douaniere_sections (code_unite_douaniere, code_section)
 VALUES 
-    ('SA', 'SECTION ARMEMENT', '06K'),
-    ('SM', 'SECTION MATERIEL', '06K'),
-    ('SG', 'SECTION GARAGE', '06K');
+    ('06K', 'SA'),
+    ('06K', 'SM'),
+    ('06K', 'SG'),
+    ('06Z', 'SA'),
+    ('06Z', 'SM'),
+    ('06Z', 'SG');
 
 
 INSERT INTO type_objet (code_type_objet, libelle_type_objet, code_section)
@@ -688,11 +811,47 @@ VALUES
     ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'modele 3', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW', '06K');
 
 
+INSERT INTO bon_pour (identifiant_b_p, description_b_p, numero_courriel_origine, date_courriel_origine, etat_b_p, object_courriel_origine, numero_arrive_d_l_f, date_arrive_d_l_f, numero_arrive_b_l_m, date_arrive_b_l_m, numero_arrive_section, date_arrive_section, code_unite_douaniere, observation_b_p, code_section, date_enregistrement, matricule_agent, code_corps_agent) 
+VALUES 
+    ('BPSG202311121243214', 'Description 1', 123, '2024-01-24', 'Etat 1', 'Objet 1', 456, '2024-01-25', 789, '2024-01-26', 101, '2024-01-27', '06Z', 'Observation 1', 'SG', CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
+    ('BPSG202311121243215', 'Description 2', 124, '2024-01-25', 'Etat 2', 'Objet 2', 457, '2024-01-26', 790, '2024-01-27', 102, '2024-01-28', '06Z', 'Observation 2', 'SG', CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    ('BPSG202311121243216', 'Description 3', 125, '2024-01-26', 'Etat 3', 'Objet 3', 458, '2024-01-27', 791, '2024-01-28', 103, '2024-01-29', '06K', 'Observation 3', 'SG', CURRENT_TIMESTAMP, 'MAT003', 'CP3');
+
+
+INSERT INTO article_bon_pour (identifiant_b_p, code_article_bon_pour, libelle_article_bon_pour, quantite_demandee, code_type_objet, matricule_agent, code_corps_agent) 
+VALUES 
+    ('BPSG202311121243214', 'Article 1', 'Article 1', 10, 'VEHIC', 'MAT001', 'CP1'),
+    ('BPSG202311121243215', 'Article 2', 'Article 2', 20, 'VEHIC', 'MAT002', 'CP2'),
+    ('BPSG202311121243216', 'Article 3', 'Article 3', 30, 'VEHIC', 'MAT003', 'CP3');
+
+
+INSERT INTO bon_de_sortie (identifiant_b_s, numero_b_s, description_b_s, date_b_s, observation_b_s, code_unite_douaniere, code_section, date_enregistrement, identifiant_b_p, code_article_bon_pour, matricule_agent, code_corps_agent) 
+VALUES 
+    ('BSSG202311121243214', 'BS001', 'Description BS1', '2024-01-24', 'Observation BS1', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
+    ('BSSG202311121243215', 'BS002', 'Description BS2', '2024-01-25', 'Observation BS2', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243215', 'Article 2', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'BS003', 'Description BS3', '2024-01-26', 'Observation BS3', '06K', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243216', 'Article 3', 'MAT003', 'CP3');
+
+
+INSERT INTO article_bon_sortie (identifiant_b_s, code_article_bon_sortie, libelle_article_bon_sortie, quantite_accordee, date_article_bon_sortie, identifiant_b_e, code_article_bon_entree, matricule_agent, code_corps_agent) 
+VALUES 
+    ('BSSG202311121243214', 'Article 1', 'Article BS1', 5, '2024-01-24', 'BESA202312011043210', 'Article 1', 'MAT001', 'CP1'),
+    ('BSSG202311121243215', 'Article 2', 'Article BS2', 10, '2024-01-25', 'BESM202312021143211', 'Article 1', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'Article 3', 'Article BS3', 15, '2024-01-26', 'BESG202312031243213', 'Article 1', 'MAT003', 'CP3');
+
+
+INSERT INTO dotation_vehicule (numero_serie, date_dotation, identifiant_b_s, code_article_bon_sortie, matricule_agent, code_corps_agent)  
+VALUES 
+    ('123456', CURRENT_TIMESTAMP, 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
+    ('789012', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 2', 'MAT002', 'CP2'),
+    ('789013', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 3', 'MAT003', 'CP3');
+
+
+
 SELECT * FROM fonction_agent;
 SELECT * FROM corps_agent;
 SELECT * FROM type_unite_douaniere;
 SELECT * FROM marque_vehicule;
-SELECT * FROM etat_vehicule;
+SELECT * FROM etat_vehicule; 
 SELECT * FROM type_vehicule;
 SELECT * FROM type_energie;
 SELECT * FROM prestataires;
@@ -707,6 +866,12 @@ SELECT * FROM bon_entree;
 SELECT * FROM article_bon_entree;
 SELECT * FROM pays;
 SELECT * FROM vehicule;
+SELECT * FROM bon_pour;
+SELECT * FROM article_bon_pour;
+SELECT * FROM bon_de_sortie;
+SELECT * FROM article_bon_sortie;
+SELECT * FROM dotation_vehicule;
+
 
 
 

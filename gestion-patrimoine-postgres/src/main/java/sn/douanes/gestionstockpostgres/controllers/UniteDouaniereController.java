@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sn.douanes.gestionstockpostgres.entities.HttpResponse;
-import sn.douanes.gestionstockpostgres.entities.TypeUniteDouaniere;
-import sn.douanes.gestionstockpostgres.entities.TypeVehicule;
-import sn.douanes.gestionstockpostgres.entities.UniteDouaniere;
+import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.services.UniteDouaniereService;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -36,19 +33,19 @@ public class UniteDouaniereController {
         return uniteDouaniereService.saveUniteDouaniere(uniteDouaniere);
     }
 
-    @PostMapping("/AjouterRequestParamUniteDouaniere")
-    public ResponseEntity<UniteDouaniere> ajouterUniteDouaniere (
-            @RequestParam("codeUniteDouaniere") String codeUniteDouaniere,
-            @RequestParam("nomUniteDouaniere") String nomUniteDouaniere,
-            @RequestParam("effectifUniteDouaniere") Integer effectifUniteDouaniere,
-            @RequestParam("nombreArme") Integer nombreArme,
-            @RequestParam("nombreAutomobile") Integer nombreAutomobile,
-            @RequestParam("nombreMateriel") Integer nombreMateriel,
-            @RequestParam("codeTypeUniteDouaniere") TypeUniteDouaniere codeTypeUniteDouaniere
-    ) {
-        UniteDouaniere uniteDouaniere = uniteDouaniereService.ajouterUniteDouaniere(codeUniteDouaniere, nomUniteDouaniere, effectifUniteDouaniere, nombreArme, nombreAutomobile,  nombreMateriel, codeTypeUniteDouaniere);
-        return new ResponseEntity<>(uniteDouaniere, OK);
-    }
+//    @PostMapping("/AjouterRequestParamUniteDouaniere")
+//    public ResponseEntity<UniteDouaniere> ajouterUniteDouaniere (
+//            @RequestParam("codeUniteDouaniere") String codeUniteDouaniere,
+//            @RequestParam("nomUniteDouaniere") String nomUniteDouaniere,
+//            @RequestParam("effectifUniteDouaniere") Integer effectifUniteDouaniere,
+//            @RequestParam("nombreArme") Integer nombreArme,
+//            @RequestParam("nombreAutomobile") Integer nombreAutomobile,
+//            @RequestParam("nombreMateriel") Integer nombreMateriel,
+//            @RequestParam("codeTypeUniteDouaniere") TypeUniteDouaniere codeTypeUniteDouaniere
+//    ) {
+//        UniteDouaniere uniteDouaniere = uniteDouaniereService.ajouterUniteDouaniere(codeUniteDouaniere, nomUniteDouaniere, effectifUniteDouaniere, nombreArme, nombreAutomobile,  nombreMateriel, codeTypeUniteDouaniere);
+//        return new ResponseEntity<>(uniteDouaniere, OK);
+//    }
 
     @PutMapping("/ModifierUniteDouaniere")
     @ResponseBody
@@ -62,6 +59,10 @@ public class UniteDouaniereController {
         uniteDouaniereService.deleteUniteDouaniereById(codeUniteDouaniere);
     }
 
+    @GetMapping("RecupererUniteDouaniereById/{id}")
+    public UniteDouaniere RecupererUniteDouaniereById(@PathVariable("id") String codeUniteDouaniere) {
+        return uniteDouaniereService.getUniteDouaniereById(codeUniteDouaniere);
+    }
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
         return new ResponseEntity<>(

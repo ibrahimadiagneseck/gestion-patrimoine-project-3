@@ -1,12 +1,15 @@
 package sn.douanes.gestionstockpostgres.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sn.douanes.gestionstockpostgres.entities.BonDeSortie;
+import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.repositories.BonDeSortieRepository;
 import sn.douanes.gestionstockpostgres.services.BonDeSortieService;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Service
@@ -19,6 +22,7 @@ public class BonDeSortieServiceImpl implements BonDeSortieService {
     public BonDeSortie saveBonDeSortie(BonDeSortie b) {
         return bonDeSortieRepository.save(b);
     }
+
 
     @Override
     public BonDeSortie updateBonDeSortie(BonDeSortie b) {
@@ -36,8 +40,8 @@ public class BonDeSortieServiceImpl implements BonDeSortieService {
     }
 
     @Override
-    public BonDeSortie getBonDeSortie(String id) {
-        return bonDeSortieRepository.findById(id).get();
+    public BonDeSortie getBonDeSortieById(String id) {
+        return bonDeSortieRepository.findById(id).isPresent() ? bonDeSortieRepository.findById(id).get() : null;
     }
 
     @Override
@@ -45,6 +49,48 @@ public class BonDeSortieServiceImpl implements BonDeSortieService {
         return bonDeSortieRepository.findAll();
     }
 
+    @Override
+    public BonDeSortie ajouterBonDeSortie(
+            String identifiantBS,
+            String numeroBS,
+            String descriptionBS,
+            Date dateBS,
+            String observationBS,
+            UniteDouaniere codeUniteDouaniere,
+            Sections codeSection,
+            ArticleBonPour identifiantBP,
+            Agent matriculeAgent
+    ) {
 
+        BonDeSortie bonDeSortie = new BonDeSortie();
+
+        bonDeSortie.setDateEnregistrement(new Timestamp(System.currentTimeMillis()));
+        bonDeSortie.setIdentifiantBS(genererIdentifiantBS(codeSection.getCodeSection(), genererDateEnregistrement(new Timestamp(System.currentTimeMillis()))));
+
+        bonDeSortie.setNumeroBS(numeroBS);
+        bonDeSortie.setDescriptionBS(descriptionBS);
+        bonDeSortie.setDateBS(dateBS);
+        bonDeSortie.setObservationBS(observationBS);
+        bonDeSortie.setCodeUniteDouaniere(codeUniteDouaniere);
+        bonDeSortie.setCodeSection(codeSection);
+        bonDeSortie.setIdentifiantBP(identifiantBP);
+        bonDeSortie.setMatriculeAgent(matriculeAgent);
+
+
+        return bonDeSortieRepository.save(bonDeSortie);
+    }
+
+
+    private String genererIdentifiantBS(String codeSection, String dateEnregistrement) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        return "BS" + codeSection + dateEnregistrement;
+    }
+
+
+    private String genererDateEnregistrement(Timestamp dateEnregistrement) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        return dateEnregistrement.toLocalDateTime().format(formatter);
+    }
 
 }

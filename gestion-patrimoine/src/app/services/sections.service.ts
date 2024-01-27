@@ -36,16 +36,13 @@ export class SectionsService {
   }
 
 
-  public createBonEntreeFormData(sections: Sections): FormData {
+  // public createBonEntreeFormData(sections: Sections): FormData {
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    formData.append('codeSection', sections.codeSection);
-    formData.append('libelleSection', sections.libelleSection);
-    formData.append('codeUniteDouaniere', JSON.stringify(sections.codeUniteDouaniere));
+  //   formData.append('codeSection', sections.codeSection);
+  //   formData.append('libelleSection', sections.libelleSection);
 
-
-
-    return formData;
-  }
+  //   return formData;
+  // }
 }

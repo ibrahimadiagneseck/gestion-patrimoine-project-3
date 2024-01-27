@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -15,11 +15,11 @@ import { SectionsService } from 'src/app/services/sections.service';
 import { AgentService } from 'src/app/services/agent.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyDate } from 'src/app/model/my-date.model';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm, Validators } from '@angular/forms';
 import { BonEntree } from 'src/app/model/bon-entree.model';
 import { BonEntreeService } from 'src/app/services/bon-entree.service';
 import { SecuriteService } from 'src/app/services/securite.service';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { MyDateService } from 'src/app/services/my-date.service';
 
 @Component({
@@ -32,6 +32,12 @@ import { MyDateService } from 'src/app/services/my-date.service';
 export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDestroy {
 
   // ----------------------------------------------------------------------------------
+  // dateBLControl = new FormControl('', Validators.required);
+  // dateBLControl = new FormControl(
+  //   this.formatDate(new Date(2024, 0, 25)),
+  //   Validators.required
+  // );
+  
   modelDate1: NgbDateStruct | null = null;
   modelDate2: NgbDateStruct | null = null;
 
@@ -43,6 +49,10 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     return this.myDateService.formatterStringToNgbDateStruct(date);
   }
 
+  // formatDate(date: Date): string {
+  //   const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+  //   return date.toLocaleDateString('fr-FR', options);
+  // }
   // ----------------------------------------------------------------------------------
 
   public BonEntrees: BonEntree[] = [];
@@ -81,7 +91,11 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     public dialogRef: MatDialogRef<ReceptionVehiculeModifierBonEntreeComponent>,
     private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public bonEntree: BonEntree,
-  ) {}
+  ) {
+    // this.form = this.fb.group({
+    //   due_date: [''],
+    // });
+  }
 
   private sendNotification(type: NotificationType, message: string, titre?: string): void {
     if (message) {

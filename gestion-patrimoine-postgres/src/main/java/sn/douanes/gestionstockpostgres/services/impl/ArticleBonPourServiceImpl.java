@@ -1,12 +1,14 @@
 package sn.douanes.gestionstockpostgres.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sn.douanes.gestionstockpostgres.entities.ArticleBonPour;
+import sn.douanes.gestionstockpostgres.entities.*;
+import sn.douanes.gestionstockpostgres.entities.keys.ArticleBonPourId;
 import sn.douanes.gestionstockpostgres.repositories.ArticleBonPourRepository;
 import sn.douanes.gestionstockpostgres.services.ArticleBonPourService;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 
 @Service
@@ -31,19 +33,45 @@ public class ArticleBonPourServiceImpl implements ArticleBonPourService {
     }
 
     @Override
-    public void deleteArticleBonPourById(String id) {
-        articleBonPourRepository.deleteById(id);
+    public void deleteArticleBonPourById(String codeArticleBonPour, BonPour identifiantBP) {
+        articleBonPourRepository.deleteById(new ArticleBonPourId(codeArticleBonPour, identifiantBP));
     }
 
     @Override
-    public ArticleBonPour getArticleBonPour(String id) {
-        return articleBonPourRepository.findById(id).get();
+    public ArticleBonPour getArticleBonPourById(String codeArticleBonPour, BonPour identifiantBP) {
+        return articleBonPourRepository.findById(new ArticleBonPourId(codeArticleBonPour, identifiantBP)).isPresent() ? articleBonPourRepository.findById(new ArticleBonPourId(codeArticleBonPour, identifiantBP)).get() : null;
     }
+
+
 
     @Override
     public List<ArticleBonPour> getAllArticleBonPours() {
         return articleBonPourRepository.findAll();
     }
+
+
+    @Override
+    public ArticleBonPour ajouterArticleBonPour(
+            BonPour identifiantBP, 
+            String codeArticleBonPour, 
+            String libelleArticleBonPour, 
+            Integer quantiteDemandee, 
+            TypeObjet codeTypeObjet, 
+            Agent matriculeAgent
+    ) {
+
+        ArticleBonPour articleBonPour = new ArticleBonPour();
+
+        articleBonPour.setIdentifiantBP(identifiantBP);
+        articleBonPour.setCodeArticleBonPour(codeArticleBonPour);
+        articleBonPour.setLibelleArticleBonPour(libelleArticleBonPour);
+        articleBonPour.setQuantiteDemandee(quantiteDemandee);
+        articleBonPour.setCodeTypeObjet(codeTypeObjet);
+        articleBonPour.setMatriculeAgent(matriculeAgent);
+
+        return articleBonPourRepository.save(articleBonPour);
+    }
+
 
 
 

@@ -44,7 +44,8 @@ export class PrestataireSecteurDetailComponent implements OnInit, OnDestroy {
 
     if (this.dataSecteurActivite) {
       // console.log(this.dataSecteurActivite.secteurActivites);
-      this.secteurActivites = this.dataPrestataire.prestataire.secteurActivite;
+      // this.secteurActivites = this.dataPrestataire.prestataire.secteurActivite;
+      this.secteurActivitesSelect = this.dataPrestataire.prestataire.secteurActivite;
     }
 
     this.cdr.detectChanges();
@@ -87,7 +88,7 @@ export class PrestataireSecteurDetailComponent implements OnInit, OnDestroy {
     const subscription = this.secteurActiviteService.listeSecteurActivites().subscribe({
       next: (response: SecteurActivite[]) => {
         this.secteurActivites = response;
-        console.log(this.secteurActivites);
+        // console.log(this.secteurActivites);
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -181,7 +182,7 @@ export class PrestataireSecteurDetailComponent implements OnInit, OnDestroy {
         next: (response: Prestataires) => {
           console.log(response);
           this.popupFermer();
-          this.sendNotification(NotificationType.SUCCESS, `Modification réussie de ${response.ninea}`);
+          this.sendNotification(NotificationType.SUCCESS, `Modification réussie du prestataire`);
         },
         error: (errorResponse: HttpErrorResponse) => {
 

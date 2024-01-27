@@ -97,15 +97,26 @@ public class PrestatairesController {
         // return ResponseEntity.ok("Utilisateur ajouté avec succès.");
 
 
+//        try {
+//            // Enregistrer l'entité Prestataires avec ses associations
+//            Prestataires savedPrestataires = prestatairesService.ajouterPrestataires(
+//                    prestataires.getNinea(),
+//                    prestataires.getRaisonSociale(),
+//                    prestataires.getNumeroTelephone(),
+//                    prestataires.getAdresseEmail(),
+//                    prestataires.getAdresse(),
+//                    prestataires.getSecteurActivite());
+//
+//            // Retourner l'entité Prestataires avec le statut 201 Created
+//            return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
+//        } catch (PrestatairesExistException e) {
+//            // Capturer l'exception PrestatairesExistException
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage() + " " + prestataires.getNinea());
+//        }
+
         try {
             // Enregistrer l'entité Prestataires avec ses associations
-            Prestataires savedPrestataires = prestatairesService.ajouterPrestataires(
-                    prestataires.getNinea(),
-                    prestataires.getRaisonSociale(),
-                    prestataires.getNumeroTelephone(),
-                    prestataires.getAdresseEmail(),
-                    prestataires.getAdresse(),
-                    prestataires.getSecteurActivite());
+            Prestataires savedPrestataires = prestatairesService.savePrestataires(prestataires);
 
             // Retourner l'entité Prestataires avec le statut 201 Created
             return new ResponseEntity<>(savedPrestataires, HttpStatus.CREATED);
@@ -113,7 +124,6 @@ public class PrestatairesController {
             // Capturer l'exception PrestatairesExistException
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage() + " " + prestataires.getNinea());
         }
-
     }
 
 
@@ -145,7 +155,8 @@ public class PrestatairesController {
     public ResponseEntity<HttpResponse> SupprimerPrestatairesById(@PathVariable("ninea") String ninea) {
 
         prestatairesService.deletePrestatairesById(ninea);
-        return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY + ninea);
+        // return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY + ninea);
+        return response(OK, PRESTATAIRES_DELETED_SUCCESSFULLY);
     }
 
 

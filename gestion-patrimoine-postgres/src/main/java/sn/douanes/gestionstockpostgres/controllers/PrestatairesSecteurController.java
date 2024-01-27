@@ -37,14 +37,14 @@ public class PrestatairesSecteurController {
         return prestatairesSecteurService.savePrestatairesSecteur(prestatairesSecteur);
     }
 
-    @PostMapping("/AjouterRequestParamPrestatairesSecteur")
-    public ResponseEntity<PrestatairesSecteur> ajouterPrestatairesSecteur (
-            @RequestParam("ninea") Prestataires ninea,
-            @RequestParam("codeSecteurActivite") SecteurActivite codeSecteurActivite
-    ) {
-        PrestatairesSecteur prestatairesSecteur = prestatairesSecteurService.ajouterPrestatairesSecteur(ninea, codeSecteurActivite);
-        return new ResponseEntity<>(prestatairesSecteur, OK);
-    }
+//    @PostMapping("/AjouterRequestParamPrestatairesSecteur")
+//    public ResponseEntity<PrestatairesSecteur> ajouterPrestatairesSecteur (
+//            @RequestParam("ninea") Prestataires ninea,
+//            @RequestParam("codeSecteurActivite") SecteurActivite codeSecteurActivite
+//    ) {
+//        PrestatairesSecteur prestatairesSecteur = prestatairesSecteurService.ajouterPrestatairesSecteur(ninea, codeSecteurActivite);
+//        return new ResponseEntity<>(prestatairesSecteur, OK);
+//    }
 
 
     @PutMapping("/ModifierPrestatairesSecteur")

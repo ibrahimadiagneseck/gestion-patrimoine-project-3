@@ -5,18 +5,13 @@ export class Sections {
 
   public codeSection: string;
   public libelleSection: string;
-  public codeUniteDouaniere: UniteDouaniere;
- ;
-
 
   constructor(
     codeSection = '',
-    libelleSection = '',
-    codeUniteDouaniere = new UniteDouaniere()
+    libelleSection = ''
   ) {
     this.codeSection = codeSection;
     this.libelleSection = libelleSection;
-    this.codeUniteDouaniere = codeUniteDouaniere;
   }
 
 }

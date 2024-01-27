@@ -26,8 +26,15 @@ public class PrestatairesServiceImpl implements PrestatairesService {
     BordereauLivraisonRepository bordereauLivraisonRepository;
 
     @Override
-    public Prestataires savePrestataires(Prestataires p) {
-        return prestatairesRepository.save(p);
+    public Prestataires savePrestataires(Prestataires p) throws PrestatairesExistException {
+        Prestataires prestataires = getPrestatairesById(p.getNinea());
+
+        if(prestataires != null) {
+            throw new PrestatairesExistException(PRESTATAIRES_ALREADY_EXISTS);
+        } else {
+            return prestatairesRepository.save(p);
+        }
+
     }
 
     @Override
@@ -42,7 +49,6 @@ public class PrestatairesServiceImpl implements PrestatairesService {
 
     @Override
     public void deletePrestatairesById(String id) {
-
         // bordereauLivraisonRepository.existsByNinea(ninea)
         Prestataires prestataires = getPrestatairesById(id);
         List<BordereauLivraison> bordereaux = bordereauLivraisonRepository.findAllByNinea(prestataires);

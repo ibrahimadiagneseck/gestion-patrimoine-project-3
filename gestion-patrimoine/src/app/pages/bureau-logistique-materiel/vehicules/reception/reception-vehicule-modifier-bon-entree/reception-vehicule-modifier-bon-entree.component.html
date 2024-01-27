@@ -28,7 +28,17 @@
                         <label for="dateBL" class="form-label fw-bold">Date bordereau</label>
                         <input type="text" name="dateBL" id="dateBL" autocomplete="off" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required [(ngModel)]="modelDate1" [value]="formatterNgbDateStructToString(modelDate1)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                     </div>
-                    
+
+                    <!-- <div class="col-3 mx-auto form-group">
+                        <label for="dateBL" class="form-label fw-bold">Date bordereau</label>
+                        <input type="text" name="dateBL" id="dateBL" formControlName="due_date" autocomplete="off" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required [(ngModel)]="modelDate1" [value]="formatterNgbDateStructToString(modelDate1)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
+                    </div> -->
+
+                    <!-- <div class="col-3 mx-auto form-group">
+                        <label for="dateBL" class="form-label fw-bold">Date bordereau</label>
+                        <input type="text" name="dateBL" id="dateBL" [formControl]="dateBLControl" autocomplete="off" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required [(ngModel)]="modelDate1" [value]="formatterNgbDateStructToString(modelDate1)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
+                    </div>
+                     -->
             
                     <div class="col-3 mx-auto form-group">
                         <label for="lieuDeLivraison" class="form-label fw-bold">Lieu de livraison</label>
@@ -137,6 +147,11 @@
                         <label for="dateBonEntree" class="form-label fw-bold">Date bon d'entrée</label>
                         <input type="text" name="dateBonEntree" id="dateBonEntree" autocomplete="off" ngbDatepicker #dp2="ngbDatepicker" (click)="dp2.toggle()" required [(ngModel)]="modelDate2" [value]="formatterNgbDateStructToString(modelDate2)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                     </div>
+
+                    <!-- <div class="col-3 mx-auto form-group">
+                        <label for="dateBonEntree" class="form-label fw-bold">Date bon d'entrée</label>
+                        <input type="text" name="dateBonEntree" id="dateBonEntree" formControlName="due_date" autocomplete="off" ngbDatepicker #dp2="ngbDatepicker" (click)="dp2.toggle()" required [(ngModel)]="modelDate2" [value]="formatterNgbDateStructToString(modelDate2)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
+                    </div> -->
             
                     <div class="col-3 mx-auto form-group">
                         <label for="libelleBonEntree" class="form-label fw-bold">Libelle bon d'entrée</label>

@@ -1,14 +1,13 @@
 package sn.douanes.gestionstockpostgres.controllers;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sn.douanes.gestionstockpostgres.entities.ArticleBonEntree;
-import sn.douanes.gestionstockpostgres.entities.ArticleBonPour;
-import sn.douanes.gestionstockpostgres.entities.HttpResponse;
+import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.services.ArticleBonPourService;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -22,7 +21,7 @@ public class ArticleBonPourController {
     @Autowired
     ArticleBonPourService articleBonPourService;
 
-
+    
     @GetMapping("/ArticleBonPours")
     public ResponseEntity<List<ArticleBonPour>> getAllArticleBonPours() {
         List<ArticleBonPour> articleBonPour = articleBonPourService.getAllArticleBonPours();
@@ -31,9 +30,10 @@ public class ArticleBonPourController {
 
     @PostMapping("/AjouterArticleBonPour")
     @ResponseBody
-    public ArticleBonPour AjouterArticleBonPour(@RequestBody ArticleBonPour a) {
-        return articleBonPourService.saveArticleBonPour(a);
+    public ArticleBonPour AjouterArticleBonPour(@RequestBody ArticleBonPour articleBonPour) {
+        return articleBonPourService.ajouterArticleBonPour(articleBonPour.getIdentifiantBP(), articleBonPour.getCodeArticleBonPour(), articleBonPour.getLibelleArticleBonPour(), articleBonPour.getQuantiteDemandee(), articleBonPour.getCodeTypeObjet(), articleBonPour.getMatriculeAgent());
     }
+
 
     @PutMapping("/ModifierArticleBonPour")
     @ResponseBody
@@ -41,17 +41,20 @@ public class ArticleBonPourController {
         return articleBonPourService.updateArticleBonPour(a);
     }
 
-    @DeleteMapping("SupprimerArticleBonPourById/{id}")
-    public void SupprimerArticleBonPourById(@PathVariable("id") String  numeroBonPour  ) {
-        articleBonPourService.deleteArticleBonPourById(numeroBonPour);
+    @DeleteMapping("SupprimerArticleBonPourById/{codeArticleBonPour}/{identifiantBP}")
+    public void SupprimerArticleBonPour(
+            @PathVariable("codeArticleBonPour") String codeArticleBonPour,
+            @PathVariable("identifiantBP") BonPour identifiantBP
+    ) {
+        articleBonPourService.deleteArticleBonPourById(codeArticleBonPour, identifiantBP);
     }
 
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
         return new ResponseEntity<>(
-                new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase(), message), httpStatus
+                new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase(), message),
+                httpStatus
         );
     }
-
 
 }

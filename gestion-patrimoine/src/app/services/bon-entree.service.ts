@@ -83,8 +83,8 @@ export class BonEntreeService {
     return this.httpClient.put<BonEntree>(`${this.urlServeur}/ModifierBonEntree`, formData);
   }
 
-  public supprimerBonEntreeById(numeroSerie: string): Observable<CustomHttpRespone> {
-    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerBonEntreeById/${numeroSerie}`);
+  public supprimerBonEntreeById(identifiantBE: string): Observable<CustomHttpRespone> {
+    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerBonEntreeById/${identifiantBE}`);
   }
 
   public recupererBonEntreeById(idIdentifiantBE: string): Observable<BonEntree> {
@@ -92,20 +92,20 @@ export class BonEntreeService {
   }
 
 
-  public createBonEntreeFormData(bonEntree: BonEntree): FormData {
+//   public createBonEntreeFormData(bonEntree: BonEntree): FormData {
 
-    const formData = new FormData();
+//     const formData = new FormData();
 
-    const formattedDate = this.formatterMyDate(bonEntree.dateBonEntree);
+//     const formattedDate = this.formatterMyDate(bonEntree.dateBonEntree);
 
-    formData.append('numeroBE', bonEntree.numeroBE);
-    formData.append('libelleBonEntree', bonEntree.libelleBonEntree);
-    formData.append('dateBonEntree', formattedDate);
-    formData.append('observationBonEntree', bonEntree.observationBonEntree);
-    formData.append('identifiantBL', bonEntree.identifiantBL.identifiantBL);
+//     formData.append('numeroBE', bonEntree.numeroBE);
+//     formData.append('libelleBonEntree', bonEntree.libelleBonEntree);
+//     formData.append('dateBonEntree', formattedDate);
+//     formData.append('observationBonEntree', bonEntree.observationBonEntree);
+//     formData.append('identifiantBL', bonEntree.identifiantBL.identifiantBL);
 
-    return formData;
-  }
+//     return formData;
+//   }
 
 public formatterMyDate(myDate: MyDate): string  {
   if (!myDate || !myDate.year || !myDate.month || !myDate.day) {

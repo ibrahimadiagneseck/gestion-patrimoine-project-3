@@ -28,6 +28,10 @@ import { ReceptionVehiculeAjouterArticleComponent } from './vehicules/reception/
 import { ConsultationReceptionVehiculeListeComponent } from './vehicules/consultation/consultation-reception-vehicule-liste/consultation-reception-vehicule-liste.component';
 import { ConsultationReceptionVehiculeDetailComponent } from './vehicules/consultation/consultation-reception-vehicule-detail/consultation-reception-vehicule-detail.component';
 import { ReceptionVehiculeModifierBonEntreeComponent } from './vehicules/reception/reception-vehicule-modifier-bon-entree/reception-vehicule-modifier-bon-entree.component';
+import { DotationVehiculeListeComponent } from './vehicules/dotation/dotation-vehicule-liste/dotation-vehicule-liste.component';
+import { DotationVehiculeAjouterComponent } from './vehicules/dotation/dotation-vehicule-ajouter/dotation-vehicule-ajouter.component';
+import { DotationVehiculeDetailComponent } from './vehicules/dotation/dotation-vehicule-detail/dotation-vehicule-detail.component';
+import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/dotation-vehicule-ajouter-bon-sortie/dotation-vehicule-ajouter-bon-sortie.component';
 
 
 @NgModule({
@@ -43,7 +47,12 @@ import { ReceptionVehiculeModifierBonEntreeComponent } from './vehicules/recepti
     ConsultationVehiculeListeComponent,
     ConsultationVehiculeDetailComponent,
     ConsultationReceptionVehiculeListeComponent,
-    ConsultationReceptionVehiculeDetailComponent
+    ConsultationReceptionVehiculeDetailComponent,
+
+    DotationVehiculeListeComponent,
+    DotationVehiculeAjouterComponent,
+    DotationVehiculeDetailComponent,
+    DotationVehiculeAjouterBonSortieComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import java.util.Set;
 
 public interface PrestatairesService {
 
-    Prestataires savePrestataires(Prestataires p);
+    Prestataires savePrestataires(Prestataires p) throws PrestatairesExistException;
     Prestataires updatePrestataires(Prestataires p) throws PrestatairesNotFoundException;
     void deletePrestataires(Prestataires p);
     void deletePrestatairesById(String id);

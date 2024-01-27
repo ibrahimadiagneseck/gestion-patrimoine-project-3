@@ -28,12 +28,12 @@ export class SecteurActiviteService {
     return this.httpClient.post<SecteurActivite>(`${this.urlServeur}/AjouterSecteurActivite`, secteurActivite);
   }
 
-  public ajouterSecteurActiviteRequestParam(formData: FormData): Observable<SecteurActivite> {
-    return this.httpClient.post<SecteurActivite>(`${this.urlServeur}/AjouterRequestParamSecteurActivite`, formData);
-  }
+  // public ajouterSecteurActiviteRequestParam(formData: FormData): Observable<SecteurActivite> {
+  //   return this.httpClient.post<SecteurActivite>(`${this.urlServeur}/AjouterRequestParamSecteurActivite`, formData);
+  // }
 
-  public modifierSecteurActivite(formData: FormData): Observable<SecteurActivite> {
-    return this.httpClient.put<SecteurActivite>(`${this.urlServeur}/ModifierSecteurActivite`, formData);
+  public modifierSecteurActivite(secteurActivite: SecteurActivite): Observable<SecteurActivite> {
+    return this.httpClient.put<SecteurActivite>(`${this.urlServeur}/ModifierSecteurActivite`, secteurActivite);
   }
 
   public supprimerSecteurActiviteById(identifiantBL: string): Observable<CustomHttpRespone> {
@@ -41,15 +41,15 @@ export class SecteurActiviteService {
   }
 
 
-  public createSecteurActiviteFormData(secteurActivite: SecteurActivite): FormData {
+  // public createSecteurActiviteFormData(secteurActivite: SecteurActivite): FormData {
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    formData.append('codeSecteurActivite', secteurActivite.codeSecteurActivite);
-    formData.append('libelleSecteurActivite', secteurActivite.libelleSecteurActivite);
+  //   formData.append('codeSecteurActivite', secteurActivite.codeSecteurActivite);
+  //   formData.append('libelleSecteurActivite', secteurActivite.libelleSecteurActivite);
     
-    return formData;
-  }
+  //   return formData;
+  // }
 
 
   

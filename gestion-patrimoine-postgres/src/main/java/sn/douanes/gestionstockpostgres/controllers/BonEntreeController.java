@@ -40,19 +40,19 @@ public class BonEntreeController {
     }
 
 
-    @PostMapping("/AjouterRequestParamBonEntree")
-    public ResponseEntity<BonEntree> ajouterBonEntree (
-        @RequestParam("numeroBE") String numeroBE,
-        @RequestParam("libelleBonEntree") String libelleBonEntree,
-        @RequestParam("dateBonEntree") String dateBonEntree,
-        @RequestParam("observationBonEntree") String observationBonEntree,
-        @RequestParam("identifiantBL") String identifiantBL
-    ) {
-        BordereauLivraison bordereauLivraison = bordereauLivraisonService.getBordereauLivraisonById(identifiantBL);
-
-        BonEntree bonEntree = bonEntreeService.ajouterBonEntree(numeroBE,  libelleBonEntree,  Date.valueOf(dateBonEntree), observationBonEntree, bordereauLivraison);
-        return new ResponseEntity<>(bonEntree, OK);
-    }
+//    @PostMapping("/AjouterRequestParamBonEntree")
+//    public ResponseEntity<BonEntree> ajouterBonEntree (
+//        @RequestParam("numeroBE") String numeroBE,
+//        @RequestParam("libelleBonEntree") String libelleBonEntree,
+//        @RequestParam("dateBonEntree") String dateBonEntree,
+//        @RequestParam("observationBonEntree") String observationBonEntree,
+//        @RequestParam("identifiantBL") String identifiantBL
+//    ) {
+//        BordereauLivraison bordereauLivraison = bordereauLivraisonService.getBordereauLivraisonById(identifiantBL);
+//
+//        BonEntree bonEntree = bonEntreeService.ajouterBonEntree(numeroBE,  libelleBonEntree,  Date.valueOf(dateBonEntree), observationBonEntree, bordereauLivraison);
+//        return new ResponseEntity<>(bonEntree, OK);
+//    }
 
 
     @PutMapping("/ModifierBonEntree")

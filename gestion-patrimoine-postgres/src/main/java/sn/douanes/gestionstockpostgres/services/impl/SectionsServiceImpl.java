@@ -50,15 +50,13 @@ public class SectionsServiceImpl implements SectionsService {
     @Override
     public Sections ajouterSections(
             String codeSection,
-            String libelleSection,
-            UniteDouaniere codeUniteDouaniere
+            String libelleSection
     ) {
 
         Sections sections = new Sections();
 
         sections.setCodeSection(codeSection);
         sections.setLibelleSection(libelleSection);
-        sections.setCodeUniteDouaniere(codeUniteDouaniere);
 
         return sectionsRepository.save(sections);
     }
