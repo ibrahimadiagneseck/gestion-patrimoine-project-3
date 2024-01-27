@@ -23,7 +23,6 @@ public class BonDeSortieController {
     @Autowired
     BonDeSortieService bonDeSortieService;
 
-
     @GetMapping("/BonDeSorties")
     public ResponseEntity<List<BonDeSortie>> getAllBonDeSorties() {
         List<BonDeSortie> BonDeSortie = bonDeSortieService.getAllBonDeSorties();

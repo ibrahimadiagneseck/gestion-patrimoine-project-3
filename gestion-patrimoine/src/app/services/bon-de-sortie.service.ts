@@ -11,7 +11,7 @@ import { BonDeSortie } from '../model/bonDeSortie.model';
 @Injectable({
   providedIn: 'root',
 })
-export class BonEntreeService {
+export class BonDeSortieService {
 
   private urlServeur = environment.apiUrl;
 

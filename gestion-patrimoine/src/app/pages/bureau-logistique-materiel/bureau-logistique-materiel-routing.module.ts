@@ -6,6 +6,9 @@ import { ConsultationVehiculeListeComponent } from './vehicules/consultation/con
 import { ReceptionVehiculeDetailComponent } from './vehicules/reception/reception-vehicule-detail/reception-vehicule-detail.component';
 import { ConsultationReceptionVehiculeListeComponent } from './vehicules/consultation/consultation-reception-vehicule-liste/consultation-reception-vehicule-liste.component';
 import { ConsultationReceptionVehiculeDetailComponent } from './vehicules/consultation/consultation-reception-vehicule-detail/consultation-reception-vehicule-detail.component';
+import { DotationVehiculeListeComponent } from './vehicules/dotation/dotation-vehicule-liste/dotation-vehicule-liste.component';
+import { DotationVehiculeDetailComponent } from './vehicules/dotation/dotation-vehicule-detail/dotation-vehicule-detail.component';
+import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/dotation-vehicule-ajouter-bon-sortie/dotation-vehicule-ajouter-bon-sortie.component';
 
 const routes: Routes = [
   
@@ -26,6 +29,18 @@ const routes: Routes = [
   }},
 
   { path: 'consultation-reception-vehicule-detail/:idIdentifiantBE', component: ConsultationReceptionVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
+    roles: ['USER']
+  }},
+
+  { path: 'dotation-vehicule', component: DotationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
+    roles: ['USER']
+  }},
+
+  { path: 'dotation-vehicule-detail/:codeUniteDouaniere', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
+    roles: ['USER']
+  }},
+
+  { path: 'dotation-vehicule-ajouter-bon-sortie', component: DotationVehiculeAjouterBonSortieComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
 
