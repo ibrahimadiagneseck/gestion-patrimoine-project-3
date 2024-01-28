@@ -211,14 +211,14 @@ export class AjouterBonPourListeDetailComponent implements OnInit, OnDestroy {
   }
   
 
-  popupDetail(bonPour: BonPour): void {
+  popupDetail(articleBonPour: ArticleBonPour): void {
     const dialogRef = this.matDialog.open(
       AjouterBonPourDetailComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',
         exitAnimationDuration: '100ms',
-        data: bonPour
+        data: articleBonPour
       }
     );
 

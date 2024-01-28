@@ -42,6 +42,7 @@ import { AjouterBonPourListeComponent } from './pages/bon-pour/ajouter/ajouter-b
 import { ConsultationBonPourListeComponent } from './pages/bon-pour/consultation/consultation-bon-pour-liste/consultation-bon-pour-liste.component';
 import { AjouterBonPourAjouterComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter/ajouter-bon-pour-ajouter.component';
 import { AjouterBonPourListeDetailComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste-detail/ajouter-bon-pour-liste-detail.component';
+import { AjouterBonPourAjouterArticleComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter-article/ajouter-bon-pour-ajouter-article.component';
 
 
 
@@ -99,6 +100,7 @@ export const MY_DATE_FORMATS = {
     AjouterBonPourListeComponent,
     AjouterBonPourAjouterComponent,
     AjouterBonPourListeDetailComponent,
+    AjouterBonPourAjouterArticleComponent,
 
     ConsultationBonPourListeComponent,
     
