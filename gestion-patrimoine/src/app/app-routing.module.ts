@@ -32,7 +32,7 @@ const routes: Routes = [
     roles: ['USER']
   }},
 
-  { path: 'consultation-bon-pour-liste/:identifiantBP', component: ConsultationBonPourListeComponent, canActivate: [AuthKeyClockGuard], data: {
+  { path: 'consultation-bon-pour', component: ConsultationBonPourListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
 
