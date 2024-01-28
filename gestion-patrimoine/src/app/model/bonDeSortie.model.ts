@@ -4,6 +4,7 @@ import { MyDate } from "./my-date.model";
 import { UniteDouaniere } from "./unite-douaniere.model";
 import { Sections } from "./sections.model";
 import { BonPour } from "./bon-pour.model";
+import { ArticleBonPour } from "./article-bon-pour.model";
 
 export class BonDeSortie {
 
@@ -14,7 +15,7 @@ export class BonDeSortie {
   public observationBS: string;
   public codeUniteDouaniere: UniteDouaniere;
   public codeSection: Sections;
-  public identifiantBP: BonPour;
+  public identifiantBP: ArticleBonPour;
   public matriculeAgent: Agent;
 
 
@@ -26,7 +27,7 @@ export class BonDeSortie {
     observationBS = '',
     codeUniteDouaniere = new UniteDouaniere,
     codeSection = new Sections,
-    identifiantBP = new BonPour,
+    identifiantBP = new ArticleBonPour,
     matriculeAgent = new Agent
   ) {
     this.identifiantBS = identifiantBS;

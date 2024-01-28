@@ -1,4 +1,5 @@
 <div class="container1 bg-mywhite">
+
     <nav>
         <app-entete></app-entete>
     </nav>
@@ -9,11 +10,10 @@
 
     <main class="bg-mywhite">
 
-        <div class="container bg-myprimary bg-gradient py-2 my-2"
-            style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); width: 98%;">
+        <div class="container bg-myprimary bg-gradient py-2 my-2" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); width: 98%;">
             <div class="row">
                 <div class="col-12 text-center fw-bolder fs-5">
-                    Dotation des Véhicules
+                    Réception des Véhicules
                 </div>
             </div>
         </div>
@@ -39,33 +39,32 @@
 
                     <div *ngIf="focusOnInput" style="position: absolute; background-color: #e7e7e7;">
 
-                        <ng-container
-                            *ngFor="let uniteDouaniere of uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$ | async;"
-                            style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                            <!-- {{ bonEntree | json }}  -->
-                            <ng-container
-                                *ngIf="isNumber(termeRechercheCodeUniteDouaniereNomUniteDouaniere); else nonNumeric">
-                                <ng-container *ngIf="uniteDouaniere?.codeUniteDouaniere as codeUniteDouaniere;">
-                                    <a (click)="FilterDoubleCodeUniteDouaniereNomUniteDouaniere(codeUniteDouaniere)"
+                        
+
+                        <ng-container *ngFor="let bonPour of bonPourFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine$ | async;" style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
+                            <!-- {{ bonPour | json }}  -->
+                            <ng-container *ngIf="isNumber(termeRechercheNumeroCourrielOrigineObjectCourrielOrigine); else nonNumeric">
+                                <ng-container *ngIf="bonPour?.numeroCourrielOrigine as numeroCourrielOrigine;">
+                                    <a (click)="FilterDoubleNumeroCourrielOrigineObjectCourrielOrigine(numeroCourrielOrigine.toString())"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                                        {{ codeUniteDouaniere }}
+                                        {{ numeroCourrielOrigine }}
                                     </a>
                                 </ng-container>
                             </ng-container>
                             <ng-template #nonNumeric>
-                                <ng-container *ngIf="uniteDouaniere?.nomUniteDouaniere as nomUniteDouaniere;">
-                                    <a (click)="FilterDoubleCodeUniteDouaniereNomUniteDouaniere(nomUniteDouaniere)"
+                                <ng-container *ngIf="bonPour?.objectCourrielOrigine as objectCourrielOrigine;">
+                                    <a (click)="FilterDoubleNumeroCourrielOrigineObjectCourrielOrigine(objectCourrielOrigine)"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                                        {{ nomUniteDouaniere }}
+                                        {{ objectCourrielOrigine }}
                                     </a>
                                 </ng-container>
                             </ng-template>
                         </ng-container>
 
-                        <!-- <ng-container *ngFor="let vehicle of vehiculeFilterDoubleNumeroBELibelleBonEntree$ | async;" style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                            <ng-container *ngIf="isNumber(termeRechercheNumeroBELibelleBonEntree); else nonNumeric">
+                        <!-- <ng-container *ngFor="let vehicle of vehiculeFilterDoubleNumeroBELibellebonPour$ | async;" style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
+                            <ng-container *ngIf="isNumber(termeRechercheNumeroBELibellebonPour); else nonNumeric">
                                 <ng-container *ngIf="vehicle?.numeroMatricule as matricule;">
-                                    <a (click)="FilterDoubleNumeroBELibelleBonEntree(matricule.toString())"
+                                    <a (click)="FilterDoubleNumeroBELibellebonPour(matricule.toString())"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
                                         {{ matricule }}
                                     </a>
@@ -73,7 +72,7 @@
                             </ng-container>
                             <ng-template #nonNumeric>
                                 <ng-container *ngIf="vehicle?.marque as marque;">
-                                    <a (click)="FilterDoubleNumeroBELibelleBonEntree(marque)"
+                                    <a (click)="FilterDoubleNumeroBELibellebonPour(marque)"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
                                         {{ marque }}
                                     </a>
@@ -89,9 +88,8 @@
                 </div>
 
                 <div class="col-3 d-flex justify-content-end">
-                    <img (click)="popupAjouterUniteDouaniere()" src="../../../../../assets/add.png" alt=""
-                        class="icon-button">
-                    <img src="../../../../../assets/fichier-pdf.png" alt="" class="icon-button">
+                    <img (click)="popupAjouterBonPourArticleBonPour()" src="../../../../../assets/add.png" alt="" class="icon-button">
+                    <img (click)="generatePDF()" src="../../../../../assets/fichier-pdf.png" alt="" class="icon-button">
                     <!-- <img (click)="exporter.exportTable('xlsx', {fileName:'vehicule-liste'})" src="../../../../../assets/xls.png" alt="" class="icon-button"> -->
                     <img src="../../../../../assets/xls.png" alt="" class="icon-button">
                 </div>
@@ -104,10 +102,9 @@
 
                 <!-- <table mat-table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter"> -->
                 <table mat-table [dataSource]="dataSource">
-                    <!-- Define columns and cells for IVehicule properties -->
+                        <!-- Define columns and cells for IVehicule properties -->
                     <ng-container *ngFor="let column of displayedColumns let i = index" [matColumnDef]="column">
-                        <th mat-header-cell *matHeaderCellDef class="fw-bold"
-                            [style.display]="columnsToHide.includes(column) ? 'none' : 'table-cell'">
+                        <th mat-header-cell *matHeaderCellDef class="fw-bold" [style.display]="columnsToHide.includes(column) ? 'none' : 'table-cell'">
                             {{ displayedColumnsCustom[i] }}
                         </th>
 
@@ -139,7 +136,6 @@
         </div>
 
     </main>
-
 
 
 </div>
