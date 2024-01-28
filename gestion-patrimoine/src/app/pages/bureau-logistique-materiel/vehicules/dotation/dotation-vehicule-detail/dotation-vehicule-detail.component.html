@@ -88,7 +88,7 @@
                         <div class="col-12 text-end">
                             <button type="button" class="btn btn-mybrown me-2">Désactiver</button>
 
-                            <button [routerLink]="'/dotation-vehicule-bonPour'" type="button"
+                            <button [routerLink]="'/dotation-vehicule-ajouter-bon-sortie'" type="button"
                                 class="btn btn-mysecondary fw-bold mx-2" data-bs-toggle="tooltip"
                                 title="cliquer ici pour ajouter artticle">
                                 Ajouter bon sortie
@@ -163,7 +163,8 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
 
-                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of vehicles">
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            aria-label="Select page of vehicles">
                         </mat-paginator>
 
                     </div>

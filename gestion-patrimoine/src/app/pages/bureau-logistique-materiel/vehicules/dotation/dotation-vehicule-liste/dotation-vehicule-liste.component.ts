@@ -22,11 +22,17 @@ import { DotationVehiculeAjouterComponent } from '../dotation-vehicule-ajouter/d
 })
 export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
+
+
   public uniteDouanieres: UniteDouaniere[] = [];
   public uniteDouaniere: UniteDouaniere | undefined;
 
   public typeUniteDouanieres: TypeUniteDouaniere[] = [];
   public typeUniteDouaniere: TypeUniteDouaniere | undefined;
+
+
+
+
 
   private subscriptions: Subscription[] = [];
 
