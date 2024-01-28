@@ -77,7 +77,7 @@ public class BonPourServiceImpl implements BonPourService {
         bonPour.setNumeroCourrielOrigine(numeroCourrielOrigine);
         bonPour.setDateCourrielOrigine(dateCourrielOrigine);
         bonPour.setEtatBP(etatBP);
-        bonPour.setObservationBP(objectCourrielOrigine);
+        bonPour.setObjectCourrielOrigine(objectCourrielOrigine);
         bonPour.setNumeroArriveDLF(numeroArriveDLF);
         bonPour.setDateArriveDLF(dateArriveDLF);
         bonPour.setNumeroArriveBLM(numeroArriveBLM);

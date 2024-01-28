@@ -84,7 +84,6 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
 
 
   // --------------------------------------------------------------------------
-
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId)?.click();
   }
@@ -96,7 +95,6 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
 
 
   // --------------------------------------------------------------------------
-  
   // pour executer ajouterBonEntree
   public submitBonEntreeForm(): void { 
     this.clickButton('prestataire-form')

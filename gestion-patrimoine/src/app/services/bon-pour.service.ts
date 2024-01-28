@@ -17,55 +17,55 @@ export class BonPourService {
   constructor(private httpClient: HttpClient) {}
 
   // ----------------------------------------------------------------------------
-  // RECHERCHER BONENTREE SANS DOUBLONS
-  // public searchBonEntreeListFilterDouble(term: string, listeBonEntrees: BonEntree[]): Observable<BonEntree[]> {
+  // RECHERCHER BONPOUR SANS DOUBLONS
+  public searchBonPourListFilterDouble(term: string, listeBonPours: BonPour[]): Observable<BonPour[]> {
 
-  //   if (term.length <= 1) {
-  //     return of([]);
-  //   }
+    if (term.length <= 1) {
+      return of([]);
+    }
 
-  //   // Filtrer la liste de bonEntrees en fonction du terme de recherche
-  //   const filteredBonEntrees: BonEntree[] = listeBonEntrees.filter((bonEntree) =>
-  //     bonEntree.numeroBE.toString().includes(term.toLowerCase()) || bonEntree.libelleBonEntree.toLowerCase().includes(term.toLowerCase())
-  //   );
+    // Filtrer la liste de BonPours en fonction du terme de recherche
+    const filteredBonPours: BonPour[] = listeBonPours.filter((BonPour) =>
+      BonPour.numeroCourrielOrigine.toString().includes(term.toLowerCase()) || BonPour.objectCourrielOrigine.toLowerCase().includes(term.toLowerCase())
+    );
 
-  //   // Utilisation de la méthode filter() pour éliminer les doublons
-  //   const filteredBonEntrees1: BonEntree[] = filteredBonEntrees.filter((item, index, self) =>
-  //     index === self.findIndex((t) => (
-  //         t.libelleBonEntree === item.libelleBonEntree || t.numeroBE === item.numeroBE
-  //     ))
-  //   );
+    // Utilisation de la méthode filter() pour éliminer les doublons
+    const filteredBonPours1: BonPour[] = filteredBonPours.filter((item, index, self) =>
+      index === self.findIndex((t) => (
+          t.objectCourrielOrigine === item.objectCourrielOrigine || t.numeroCourrielOrigine === item.numeroCourrielOrigine
+      ))
+    );
 
-  //   return of(filteredBonEntrees1);
-  // }
+    return of(filteredBonPours1);
+  }
 
-  // // RECHERCHER BONENTREE
-  // public searchBonEntreeList(term: string, listeBonEntrees: BonEntree[]): Observable<BonEntree[]> {
-  //   if (term.length <= 1) {
-  //     return of([]);
-  //   }
+  // RECHERCHER BonPour
+  public searchBonPourList(term: string, listeBonPours: BonPour[]): Observable<BonPour[]> {
+    if (term.length <= 1) {
+      return of([]);
+    }
 
-  //   // Filtrer la liste de BonEntree en fonction du terme de recherche
-  //   const filteredBonEntrees = listeBonEntrees.filter((bonEntree) =>
-  //     this.doesBonEntreeMatchTerm(bonEntree, term)
-  //   );
+    // Filtrer la liste de BonPour en fonction du terme de recherche
+    const filteredBonPours = listeBonPours.filter((BonPour) =>
+      this.doesBonPourMatchTerm(BonPour, term)
+    );
 
-  //   return of(filteredBonEntrees);
-  // }
+    return of(filteredBonPours);
+  }
 
-  // private doesBonEntreeMatchTerm(bonEntree: BonEntree, term: string): boolean {
-  //   // Vérifier si le terme de recherche correspond à n'importe lequel des attributs du bonEntree
-  //   const termLowerCase = term.toLowerCase();
-  //   return (
-  //     bonEntree.numeroBE.toString().includes(termLowerCase) || bonEntree.libelleBonEntree.toLowerCase().includes(termLowerCase)
-  //     // Ajoutez d'autres attributs à vérifier si nécessaire
-  //   );
-  // }
+  private doesBonPourMatchTerm(BonPour: BonPour, term: string): boolean {
+    // Vérifier si le terme de recherche correspond à n'importe lequel des attributs du BonPour
+    const termLowerCase = term.toLowerCase();
+    return (
+      BonPour.numeroCourrielOrigine.toString().includes(termLowerCase) || BonPour.objectCourrielOrigine.toLowerCase().includes(termLowerCase)
+      // Ajoutez d'autres attributs à vérifier si nécessaire
+    );
+  }
   // ----------------------------------------------------------------------------
 
 
   // ----------------------------------------------------------------------------
-  //  CRUD BONENTREE
+  //  CRUD BonPour
 
   public listeBonPours(): Observable<BonPour[]> {
     return this.httpClient.get<BonPour[]>(`${this.urlServeur}/BonPours`);
@@ -75,8 +75,8 @@ export class BonPourService {
     return this.httpClient.post<BonPour>(`${this.urlServeur}/AjouterBonPour`, bonPour);
   }
 
-  // public ajouterBonEntreeRequestParam(formData: FormData): Observable<BonPour> {
-  //   return this.httpClient.post<BonPour>(`${this.urlServeur}/AjouterRequestParamBonEntree`, formData);
+  // public ajouterBonPourRequestParam(formData: FormData): Observable<BonPour> {
+  //   return this.httpClient.post<BonPour>(`${this.urlServeur}/AjouterRequestParamBonPour`, formData);
   // }
 
   public modifierBonPour(bonPour: BonPour): Observable<BonPour> {
@@ -87,22 +87,22 @@ export class BonPourService {
     return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerBonPourById/${identifiantBP}`);
   }
 
-  public recupererBonEntreeById(identifiantBP: string): Observable<BonPour> {
-    return this.httpClient.get<BonPour>(`${this.urlServeur}/RecupererBonEntreeById/${identifiantBP}`);
+  public recupererBonPourById(identifiantBP: string): Observable<BonPour> {
+    return this.httpClient.get<BonPour>(`${this.urlServeur}/RecupererBonPourById/${identifiantBP}`);
   }
 
 
-//   public createBonEntreeFormData(bonEntree: BonEntree): FormData {
+//   public createBonPourFormData(BonPour: BonPour): FormData {
 
 //     const formData = new FormData();
 
-//     const formattedDate = this.formatterMyDate(bonEntree.dateBonEntree);
+//     const formattedDate = this.formatterMyDate(BonPour.dateBonPour);
 
-//     formData.append('numeroBE', bonEntree.numeroBE);
-//     formData.append('libelleBonEntree', bonEntree.libelleBonEntree);
-//     formData.append('dateBonEntree', formattedDate);
-//     formData.append('observationBonEntree', bonEntree.observationBonEntree);
-//     formData.append('identifiantBL', bonEntree.identifiantBL.identifiantBL);
+//     formData.append('numeroBE', BonPour.numeroBE);
+//     formData.append('libelleBonPour', BonPour.libelleBonPour);
+//     formData.append('dateBonPour', formattedDate);
+//     formData.append('observationBonPour', BonPour.observationBonPour);
+//     formData.append('identifiantBL', BonPour.identifiantBL.identifiantBL);
 
 //     return formData;
 //   }

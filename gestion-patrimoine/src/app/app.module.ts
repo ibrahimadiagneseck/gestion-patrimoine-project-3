@@ -38,6 +38,11 @@ import { PrestataireSecteurListeComponent } from './pages/prestataire/prestatair
 import { PrestataireSecteurAjouterComponent } from './pages/prestataire/prestataire-secteur-ajouter/prestataire-secteur-ajouter.component';
 import { PrestataireSecteurDetailComponent } from './pages/prestataire/prestataire-secteur-detail/prestataire-secteur-detail.component';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { AjouterBonPourListeComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste/ajouter-bon-pour-liste.component';
+import { ConsultationBonPourListeComponent } from './pages/bon-pour/consultation/consultation-bon-pour-liste/consultation-bon-pour-liste.component';
+import { AjouterBonPourAjouterComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter/ajouter-bon-pour-ajouter.component';
+import { AjouterBonPourListeDetailComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste-detail/ajouter-bon-pour-liste-detail.component';
+import { AjouterBonPourAjouterArticleComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter-article/ajouter-bon-pour-ajouter-article.component';
 
 
 
@@ -92,6 +97,13 @@ export const MY_DATE_FORMATS = {
     PrestataireSecteurAjouterComponent,
     PrestataireSecteurDetailComponent,
 
+    AjouterBonPourListeComponent,
+    AjouterBonPourAjouterComponent,
+    AjouterBonPourListeDetailComponent,
+    AjouterBonPourAjouterArticleComponent,
+
+    ConsultationBonPourListeComponent,
+    
     
   ],
   imports: [

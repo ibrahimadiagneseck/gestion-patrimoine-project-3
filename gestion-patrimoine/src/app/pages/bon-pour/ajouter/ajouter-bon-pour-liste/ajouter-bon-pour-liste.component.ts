@@ -1,32 +1,49 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { BonPour } from 'src/app/model/bon-pour.model';
 import { UniteDouaniere } from 'src/app/model/unite-douaniere.model';
+import { Sections } from 'src/app/model/sections.model';
+import { Agent } from 'src/app/model/agent.model';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { BonPourService } from 'src/app/services/bon-pour.service';
 import { UniteDouaniereService } from 'src/app/services/unite-douaniere.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TypeUniteDouaniereService } from 'src/app/services/type-unite-douaniere.service';
-import { TypeUniteDouaniere } from 'src/app/model/type-unite-douaniere.model';
+import { SectionsService } from 'src/app/services/sections.service';
+import { AgentService } from 'src/app/services/agent.service';
 import { SecuriteService } from 'src/app/services/securite.service';
-import { DotationVehiculeAjouterComponent } from '../dotation-vehicule-ajouter/dotation-vehicule-ajouter.component';
+import { MatDialog } from '@angular/material/dialog';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AjouterBonPourAjouterComponent } from '../ajouter-bon-pour-ajouter/ajouter-bon-pour-ajouter.component';
+import { ArticleBonPour } from 'src/app/model/article-bon-pour.model';
+import { ArticleBonPourService } from 'src/app/services/article-bon-pour.service';
 
 @Component({
-  selector: 'app-dotation-vehicule-liste',
+  selector: 'app-ajouter-bon-pour-liste',
   // standalone: true,
   // imports: [CommonModule],
-  templateUrl: './dotation-vehicule-liste.component.html',
-  styleUrl: './dotation-vehicule-liste.component.css'
+  templateUrl: './ajouter-bon-pour-liste.component.html',
+  styleUrl: './ajouter-bon-pour-liste.component.css'
 })
-export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
+export class AjouterBonPourListeComponent implements OnInit, OnDestroy {
+
+  public bonPours: BonPour[] = [];
+  public bonPour: BonPour | undefined;
+
+  public articleBonPours: ArticleBonPour[] = [];
+  public articleBonPour: ArticleBonPour | undefined;
 
   public uniteDouanieres: UniteDouaniere[] = [];
   public uniteDouaniere: UniteDouaniere | undefined;
 
-  public typeUniteDouanieres: TypeUniteDouaniere[] = [];
-  public typeUniteDouaniere: TypeUniteDouaniere | undefined;
+  public sections: Sections[] = [];
+  public section: Sections | undefined;
+
+  public agents: Agent[] = [];
+  public agent: Agent | undefined;
 
   private subscriptions: Subscription[] = [];
 
@@ -53,141 +70,171 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
     }
   }
   /* ----------------------------------------------------------------------------------------- */
-
+  
 
   /* ----------------------------------------------------------------------------------------- */
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
   // rechercher
   searchTerms = new Subject<string>();
-  uniteDouanieres$: Observable<UniteDouaniere[]> = of();
+  bonPours$: Observable<BonPour[]> = of();
   // recherche custom
-  searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere = new Subject<string>();
-  termeRechercheCodeUniteDouaniereNomUniteDouaniere: string = "";
-  uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$: Observable<UniteDouaniere[]> = of();
+  searchTermsFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine = new Subject<string>();
+  termeRechercheNumeroCourrielOrigineObjectCourrielOrigine: string = "";
+  bonPourFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine$: Observable<BonPour[]> = of();
   /* ----------------------------------------------------------------------------------------- */
 
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
   columnsDateFormat: string[] = [
-
+    "dateCourrielOrigine",
+    "dateArriveDLF",
+    "dateArriveBLM",
+    "dateArriveSection"
   ];
   columnsToHide: string[] = [
-    // "nombreArme",
-    // "nombreMateriel"
-
+    "descriptionBP",
+    "numeroArriveDLF",
+    "dateArriveDLF",
+    "numeroArriveBLM",
+    "dateArriveBLM",
+    "numeroArriveSection",
+    "dateArriveSection",
+    "codeUniteDouaniere",
+    "observationBP",
+    "codeSection",
+    "matriculeAgent"
   ];
-  dataSource = new MatTableDataSource<UniteDouaniere>();
+  dataSource = new MatTableDataSource<BonPour>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
+    "descriptionBP",
+    "numeroCourrielOrigine",
+    "dateCourrielOrigine",
+    "etatBP",
+    "objectCourrielOrigine",
+    "numeroArriveDLF",
+    "dateArriveDLF",
+    "numeroArriveBLM",
+    "dateArriveBLM",
+    "numeroArriveSection",
+    "dateArriveSection",
     "codeUniteDouaniere",
-    "nomUniteDouaniere",
-    "effectifUniteDouaniere",
-    "rowTypeUniteDouaniere"
+    "observationBP",
+    "codeSection",
+    "matriculeAgent",
+    "rowNombreArticleBonPour"
   ];
   displayedColumnsCustom: string[] = [
-    "Code unite",
-    "Nom unite",
-    "Effectif unite",
-    "Type unite"
+    "Description bon pour",
+    "N° courriel origine",
+    "Date courriel origine",
+    "Etat bon pour",
+    "Object courriel origine",
+    "N° arrive DLF",
+    "Date arrive DLF",
+    "N° arrive BLM",
+    "Date arrive BLM",
+    "N° arrive section",
+    "Date arrive section",
+    "code unite",
+    "Observation bon pour",
+    "Code section",
+    "Agent",
+    "Article"
   ];
   /* ----------------------------------------------------------------------------------------- */
 
   constructor(
-
     private router: Router,
+    private articleBonPourService: ArticleBonPourService,
+    private bonPourService: BonPourService,
     private uniteDouaniereService: UniteDouaniereService,
+    private sectionsService: SectionsService,
+    private agentService: AgentService,
     private securiteService: SecuriteService,
-    private typeUniteDouaniereService: TypeUniteDouaniereService,
     private matDialog: MatDialog,
-
-
-
   ) { }
-
+  
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ngOnInit(): void {
-    // this.listeVehicules();
-    this.listeUniteDouanieres();
-    // this.listeBonEntrees();
+    this.listeArticleBonPours();
 
     /* ----------------------------------------------------------------------------------------- */
     // rechercher
-    this.uniteDouanieres$ = this.searchTerms.pipe(
+    this.bonPours$ = this.searchTerms.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereList(term, this.uniteDouanieres))
+      switchMap((term) => this.bonPourService.searchBonPourList(term, this.bonPours))
       // {.....List(ab)............List(abc)......}
     );
-    this.uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$ = this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.pipe(
+    this.bonPourFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine$ = this.searchTermsFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereListFilterDouble(term, this.uniteDouanieres))
+      switchMap((term) => this.bonPourService.searchBonPourListFilterDouble(term, this.bonPours))
       // {.....List(ab)............List(abc)......}
     );
     /* ----------------------------------------------------------------------------------------- */
   }
 
 
-  // generatePDF(): void {
+  generatePDF(): void {
 
-  //   const data: BonEntree[] = this.dataSource.filteredData;
-  //   // console.log(data);
+    const data: BonPour[] = this.dataSource.filteredData;
+    // console.log(data);
+    
 
+    const months = ['JANV.', 'FÉVR.', 'MARS', 'AVR.', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
 
-  //   const months = ['JANV.', 'FÉVR.', 'MARS', 'AVR.', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+    const doc = new jsPDF();
 
-  //   const doc = new jsPDF();
+    // Créez un tableau de données pour autoTable
+    const tableData = data.map((item: BonPour) => [
+      item.numeroCourrielOrigine,
+      item.etatBP,
+      `${new Date(item.dateCourrielOrigine.toString()).getDate()} ${months[new Date(item.dateCourrielOrigine.toString()).getMonth()]} ${new Date(item.dateCourrielOrigine.toString()).getFullYear() % 100}`,
+      item.objectCourrielOrigine
+    ]);
 
-  //   // Créez un tableau de données pour autoTable
-  //   const tableData = data.map((item: BonEntree) => [
-  //     item.numeroBE,
-  //     item.libelleBonEntree,
-  //     `${new Date(item.dateBonEntree.toString()).getDate()} ${months[new Date(item.dateBonEntree.toString()).getMonth()]} ${new Date(item.dateBonEntree.toString()).getFullYear() % 100}`,
-  //     item.observationBonEntree,
-  //     item.rowNombreArticleBonEntree
-  //   ]);
+    // Configuration pour le PDF avec une taille de page personnalisée
+ 
+    const marginLeft = 10;
+    const marginTop = 10;
+    const marginRight = 10;
+    const marginBottom = 10;
 
-  //   // Configuration pour le PDF avec une taille de page personnalisée
+    // Générer le tableau dans le PDF avec des styles de texte personnalisés
+    autoTable(doc, {
+      head: [
+        [
+          { content: 'N° courriel origine', styles: { fontSize: 6 } },
+          { content: 'Date courriel origine', styles: { fontSize: 6 } },
+          { content: 'Etat bon pour', styles: { fontSize: 6 } },
+          { content: 'Object courriel origine', styles: { fontSize: 6 } }
+        ]
+      ],
+      body: tableData.map(row => row.map(cell => ({ content: cell.toString(), styles: { fontSize: 6 } }))),
+      margin: { top: marginTop, right: marginRight, bottom: marginBottom, left: marginLeft },
+      theme: 'plain'
+    });
 
-  //   const marginLeft = 10;
-  //   const marginTop = 10;
-  //   const marginRight = 10;
-  //   const marginBottom = 10;
-
-  //   // Générer le tableau dans le PDF avec des styles de texte personnalisés
-  //   autoTable(doc, {
-  //     head: [
-  //       [
-  //         { content: 'N° bon d\'entrée', styles: { fontSize: 6 } },
-  //         { content: 'Libelle bon d\'entrée', styles: { fontSize: 6 } },
-  //         { content: 'Date bon d\'entrée', styles: { fontSize: 6 } },
-  //         { content: 'Observation bon d\'entrée', styles: { fontSize: 6 } },
-  //         { content: 'Articles', styles: { fontSize: 6 } }
-  //       ]
-  //     ],
-  //     body: tableData.map(row => row.map(cell => ({ content: cell.toString(), styles: { fontSize: 6 } }))),
-  //     margin: { top: marginTop, right: marginRight, bottom: marginBottom, left: marginLeft },
-  //     theme: 'plain'
-  //   });
-
-  //   doc.save('bon-entree-liste.pdf');
-  // }
+    doc.save('bon-pour-liste.pdf');
+  }
 
 
   search(term: string): void {
-    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = term;
+    this.termeRechercheNumeroCourrielOrigineObjectCourrielOrigine = term;
     this.searchTerms.next(term);
-    this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.next(term);
+    this.searchTermsFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine.next(term);
   }
 
   applyFilter(event: Event): void {
@@ -196,16 +243,16 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
 
-  FilterDoubleCodeUniteDouaniereNomUniteDouaniere(termeRechercheCodeUniteDouaniereNomUniteDouaniere: string) {
-    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
-    this.myInputSearch.nativeElement.value = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
-    this.dataSource.filter = termeRechercheCodeUniteDouaniereNomUniteDouaniere.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
+  FilterDoubleNumeroCourrielOrigineObjectCourrielOrigine(termeRechercheNumeroCourrielOrigineObjectCourrielOrigine: string) {
+    this.termeRechercheNumeroCourrielOrigineObjectCourrielOrigine = termeRechercheNumeroCourrielOrigineObjectCourrielOrigine;
+    this.myInputSearch.nativeElement.value = termeRechercheNumeroCourrielOrigineObjectCourrielOrigine;
+    this.dataSource.filter = termeRechercheNumeroCourrielOrigineObjectCourrielOrigine.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
     this.focusOnInput = false;
   }
 
 
-  isNumber(termeRechercheNumeroBELibelleBonEntree: string): boolean {
-    return !isNaN(Number(termeRechercheNumeroBELibelleBonEntree))
+  isNumber(termeRechercheNumeroCourrielOrigineObjectCourrielOrigine: string): boolean {
+    return !isNaN(Number(termeRechercheNumeroCourrielOrigineObjectCourrielOrigine))
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
@@ -214,7 +261,7 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
   //   const subscription = this.vehiculeService.listeVehicules().subscribe({
   //     next: (response: Vehicule[]) => {
-
+        
   //       this.vehicules = response;
   //       // this.vehicules = response.sort((a, b) => parseInt(a.numeroImmatriculation) - parseInt(b.numeroImmatriculation));
   //       // this.vehicules = response.sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
@@ -224,7 +271,7 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
   //       // recuperer la liste des bon entrees qui se trouvent dans la liste de vehicules
   //       this.filtreBonEntreeVehicule(this.vehicules, this.articleBonEntrees);
-
+        
   //     },
   //     error: (errorResponse: HttpErrorResponse) => {
   //       // console.log(errorResponse);
@@ -239,32 +286,13 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
+  public listeArticleBonPours(): void {
 
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-
-
-
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-
-
-
-
-  public listeUniteDouanieres(): void {
-
-    const subscription = this.uniteDouaniereService.listeUniteDouanieres().subscribe({
-      next: (response: UniteDouaniere[]) => {
-        this.uniteDouanieres = response;
-
-        this.dataSource = new MatTableDataSource<UniteDouaniere>(this.uniteDouanieres.map((item) => ({
-          ...item,
-          rowTypeUniteDouaniere: item.codeTypeUniteDouaniere.libelleTypeUniteDouaniere
-
-        })));
-
-        // console.log(this.dataSource.data);
-        this.dataSource.paginator = this.paginator;
+    const subscription = this.articleBonPourService.listeArticleBonPours().subscribe({
+      next: (response: ArticleBonPour[]) => {
+        this.articleBonPours = response;
+        // this.listeVehicules();
+        this.listeBonPours();
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -277,9 +305,38 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------------------------------------------
 
 
-  popupAjouterUniteDouaniere(): void {
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+  public listeBonPours(): void {
+
+    const subscription = this.bonPourService.listeBonPours().subscribe({
+      next: (response: BonPour[]) => {
+        this.bonPours = response;
+
+        this.dataSource = new MatTableDataSource<BonPour>(this.bonPours.map((item) => ({
+          ...item,
+          // raisonSociale: item.identifiantBL.ninea ? item.identifiantBL.ninea.raisonSociale : '---',
+          rowNombreArticleBonPour: this.nombreArticleBonEntree(item, this.articleBonPours)
+        })).sort((a, b) => a.numeroCourrielOrigine - b.numeroCourrielOrigine));
+    
+        // console.log(this.dataSource.data);
+        this.dataSource.paginator = this.paginator;
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+  
+
+  popupAjouterBonPourArticleBonPour(): void {
     const dialogRef = this.matDialog.open(
-      DotationVehiculeAjouterComponent,
+      AjouterBonPourAjouterComponent,
       {
         width: '80%',
         enterAnimationDuration: '100ms',
@@ -291,26 +348,19 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
       this.ngOnInit();
     });
   }
+  
 
-
-  goToDetail(uniteDouaniere: UniteDouaniere): void {
-    const id = uniteDouaniere.codeUniteDouaniere;
-    console.log(id);
-
+  goToDetail(bonPour: BonPour): void {
+    const id = bonPour.identifiantBP;
     const encrypt = this.securiteService.encryptUsingAES256(id);
-    this.router.navigate(['/dotation-vehicule-detail', encrypt]);
+    this.router.navigate(['/ajouter-bon-pour-detail', encrypt]);
   }
 
 
 
 
-
-
-
-
-
   // filtreBonEntreeVehicule(vehicules: Vehicule[], articleBonEntrees: ArticleBonEntree[]): void {
-
+    
 
   //   const listeBonEntree: BonEntree[] = vehicules.map((vehicule: Vehicule) => vehicule.identifiantBE.identifiantBE);
   //   // Supprimer les doublons en se basant sur la propriété identifiantBE
@@ -323,7 +373,7 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   //     (elementActuel, indexActuel, tableauOriginal) =>
   //       tableauOriginal.findIndex((elementPrecedent) => elementPrecedent.identifiantBE === elementActuel.identifiantBE) === indexActuel
   //   );
-
+    
 
   //   this.dataSource = new MatTableDataSource<BonEntree>(listeBonEntreeUnique.map((item) => ({
   //     ...item,
@@ -335,6 +385,17 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   // }
 
 
+  nombreArticleBonEntree(bonPour: BonPour, articleBonEntrees: ArticleBonPour[]): number {
+    let nombreArticleBonPour  = 0;
 
+    for (const articleBonPour of this.articleBonPours) {
+      // Comparer les bonEntree ici (assurez-vous d'implémenter une méthode de comparaison dans la classe BonEntree)
+      if (bonPour && articleBonPour.identifiantBP && JSON.stringify(bonPour) === JSON.stringify(articleBonPour.identifiantBP)) {
+        nombreArticleBonPour++;
+      }
+    }
+
+    return nombreArticleBonPour;
+  }
 
 }
