@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UniteDouaniere } from 'src/app/model/unite-douaniere.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { TypeUniteDouaniere } from 'src/app/model/type-unite-douaniere.model';
+import { UniteDouaniere } from 'src/app/model/unite-douaniere.model';
 import { Subscription } from 'rxjs';
 import { TypeUniteDouaniereService } from 'src/app/services/type-unite-douaniere.service';
 import { UniteDouaniereService } from 'src/app/services/unite-douaniere.service';
@@ -11,16 +10,17 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-dotation-vehicule-ajouter',
+  selector: 'app-unite-douaniere-ajouter',
   // standalone: true,
   // imports: [CommonModule],
-  templateUrl: './dotation-vehicule-ajouter.component.html',
-  styleUrl: './dotation-vehicule-ajouter.component.css'
+  templateUrl: './unite-douaniere-ajouter.component.html',
+  styleUrl: './unite-douaniere-ajouter.component.css'
 })
-export class DotationVehiculeAjouterComponent implements OnInit, OnDestroy{
+export class UniteDouaniereAjouterComponent implements OnInit, OnDestroy{
 
 
   // ----------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ export class DotationVehiculeAjouterComponent implements OnInit, OnDestroy{
     private securiteService: SecuriteService,
     private router: Router,
     private matDialog: MatDialog,
-    public dialogRef: MatDialogRef<DotationVehiculeAjouterComponent>,
+    public dialogRef: MatDialogRef<UniteDouaniereAjouterComponent>,
     private notificationService: NotificationService,
   ) {}
 
@@ -136,9 +136,8 @@ export class DotationVehiculeAjouterComponent implements OnInit, OnDestroy{
           this.uniteDouaniere = response;
           console.log(this.uniteDouaniere);
           this.popupFermer();
-          this.goToAjouterBonDeSortie(this.uniteDouaniere)
           // this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
-          this.sendNotification(NotificationType.SUCCESS, `Ajout unité réussie`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussi de l'unité`);
 
         },
         error: (errorResponse: HttpErrorResponse) => {
@@ -162,12 +161,6 @@ export class DotationVehiculeAjouterComponent implements OnInit, OnDestroy{
   }
 
 
-
-  goToAjouterBonDeSortie(uniteDouaniere: UniteDouaniere): void {
-    const id = uniteDouaniere.codeUniteDouaniere;
-    const encrypt = this.securiteService.encryptUsingAES256(id);
-    this.router.navigate(['/dotation-vehicule-detail', encrypt]);
-  }
 
 
 }

@@ -15,6 +15,10 @@ import { SecuriteService } from 'src/app/services/securite.service';
 import { MyDateService } from 'src/app/services/my-date.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyDate } from 'src/app/model/my-date.model';
+import { ArticleBonPourService } from 'src/app/services/article-bon-pour.service';
+import { ArticleBonPour } from 'src/app/model/article-bon-pour.model';
+import { ArticleBonSortie } from 'src/app/model/article-bon-sortie.model';
+import { BonPour } from 'src/app/model/bon-pour.model';
 
 @Component({
   selector: 'app-dotation-vehicule-detail',
@@ -23,10 +27,13 @@ import { MyDate } from 'src/app/model/my-date.model';
   templateUrl: './dotation-vehicule-detail.component.html',
   styleUrl: './dotation-vehicule-detail.component.css'
 })
-export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
+export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
 
   public bonDeSorties: BonDeSortie[] = [];
-  public bonDeSortie: BonDeSortie = new BonDeSortie();
+  public bonDeSortie: BonDeSortie | undefined = new BonDeSortie();
+
+  public articleBonPours: ArticleBonPour[] = [];
+  public articleBonPour: ArticleBonPour = new ArticleBonPour();
 
   public uniteDouanieres: UniteDouaniere[] = [];
   public uniteDouaniere: UniteDouaniere | undefined;
@@ -70,6 +77,7 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
 
 
   constructor(
+    private articleBonPourService: ArticleBonPourService,
     private bonDeSortieService: BonDeSortieService,
     private matDialog: MatDialog,
     private route: ActivatedRoute,
@@ -89,27 +97,27 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     // this.listeArticles();
-    this.listeBonDeSorties();
+    // this.listeBonDeSorties();
     // --------------------------------------------------------------------------------
-    const id = this.route.snapshot.paramMap.get('codeUniteDouaniere') ?? '';
-      // console.log(id);
-
-     const decrypt = this.securiteService.decryptUsingAES256(id);
-
-
-
+    const identifiantBP = this.route.snapshot.paramMap.get('identifiantBP') ?? '';
+    const codeArticleBonPour = this.route.snapshot.paramMap.get('codeArticleBonPour') ?? '';
     // console.log(id);
-    //  console.log(decrypt);
+
+    const decrypt1 = this.securiteService.decryptUsingAES256(identifiantBP);
+    const decrypt2 = this.securiteService.decryptUsingAES256(codeArticleBonPour);
+
+    // console.log(decrypt1, decrypt2);
 
 
 
-    if (decrypt) {
+    if (decrypt1 && decrypt2) {
       // this.utilisateurService.getUtilisateurByUtilisateurId(+utilisateurId).subscribe(pokemon => this.pokemon = pokemon);
-      this.subscriptions.push(this.uniteDouaniereService.recupererUniteDouaniereById(decrypt).subscribe({
-        next: (response: UniteDouaniere) => {
-          this.uniteDouaniere = response;
-          console.log(this.uniteDouaniere);
-           this.listeBonDeSorties();
+      this.subscriptions.push(this.articleBonPourService.recupererArticleBonPourById(decrypt1, decrypt2).subscribe({
+        next: (response: ArticleBonPour) => {
+          this.articleBonPour = response;
+          console.log(this.articleBonPour);
+
+          this.listeBonDeSorties();
         },
         error: (errorResponse: HttpErrorResponse) => {
 
@@ -122,21 +130,16 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
 
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
+  public listeBonDeSorties(): void {
 
-
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-
-
-  // ---------------------------------------------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------------------------------------------
-  public listeUniteDouaniere(): void {
-
-    const subscription = this.uniteDouaniereService.listeUniteDouanieres().subscribe({
-      next: (response: UniteDouaniere[]) => {
-        this.uniteDouanieres = response;
-        // this.listeVehicules();
-
+    const subscription = this.bonDeSortieService.listeBonDeSorties().subscribe({
+      next: (response: BonDeSortie[]) => {
+        this.bonDeSorties = response;
+        this.bonDeSortie = this.filtreBonPourArticleBonSortie(this.articleBonPour.identifiantBP, this.bonDeSorties);
+        console.log(this.bonDeSortie);
+        console.log(this.articleBonPour.identifiantBP);
+        
+        
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -147,54 +150,12 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
   }
 
 
-  // public listeBonDeSorties(): void {
+  filtreBonPourArticleBonSortie(bonPour: BonPour, bonDeSorties: BonDeSortie[]): BonDeSortie {
+    return bonDeSorties.find(bonDeSortie =>
+        Array.isArray(bonDeSortie.identifiantBP) && bonDeSortie.identifiantBP.some(bp => bp === bonPour)
+    ) ?? new BonDeSortie();
+  }
 
-  //     const subscription = this.bonDeSortieService.listeBonDeSorties().subscribe({
-  //       next: (response: BonDeSortie[]) => {
-
-  //         this.dataSource = new MatTableDataSource<BonDeSortie>(this.bonDeSorties.map((item) => ({
-  //           ...item,
-  //           // vehicule: [] as Vehicule[],
-
-  //         })));
-
-  //         this.dataSource.paginator = this.paginator;
-
-
-
-
-  //       },
-  //       error: (errorResponse: HttpErrorResponse) => {
-  //         // console.log(errorResponse);
-  //       },
-  //     });
-
-  //     this.subscriptions.push(subscription);
-  //   }
-
-
-    public listeBonDeSorties(): void {
-
-      const subscription = this.bonDeSortieService.listeBonDeSorties().subscribe({
-        next: (response: BonDeSortie[]) => {
-          this.bonDeSorties = response;
-
-          this.dataSource = new MatTableDataSource<BonDeSortie>(this.bonDeSorties.map((item) => ({
-            ...item,
-            // rowTypeUniteDouaniere: item.codeTypeUniteDouaniere.libelleTypeUniteDouaniere
-
-          })));
-
-          // console.log(this.dataSource.data);
-          this.dataSource.paginator = this.paginator;
-        },
-        error: (errorResponse: HttpErrorResponse) => {
-          // console.log(errorResponse);
-        },
-      });
-
-      this.subscriptions.push(subscription);
-    }
 
 
   myDateStringFormatter(date: MyDate | string | undefined): string {
@@ -228,9 +189,9 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy{
 
   goToDetail(bonDeSortie: BonDeSortie): void {
     const id = bonDeSortie.identifiantBS;
-     console.log(id);
+    console.log(id);
 
-     const encrypt = this.securiteService.encryptUsingAES256(id);
+    const encrypt = this.securiteService.encryptUsingAES256(id);
     this.router.navigate(['/dotation-vehicule-detail-bon-sortie-detail', encrypt]);
   }
 

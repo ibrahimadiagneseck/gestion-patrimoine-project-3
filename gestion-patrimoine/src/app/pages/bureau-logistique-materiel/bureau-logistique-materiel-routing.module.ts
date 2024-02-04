@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'dotation-vehicule', component: DotationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
-  { path: 'dotation-vehicule-detail/:codeUniteDouaniere', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
+  { path: 'dotation-vehicule-detail/:identifiantBP/:codeArticleBonPour', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
   { path: 'dotation-vehicule-ajouter-bon-sortie', component: DotationVehiculeAjouterBonSortieComponent, canActivate: [AuthKeyClockGuard], data: {

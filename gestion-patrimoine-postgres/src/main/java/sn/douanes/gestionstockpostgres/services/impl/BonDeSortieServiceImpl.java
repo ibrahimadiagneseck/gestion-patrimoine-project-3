@@ -51,14 +51,13 @@ public class BonDeSortieServiceImpl implements BonDeSortieService {
 
     @Override
     public BonDeSortie ajouterBonDeSortie(
-            String identifiantBS,
             String numeroBS,
             String descriptionBS,
             Date dateBS,
             String observationBS,
             UniteDouaniere codeUniteDouaniere,
             Sections codeSection,
-            ArticleBonPour identifiantBP,
+            BonPour identifiantBP,
             Agent matriculeAgent
     ) {
 

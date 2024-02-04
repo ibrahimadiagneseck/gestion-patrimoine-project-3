@@ -51,7 +51,6 @@ public class BonPourServiceImpl implements BonPourService {
 
     @Override
     public BonPour ajouterBonPour(
-            String identifiantBP,
             String descriptionBP,
             Integer numeroCourrielOrigine,
             Date dateCourrielOrigine,
@@ -59,11 +58,13 @@ public class BonPourServiceImpl implements BonPourService {
             String objectCourrielOrigine,
             Integer numeroArriveDLF,
             Date dateArriveDLF,
+            String observationDLF,
             Integer numeroArriveBLM,
             Date dateArriveBLM,
+            String observationBLM,
             Integer numeroArriveSection,
             Date dateArriveSection,
-            String observationBP,
+            String observationSection,
             UniteDouaniere codeUniteDouaniere,
             Sections codeSection,
             Agent matriculeAgent
@@ -80,11 +81,13 @@ public class BonPourServiceImpl implements BonPourService {
         bonPour.setObjectCourrielOrigine(objectCourrielOrigine);
         bonPour.setNumeroArriveDLF(numeroArriveDLF);
         bonPour.setDateArriveDLF(dateArriveDLF);
+        bonPour.setObservationDLF(observationDLF);
         bonPour.setNumeroArriveBLM(numeroArriveBLM);
         bonPour.setDateArriveBLM(dateArriveBLM);
+        bonPour.setObservationBLM(observationBLM);
         bonPour.setNumeroArriveSection(numeroArriveSection);
         bonPour.setDateArriveSection(dateArriveSection);
-        bonPour.setObservationBP(observationBP);
+        bonPour.setObservationSection(observationSection);
         bonPour.setCodeUniteDouaniere(codeUniteDouaniere);
         bonPour.setCodeSection(codeSection);
         bonPour.setMatriculeAgent(matriculeAgent);

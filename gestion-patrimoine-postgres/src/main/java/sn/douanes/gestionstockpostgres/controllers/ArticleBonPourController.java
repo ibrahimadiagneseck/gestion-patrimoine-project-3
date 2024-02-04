@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.douanes.gestionstockpostgres.entities.*;
 import sn.douanes.gestionstockpostgres.services.ArticleBonPourService;
+import sn.douanes.gestionstockpostgres.services.BonPourService;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class ArticleBonPourController {
 
     @Autowired
     ArticleBonPourService articleBonPourService;
+
+    @Autowired
+    BonPourService bonPourService;
 
     
     @GetMapping("/ArticleBonPours")
@@ -47,6 +51,14 @@ public class ArticleBonPourController {
             @PathVariable("identifiantBP") BonPour identifiantBP
     ) {
         articleBonPourService.deleteArticleBonPourById(codeArticleBonPour, identifiantBP);
+    }
+
+    @GetMapping("RecupererArticleBonPourById/{identifiantBP}/{codeArticleBonPour}")
+    public ArticleBonPour RecupererArticleBonPourById(
+            @PathVariable("identifiantBP") String identifiantBP,
+            @PathVariable("codeArticleBonPour") String codeArticleBonPour
+    ) {
+        return articleBonPourService.getArticleBonPourById(codeArticleBonPour, bonPourService.getBonPourById(identifiantBP));
     }
 
 

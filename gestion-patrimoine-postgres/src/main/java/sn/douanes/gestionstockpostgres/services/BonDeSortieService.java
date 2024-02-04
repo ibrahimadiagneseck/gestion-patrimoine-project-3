@@ -17,7 +17,7 @@ public interface BonDeSortieService {
     BonDeSortie getBonDeSortieById(String id);
     List<BonDeSortie> getAllBonDeSorties();
 
-    BonDeSortie ajouterBonDeSortie(String identifiantBS, String numeroBS, String descriptionBS, Date dateBS, String observationBS, UniteDouaniere codeUniteDouaniere, Sections codeSection, ArticleBonPour identifiantBP, Agent matriculeAgent);
+    BonDeSortie ajouterBonDeSortie(String numeroBS, String descriptionBS, Date dateBS, String observationBS, UniteDouaniere codeUniteDouaniere, Sections codeSection, BonPour identifiantBP, Agent matriculeAgent);
 
 
 }

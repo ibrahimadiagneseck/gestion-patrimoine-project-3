@@ -35,10 +35,8 @@ public class BonDeSortieController {
     @ResponseBody
     public BonDeSortie AjouterBonDeSortie(@RequestBody BonDeSortie bonDeSortie) {
         // return BonDeSortieService.saveBonDeSortie(BonDeSortie);
-        return bonDeSortieService.ajouterBonDeSortie(bonDeSortie.getIdentifiantBS(), bonDeSortie.getNumeroBS(), bonDeSortie.getDescriptionBS(), bonDeSortie.getDateBS(), bonDeSortie.getObservationBS(), bonDeSortie.getCodeUniteDouaniere(), bonDeSortie.getCodeSection(), bonDeSortie.getIdentifiantBP(), bonDeSortie.getMatriculeAgent());
+        return bonDeSortieService.ajouterBonDeSortie(bonDeSortie.getNumeroBS(), bonDeSortie.getDescriptionBS(), bonDeSortie.getDateBS(), bonDeSortie.getObservationBS(), bonDeSortie.getCodeUniteDouaniere(), bonDeSortie.getCodeSection(), bonDeSortie.getIdentifiantBP(), bonDeSortie.getMatriculeAgent());
     }
-
-
 
 
     @PutMapping("/ModifierBonDeSortie")

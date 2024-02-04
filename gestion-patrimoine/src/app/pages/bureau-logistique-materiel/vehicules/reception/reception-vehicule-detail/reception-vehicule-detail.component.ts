@@ -53,6 +53,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
+  rowNumber!: number; // numéro de ligne pour le tableau
   // columnsToCodeMarque: string[] = [
   //   "codeMarque"
   // ];
@@ -63,15 +64,24 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     "dateMiseEnCirculation"
   ];
   columnsToHide: string[] = [
+    // "rowNumber",
+    // "rowMarque",
+    // "modele",
+    "numeroSerie",
     "numeroImmatriculation",
-    "typeEnergie",
+    "rowPays",
     "numeroCarteGrise",
+    "dateMiseEnCirculation",
     "rowTypeVehicule",
-    "codeUniteDouaniere"
   ];
   dataSource = new MatTableDataSource<Vehicule>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
+    // "rowCodeArticleBonEntree",
+    "rowNumber",
+    "rowLibelleArticleBonEntree",
+    // "rowMarque",
+    // "modele",
     "numeroSerie",
     "numeroImmatriculation",
     "rowEtat",
@@ -80,9 +90,13 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     "numeroCarteGrise",
     "dateMiseEnCirculation",
     "rowTypeVehicule",
-    "rowMarque"
   ];
   displayedColumnsCustom: string[] = [
+    // "N°",
+    "N°",
+    "Libelle article",
+    // "Marque",
+    // "Modèle",
     "N° serie",
     "N° immatriculation",
     "Etat vehicule",
@@ -90,8 +104,8 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     "Provenance",
     "N° carte grise",
     "Date mise en circulation",
-    "Type vehicule",
-    "Marque"
+    "Type vehicule"
+    
   ];
   /* ----------------------------------------------------------------------------------------- */
   
@@ -195,9 +209,9 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
         // console.log(response);
 
-        // this.vehicules = response;
+        this.vehicules = response;
         // this.vehicules = response.sort((a, b) => parseInt(a.numeroImmatriculation) - parseInt(b.numeroImmatriculation));
-        this.vehicules = response.sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
+        // this.vehicules = response.sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
         // this.vehicules = response.sort((a, b) => a.numeroImmatriculation.localeCompare(b.numeroImmatriculation));
         // this.vehicules = response.sort((a, b) => a.numeroChassis - b.numeroChassis);
         // this.vehicules = response.sort((a, b) => new Date(b.dateModification).getTime() - new Date(a.dateModification).getTime());
@@ -239,9 +253,11 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   filtreVehiculeBonEntree(vehicules: Vehicule[], bonEntree: BonEntree): void {
 
+    this.rowNumber = 1;
+
     vehicules = vehicules.filter((vehicule: Vehicule) => {
       return vehicule.identifiantBE && bonEntree.identifiantBE && vehicule.identifiantBE.identifiantBE.identifiantBE === bonEntree.identifiantBE;
-    }).sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
+    });
 
     
 
@@ -253,8 +269,11 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
       rowPays: item.codePays.libellePays,
       rowEtat: item.codeEtat.libelleEtat,
       rowTypeEnergie: item.codeTypeEnergie.libelleTypeEnergie,
-      rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule
-    })));
+      rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule,
+      rowCodeArticleBonEntree: item.identifiantBE.codeArticleBonEntree,
+      rowLibelleArticleBonEntree: item.identifiantBE.libelleArticleBonEntree,
+      rowNumber: this.rowNumber++,
+    })).sort((a, b) => a.rowCodeArticleBonEntree.localeCompare(b.rowCodeArticleBonEntree)));
 
 
     // console.log(this.dataSource.data);

@@ -11,6 +11,8 @@ import { ReceptionVehiculeDetailComponent } from './pages/bureau-logistique-mate
 import { AjouterBonPourListeComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste/ajouter-bon-pour-liste.component';
 import { AjouterBonPourListeDetailComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste-detail/ajouter-bon-pour-liste-detail.component';
 import { ConsultationBonPourListeComponent } from './pages/bon-pour/consultation/consultation-bon-pour-liste/consultation-bon-pour-liste.component';
+import { UniteDouaniere } from './model/unite-douaniere.model';
+import { UniteDouaniereListeComponent } from './pages/unite-douaniere/unite-douaniere-liste/unite-douaniere-liste.component';
 
 const routes: Routes = [
 
@@ -33,6 +35,10 @@ const routes: Routes = [
   }},
 
   { path: 'consultation-bon-pour', component: ConsultationBonPourListeComponent, canActivate: [AuthKeyClockGuard], data: {
+    roles: ['USER']
+  }},
+
+  { path: 'unite-douaniere', component: UniteDouaniereListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
 

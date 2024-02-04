@@ -26,7 +26,7 @@
                         <div class="col-3 mx-auto form-group">
                             <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
                             <select id="codeTypeObjet" name="codeTypeObjet" required class="form-select text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
-                                <option value="">Chaine vide par défaut</option>
+                                <option value="">liste vide</option>
                             </select>
                         </div>
                     </ng-template>
@@ -42,7 +42,7 @@
                     </div> -->
             
                     <div class="col-3 mx-auto form-group">
-                        <label for="codeArticleBonEntree" class="form-label fw-bold">Code article</label>
+                        <label for="codeArticleBonEntree" class="form-label fw-bold">N° article</label>
                         <input id="codeArticleBonEntree" type="text" name="codeArticleBonEntree" disabled required [(ngModel)]="codeArticleBonEntree" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
 
@@ -50,12 +50,14 @@
                         <label for="quantiteEntree" class="form-label fw-bold">Quantité entrée</label>
                         <input id="quantiteEntree" type="number" name="quantiteEntree" disabled required ngModel="1" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
+                    </div>
+            
+                    <!-- <div class="col-3 mx-auto form-group">
                         <label for="libelleArticleBonEntree" class="form-label fw-bold">Libellé article</label>
                         <input id="libelleArticleBonEntree" type="text" name="libelleArticleBonEntree" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
-                    </div>
-
+                    </div> -->
                 </div>
             
                 <div class="row">

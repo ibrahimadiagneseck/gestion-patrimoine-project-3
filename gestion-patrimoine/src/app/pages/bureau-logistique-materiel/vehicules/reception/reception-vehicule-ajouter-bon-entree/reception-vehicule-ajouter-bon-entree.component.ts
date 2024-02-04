@@ -337,7 +337,7 @@ export class ReceptionVehiculeAjouterBonEntreeComponent implements OnInit, OnDes
           this.popupFermer();
           this.goToAjouterArticle(this.bonEntree)
           // this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de ${response.ninea}`);
-          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussi`);
         },
         error: (errorResponse: HttpErrorResponse) => {
 

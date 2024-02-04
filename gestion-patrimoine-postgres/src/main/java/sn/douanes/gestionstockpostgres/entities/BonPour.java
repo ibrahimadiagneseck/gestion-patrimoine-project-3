@@ -44,11 +44,17 @@ public class BonPour {
     @Column(name = "date_arrive_d_l_f")
     private Date dateArriveDLF;
 
+    @Column(name = "observation_d_l_f")
+    private String observationDLF;
+
     @Column(name = "numero_arrive_b_l_m")
     private Integer numeroArriveBLM;
 
     @Column(name = "date_arrive_b_l_m")
     private Date dateArriveBLM;
+
+    @Column(name = "observation_b_l_m")
+    private String observationBLM;
 
     @Column(name = "numero_arrive_section")
     private Integer numeroArriveSection;
@@ -56,8 +62,9 @@ public class BonPour {
     @Column(name = "date_arrive_section")
     private Date dateArriveSection;
 
-    @Column(name = "observation_b_p")
-    private String observationBP;
+    @Column(name = "observation_section")
+    private String observationSection;
+
 
     @ManyToOne
     @JoinColumn(name = "code_unite_douaniere")

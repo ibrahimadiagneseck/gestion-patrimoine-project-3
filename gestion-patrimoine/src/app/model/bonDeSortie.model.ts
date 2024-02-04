@@ -15,7 +15,7 @@ export class BonDeSortie {
   public observationBS: string;
   public codeUniteDouaniere: UniteDouaniere;
   public codeSection: Sections;
-  public identifiantBP: ArticleBonPour;
+  public identifiantBP: BonPour;
   public matriculeAgent: Agent;
 
 
@@ -25,10 +25,10 @@ export class BonDeSortie {
     descriptionBS = '',
     dateBS = new MyDate(),
     observationBS = '',
-    codeUniteDouaniere = new UniteDouaniere,
-    codeSection = new Sections,
-    identifiantBP = new ArticleBonPour,
-    matriculeAgent = new Agent
+    codeUniteDouaniere = new UniteDouaniere(),
+    codeSection = new Sections(),
+    identifiantBP = new BonPour(),
+    matriculeAgent = new Agent()
   ) {
     this.identifiantBS = identifiantBS;
     this.numeroBS = numeroBS;

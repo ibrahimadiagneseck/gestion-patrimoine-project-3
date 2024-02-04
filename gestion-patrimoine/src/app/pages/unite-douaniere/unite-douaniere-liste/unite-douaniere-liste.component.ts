@@ -1,37 +1,37 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import { UniteDouaniere } from 'src/app/model/unite-douaniere.model';
+import { TypeUniteDouaniere } from 'src/app/model/type-unite-douaniere.model';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { TypeUniteDouaniereService } from 'src/app/services/type-unite-douaniere.service';
+import { SecuriteService } from 'src/app/services/securite.service';
 import { UniteDouaniereService } from 'src/app/services/unite-douaniere.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TypeUniteDouaniereService } from 'src/app/services/type-unite-douaniere.service';
-import { TypeUniteDouaniere } from 'src/app/model/type-unite-douaniere.model';
-import { SecuriteService } from 'src/app/services/securite.service';
-import { ArticleBonPour } from 'src/app/model/article-bon-pour.model';
-import { BonPour } from 'src/app/model/bon-pour.model';
-import { ArticleBonPourService } from 'src/app/services/article-bon-pour.service';
-import { BonPourService } from 'src/app/services/bon-pour.service';
+import { UniteDouaniereAjouterComponent } from '../unite-douaniere-ajouter/unite-douaniere-ajouter.component';
+import { UniteDouaniereDetailComponent } from '../unite-douaniere-detail/unite-douaniere-detail.component';
 
 @Component({
-  selector: 'app-dotation-vehicule-liste',
+  selector: 'app-unite-douaniere-liste',
   // standalone: true,
   // imports: [CommonModule],
-  templateUrl: './dotation-vehicule-liste.component.html',
-  styleUrl: './dotation-vehicule-liste.component.css'
+  templateUrl: './unite-douaniere-liste.component.html',
+  styleUrl: './unite-douaniere-liste.component.css'
 })
-export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
+export class UniteDouaniereListeComponent implements OnInit, OnDestroy {
 
 
 
-  public articleBonPours: ArticleBonPour[] = [];
-  public articleBonPour: ArticleBonPour | undefined;
+  public uniteDouanieres: UniteDouaniere[] = [];
+  public uniteDouaniere: UniteDouaniere | undefined;
 
-  public bonPours: BonPour[] = [];
-  public bonPour: BonPour | undefined;
+  public typeUniteDouanieres: TypeUniteDouaniere[] = [];
+  public typeUniteDouaniere: TypeUniteDouaniere | undefined;
+
+
 
 
 
@@ -66,49 +66,46 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
   // rechercher
   searchTerms = new Subject<string>();
-  articleBonPours$: Observable<ArticleBonPour[]> = of();
+  uniteDouanieres$: Observable<UniteDouaniere[]> = of();
   // recherche custom
-  searchTermsFilterDoubleNumeroCourrielOrigineEtatBP = new Subject<string>();
-  termeRechercheNumeroCourrielOrigineEtatBP: string = "";
-  articleBonPourFilterDoubleNumeroCourrielOrigineEtatBP$: Observable<ArticleBonPour[]> = of();
+  searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere = new Subject<string>();
+  termeRechercheCodeUniteDouaniereNomUniteDouaniere: string = "";
+  uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$: Observable<UniteDouaniere[]> = of();
   /* ----------------------------------------------------------------------------------------- */
 
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
   columnsDateFormat: string[] = [
-    "rowDateCourrielOrigine"
+
   ];
   columnsToHide: string[] = [
     // "nombreArme",
     // "nombreMateriel"
 
   ];
-  dataSource = new MatTableDataSource<ArticleBonPour>();
+  dataSource = new MatTableDataSource<UniteDouaniere>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
-    "rowNumeroCourrielOrigine",
-    "rowEtatBP",
-    "rowDateCourrielOrigine",
-    "libelleArticleBonPour",
-    "quantiteDemandee",
-    
+    "codeUniteDouaniere",
+    "nomUniteDouaniere",
+    "effectifUniteDouaniere",
+    "rowTypeUniteDouaniere"
   ];
   displayedColumnsCustom: string[] = [
-    "N° courriel origine",
-    "Etat bon pour",
-    "Date courriel origine",
-    "Libelle article bon pour",
-    "Quantité demandée",
+    "Code unité",
+    "Nom unité",
+    "Effectif unité",
+    "Type unité"
   ];
   /* ----------------------------------------------------------------------------------------- */
 
   constructor(
     private router: Router,
-    private articleBonPourService: ArticleBonPourService,
+    private uniteDouaniereService: UniteDouaniereService,
     private securiteService: SecuriteService,
-    private bonPourService: BonPourService,
-    private matDialog: MatDialog
+    private typeUniteDouaniereService: TypeUniteDouaniereService,
+    private matDialog: MatDialog,
   ) { }
 
   ngOnDestroy(): void {
@@ -116,27 +113,28 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.listeArticleBonPours();
+    // this.listeVehicules();
+    this.listeUniteDouanieres();
+    // this.listeBonEntrees();
 
     /* ----------------------------------------------------------------------------------------- */
     // rechercher
-    this.articleBonPours$ = this.searchTerms.pipe(
+    this.uniteDouanieres$ = this.searchTerms.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.articleBonPourService.searchArticleBonPourList(term, this.articleBonPours))
+      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereList(term, this.uniteDouanieres))
       // {.....List(ab)............List(abc)......}
     );
-    this.articleBonPourFilterDoubleNumeroCourrielOrigineEtatBP$ = this.searchTermsFilterDoubleNumeroCourrielOrigineEtatBP.pipe(
+    this.uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$ = this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.articleBonPourService.searchArticleBonPourListFilterDouble(term, this.articleBonPours))
+      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereListFilterDouble(term, this.uniteDouanieres))
       // {.....List(ab)............List(abc)......}
     );
     /* ----------------------------------------------------------------------------------------- */
@@ -190,9 +188,9 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
 
   search(term: string): void {
-    this.termeRechercheNumeroCourrielOrigineEtatBP = term;
+    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = term;
     this.searchTerms.next(term);
-    this.searchTermsFilterDoubleNumeroCourrielOrigineEtatBP.next(term);
+    this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.next(term);
   }
 
   applyFilter(event: Event): void {
@@ -201,16 +199,16 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
 
-  FilterDoubleNumeroCourrielOrigineEtatBP(termeRechercheNumeroCourrielOrigineEtatBP: string) {
-    this.termeRechercheNumeroCourrielOrigineEtatBP = termeRechercheNumeroCourrielOrigineEtatBP;
-    this.myInputSearch.nativeElement.value = termeRechercheNumeroCourrielOrigineEtatBP;
-    this.dataSource.filter = termeRechercheNumeroCourrielOrigineEtatBP.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
+  FilterDoubleCodeUniteDouaniereNomUniteDouaniere(termeRechercheCodeUniteDouaniereNomUniteDouaniere: string) {
+    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
+    this.myInputSearch.nativeElement.value = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
+    this.dataSource.filter = termeRechercheCodeUniteDouaniereNomUniteDouaniere.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
     this.focusOnInput = false;
   }
 
 
-  isNumber(termeRechercheNumeroCourrielOrigineEtatBP: string): boolean {
-    return !isNaN(Number(termeRechercheNumeroCourrielOrigineEtatBP))
+  isNumber(termeRechercheNumeroBELibelleBonEntree: string): boolean {
+    return !isNaN(Number(termeRechercheNumeroBELibelleBonEntree))
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
@@ -256,17 +254,15 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
 
 
-  public listeArticleBonPours(): void {
+  public listeUniteDouanieres(): void {
 
-    const subscription = this.articleBonPourService.listeArticleBonPours().subscribe({
-      next: (response: ArticleBonPour[]) => {
-        this.articleBonPours = response;
+    const subscription = this.uniteDouaniereService.listeUniteDouanieres().subscribe({
+      next: (response: UniteDouaniere[]) => {
+        this.uniteDouanieres = response;
 
-        this.dataSource = new MatTableDataSource<ArticleBonPour>(this.articleBonPours.map((item) => ({
+        this.dataSource = new MatTableDataSource<UniteDouaniere>(this.uniteDouanieres.map((item) => ({
           ...item,
-          rowNumeroCourrielOrigine: item.identifiantBP.numeroCourrielOrigine,
-          rowEtatBP: item.identifiantBP.etatBP,
-          rowDateCourrielOrigine: item.identifiantBP.dateCourrielOrigine,
+          rowTypeUniteDouaniere: item.codeTypeUniteDouaniere.libelleTypeUniteDouaniere
 
         })));
 
@@ -284,18 +280,36 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------------------------------------------
 
 
-  popupAjouterDotation(): void {
-    this.router.navigate(['/dotation-vehicule-detail', '', '']);
+  popupAjouterUniteDouaniere(): void {
+    const dialogRef = this.matDialog.open(
+      UniteDouaniereAjouterComponent,
+      {
+        width: '80%',
+        enterAnimationDuration: '100ms',
+        exitAnimationDuration: '100ms'
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
-  goToDetail(articleBonPour: ArticleBonPour): void {
-    const identifiantBP = articleBonPour.identifiantBP.identifiantBP;
-    const codeArticleBonPour = articleBonPour.codeArticleBonPour;
 
-    const encrypt1 = this.securiteService.encryptUsingAES256(identifiantBP);
-    const encrypt2 = this.securiteService.encryptUsingAES256(codeArticleBonPour);
+  goToDetail(uniteDouaniere: UniteDouaniere): void {
+    const dialogRef = this.matDialog.open(
+      UniteDouaniereDetailComponent,
+      {
+        width: '80%',
+        enterAnimationDuration: '100ms',
+        exitAnimationDuration: '100ms',
+        data: uniteDouaniere
+      }
+    );
 
-    this.router.navigate(['/dotation-vehicule-detail', encrypt1, encrypt2]);
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
 
