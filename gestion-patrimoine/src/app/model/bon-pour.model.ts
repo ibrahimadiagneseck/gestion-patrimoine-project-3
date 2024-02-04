@@ -13,12 +13,14 @@ export class BonPour {
   objectCourrielOrigine: string;
   numeroArriveDLF: number;
   dateArriveDLF: MyDate;
+  observationDLF: string;
   numeroArriveBLM: number;
   dateArriveBLM: MyDate;
+  observationBLM: string;
   numeroArriveSection: number;
   dateArriveSection: MyDate;
+  observationSection: string;
   codeUniteDouaniere: UniteDouaniere;
-  observationBP: string;
   codeSection: Sections;
   matriculeAgent: Agent;
 
@@ -31,12 +33,14 @@ export class BonPour {
     objectCourrielOrigine = '',
     numeroArriveDLF = 0,
     dateArriveDLF = new MyDate(),
+    observationDLF = '',
     numeroArriveBLM = 0,
     dateArriveBLM = new MyDate(),
+    observationBLM = '',
     numeroArriveSection = 0,
     dateArriveSection = new MyDate(),
+    observationSection = '',
     codeUniteDouaniere = new UniteDouaniere(),
-    observationBP = '',
     codeSection = new Sections(),
     matriculeAgent = new Agent()
   ) {
@@ -48,12 +52,14 @@ export class BonPour {
     this.objectCourrielOrigine = objectCourrielOrigine;
     this.numeroArriveDLF = numeroArriveDLF;
     this.dateArriveDLF = dateArriveDLF;
+    this.observationDLF = observationDLF;
     this.numeroArriveBLM = numeroArriveBLM;
     this.dateArriveBLM = dateArriveBLM;
+    this.observationBLM = observationBLM;
     this.numeroArriveSection = numeroArriveSection;
     this.dateArriveSection = dateArriveSection;
+    this.observationSection = observationSection;
     this.codeUniteDouaniere = codeUniteDouaniere;
-    this.observationBP = observationBP;
     this.codeSection = codeSection;
     this.matriculeAgent = matriculeAgent;
   }

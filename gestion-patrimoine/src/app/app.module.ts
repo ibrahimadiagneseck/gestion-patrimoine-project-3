@@ -43,6 +43,9 @@ import { ConsultationBonPourListeComponent } from './pages/bon-pour/consultation
 import { AjouterBonPourAjouterComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter/ajouter-bon-pour-ajouter.component';
 import { AjouterBonPourListeDetailComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-liste-detail/ajouter-bon-pour-liste-detail.component';
 import { AjouterBonPourAjouterArticleComponent } from './pages/bon-pour/ajouter/ajouter-bon-pour-ajouter-article/ajouter-bon-pour-ajouter-article.component';
+import { UniteDouaniereListeComponent } from './pages/unite-douaniere/unite-douaniere-liste/unite-douaniere-liste.component';
+import { UniteDouaniereAjouterComponent } from './pages/unite-douaniere/unite-douaniere-ajouter/unite-douaniere-ajouter.component';
+import { UniteDouaniereDetailComponent } from './pages/unite-douaniere/unite-douaniere-detail/unite-douaniere-detail.component';
 
 
 
@@ -103,6 +106,10 @@ export const MY_DATE_FORMATS = {
     AjouterBonPourAjouterArticleComponent,
 
     ConsultationBonPourListeComponent,
+
+    UniteDouaniereListeComponent,
+    UniteDouaniereAjouterComponent,
+    UniteDouaniereDetailComponent,
     
     
   ],

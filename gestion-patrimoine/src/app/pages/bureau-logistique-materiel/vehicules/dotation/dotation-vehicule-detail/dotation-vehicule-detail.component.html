@@ -18,64 +18,37 @@
                 <!-- --------------------Unite Douaniere------------------------------------------------------ -->
                 <div class="container">
                     <div class="text-center fw-bolder bg-myprimary mt-1" role="alert">
-                        Unite douaniére
-
-
+                        Unité douanière
                     </div>
 
                     <form class="container px-3 py-2">
-
                         <div class="row g-4 mb-3">
                             <div class="col-3 mx-auto">
-                                <span class="fw-bold">Code unite </span>
-                                <div class="text-input"> {{ uniteDouaniere?.codeUniteDouaniere }} </div>
+                                <span class="fw-bold">Code unité</span>
+                                <div class="text-input"> {{ articleBonPour.identifiantBP.codeUniteDouaniere.codeUniteDouaniere }} </div>
                             </div>
 
-
-                            <div class="col-3 mx-auto">
-                                <span class="fw-bold">Nom unite</span>
-                                <div class="text-input text-uppercase"> {{ uniteDouaniere?.nomUniteDouaniere }} </div>
-                            </div>
-
-                            <div class="col-3 mx-auto">
-                                <span class="fw-bold">Effectif unite</span>
-                                <div class="text-input text-uppercase"> {{ uniteDouaniere?.effectifUniteDouaniere }}
-                                </div>
+                            <div class="col-7 mx-auto">
+                                <span class="fw-bold">Nom unité</span>
+                                <div class="text-input text-uppercase"> {{ articleBonPour.identifiantBP.codeUniteDouaniere.nomUniteDouaniere }} </div>
                             </div>
                         </div>
 
                         <div class="row g-4 mb-3">
                             <div class="col-3 mx-auto">
                                 <span class="fw-bold">Nombre arme</span>
-                                <div class="text-input text-uppercase"> {{ uniteDouaniere?.nombreArme }} </div>
+                                <div class="text-input text-uppercase"> {{ articleBonPour.identifiantBP.codeUniteDouaniere.nombreArme }} </div>
                             </div>
 
                             <div class="col-3 mx-auto">
                                 <span class="fw-bold">Nombre automobile</span>
-                                <div class="text-input text-uppercase"> {{ uniteDouaniere?.nombreAutomobile }} </div>
+                                <div class="text-input text-uppercase"> {{ articleBonPour.identifiantBP.codeUniteDouaniere.nombreAutomobile }} </div>
                             </div>
 
                             <div class="col-3 mx-auto">
                                 <span class="fw-bold">Nombre materiel</span>
-                                <div class="text-input text-uppercase"> {{ uniteDouaniere?.nombreMateriel }} </div>
+                                <div class="text-input text-uppercase"> {{ articleBonPour.identifiantBP.codeUniteDouaniere.nombreMateriel }} </div>
                             </div>
-
-
-
-                        </div>
-
-                        <div class="row g-4 mb-3">
-
-                            <div class="col-7 mx-auto">
-                                <span class="fw-bold">Type unite</span>
-                                <div class="text-input text-uppercase"> {{
-                                    uniteDouaniere?.codeTypeUniteDouaniere?.libelleTypeUniteDouaniere }} </div>
-                            </div>
-
-                            <div class="col-3 mx-auto">
-
-                            </div>
-
                         </div>
 
                     </form>
@@ -88,10 +61,10 @@
                         <div class="col-12 text-end">
                             <button type="button" class="btn btn-mybrown me-2">Désactiver</button>
 
-                            <button [routerLink]="'/dotation-vehicule-bonPour'" type="button"
+                            <button [routerLink]="'/dotation-vehicule-ajouter-bon-sortie'" type="button"
                                 class="btn btn-mysecondary fw-bold mx-2" data-bs-toggle="tooltip"
-                                title="cliquer ici pour ajouter artticle">
-                                Ajouter bon sortie
+                                title="cliquer ici pour ajouter article">
+                                Ajouter article
                             </button>
 
                             <button type="button" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip"
@@ -113,10 +86,10 @@
 
             <!-- ----------------LISTES--------------------------------------------------------- -->
 
-            <!-- ------------------VEHICULE-------------------------------------------------------- -->
+            <!-- ------------------Dotation-------------------------------------------------------- -->
             <div class="container">
                 <div class="text-center fw-bolder bg-myprimary mt-1" role="alert">
-                    Liste bon de sortie
+                    Liste dotations
                 </div>
 
                 <div class="container px-3 py-2 mt-1">
@@ -163,7 +136,8 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
 
-                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of vehicles">
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            aria-label="Select page of vehicles">
                         </mat-paginator>
 
                     </div>

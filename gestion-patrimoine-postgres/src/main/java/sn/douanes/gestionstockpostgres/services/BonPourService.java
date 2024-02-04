@@ -20,7 +20,7 @@ public interface BonPourService {
     BonPour getBonPourById(String id);
     List<BonPour> getAllBonPours();
 
-    BonPour ajouterBonPour(String identifiantBP, String descriptionBP, Integer numeroCourrielOrigine, Date dateCourrielOrigine, String etatBP, String objectCourrielOrigine, Integer numeroArriveDLF, Date dateArriveDLF, Integer numeroArriveBLM, Date dateArriveBLM, Integer numeroArriveSection, Date dateArriveSection, String observationBP, UniteDouaniere codeUniteDouaniere, Sections codeSection, Agent matriculeAgent);
+    BonPour ajouterBonPour(String descriptionBP, Integer numeroCourrielOrigine, Date dateCourrielOrigine, String etatBP, String objectCourrielOrigine, Integer numeroArriveDLF, Date dateArriveDLF, String observationDLF, Integer numeroArriveBLM, Date dateArriveBLM, String observationBLM, Integer numeroArriveSection, Date dateArriveSection, String observationSection, UniteDouaniere codeUniteDouaniere, Sections codeSection, Agent matriculeAgent);
 
 
 }

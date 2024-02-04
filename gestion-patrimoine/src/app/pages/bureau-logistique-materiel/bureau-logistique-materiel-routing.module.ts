@@ -9,6 +9,7 @@ import { ConsultationReceptionVehiculeDetailComponent } from './vehicules/consul
 import { DotationVehiculeListeComponent } from './vehicules/dotation/dotation-vehicule-liste/dotation-vehicule-liste.component';
 import { DotationVehiculeDetailComponent } from './vehicules/dotation/dotation-vehicule-detail/dotation-vehicule-detail.component';
 import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/dotation-vehicule-ajouter-bon-sortie/dotation-vehicule-ajouter-bon-sortie.component';
+import { DotationVehiculeDetailBonSortieDetailComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie-detail/dotation-vehicule-detail-bon-sortie-detail.component';
 
 const routes: Routes = [
   
@@ -32,17 +33,25 @@ const routes: Routes = [
     roles: ['USER']
   }},
 
+
   { path: 'dotation-vehicule', component: DotationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
-
-  { path: 'dotation-vehicule-detail/:codeUniteDouaniere', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
+  { path: 'dotation-vehicule-detail/:identifiantBP/:codeArticleBonPour', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
-
   { path: 'dotation-vehicule-ajouter-bon-sortie', component: DotationVehiculeAjouterBonSortieComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
+  { path: 'dotation-vehicule-detail-bon-sortie-detail/:idIdentifiantBS', component: DotationVehiculeDetailBonSortieDetailComponent, canActivate: [AuthKeyClockGuard], data: {
+    roles: ['USER']
+  }},
+
+  
+
+
+
+
 
 
 ];

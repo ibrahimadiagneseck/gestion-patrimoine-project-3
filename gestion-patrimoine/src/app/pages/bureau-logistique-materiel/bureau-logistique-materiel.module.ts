@@ -29,9 +29,12 @@ import { ConsultationReceptionVehiculeListeComponent } from './vehicules/consult
 import { ConsultationReceptionVehiculeDetailComponent } from './vehicules/consultation/consultation-reception-vehicule-detail/consultation-reception-vehicule-detail.component';
 import { ReceptionVehiculeModifierBonEntreeComponent } from './vehicules/reception/reception-vehicule-modifier-bon-entree/reception-vehicule-modifier-bon-entree.component';
 import { DotationVehiculeListeComponent } from './vehicules/dotation/dotation-vehicule-liste/dotation-vehicule-liste.component';
-import { DotationVehiculeAjouterComponent } from './vehicules/dotation/dotation-vehicule-ajouter/dotation-vehicule-ajouter.component';
 import { DotationVehiculeDetailComponent } from './vehicules/dotation/dotation-vehicule-detail/dotation-vehicule-detail.component';
 import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/dotation-vehicule-ajouter-bon-sortie/dotation-vehicule-ajouter-bon-sortie.component';
+import { DotationVehiculeNonDoteListeComponent } from './vehicules/dotation/dotation-vehicule-non-dote-liste/dotation-vehicule-non-dote-liste.component';
+import { DotationVehiculeDetailBonSortieComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie/dotation-vehicule-detail-bon-sortie.component';
+import { DotationVehiculeDetailBonSortieDetailComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie-detail/dotation-vehicule-detail-bon-sortie-detail.component';
+import { DotationVehiculeNonDoteAjouterComponent } from './vehicules/dotation/dotation-vehicule-non-dote-ajouter/dotation-vehicule-non-dote-ajouter.component';
 
 
 @NgModule({
@@ -50,9 +53,13 @@ import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/
     ConsultationReceptionVehiculeDetailComponent,
 
     DotationVehiculeListeComponent,
-    DotationVehiculeAjouterComponent,
+    DotationVehiculeNonDoteListeComponent,
     DotationVehiculeDetailComponent,
     DotationVehiculeAjouterBonSortieComponent,
+    DotationVehiculeDetailBonSortieComponent,
+    DotationVehiculeDetailBonSortieDetailComponent,
+    DotationVehiculeNonDoteAjouterComponent
+    
   ],
   imports: [
     BrowserModule,

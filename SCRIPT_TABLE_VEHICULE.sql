@@ -273,24 +273,27 @@ CREATE TABLE vehicule (
 
 ------------------------------------------------------------------------------------------------------------
 
-
-
-
 CREATE TABLE  bon_pour  (
-    identifiant_b_p  VARCHAR(25), 
-    description_b_p  VARCHAR(100), 
+    identifiant_b_p  VARCHAR(25), -- exemple : BPSG202311121243214 (SG+heure en timestamp)
     numero_courriel_origine INT,
     date_courriel_origine DATE,
     etat_b_p  VARCHAR(10),
     object_courriel_origine VARCHAR(255),
+    description_b_p  VARCHAR(100), 
+
     numero_arrive_d_l_f INT,
     date_arrive_d_l_f DATE,
+    observation_d_l_f  VARCHAR(255), 
+
     numero_arrive_b_l_m INT,
     date_arrive_b_l_m DATE,
+    observation_b_l_m  VARCHAR(255), 
+
     numero_arrive_section INT,
     date_arrive_section DATE,
+    observation_section  VARCHAR(255), 
+
     code_unite_douaniere VARCHAR(3),
-    observation_b_p  VARCHAR(255), 
     code_section VARCHAR(3),
     date_enregistrement  Timestamp,
     matricule_agent  VARCHAR(7),
@@ -301,6 +304,7 @@ CREATE TABLE  bon_pour  (
     CONSTRAINT FK_bon_de_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
     
 );
+
 
 
 
@@ -330,12 +334,11 @@ CREATE TABLE  bon_de_sortie  (
     code_section VARCHAR(3),
     date_enregistrement  Timestamp,
     identifiant_b_p VARCHAR(25), 
-    code_article_bon_pour VARCHAR(25),
     matricule_agent  VARCHAR(7),
     code_corps_agent VARCHAR(3),
     PRIMARY KEY (identifiant_b_s),
     CONSTRAINT FK_bon_de_sortie_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere),
-    CONSTRAINT FK_bon_de_sortie_article_bon_pour FOREIGN KEY (identifiant_b_p, code_article_bon_pour) REFERENCES article_bon_pour(identifiant_b_p, code_article_bon_pour),
+    CONSTRAINT FK_bon_de_sortie_bon_pour FOREIGN KEY (identifiant_b_p) REFERENCES bon_pour(identifiant_b_p),
     CONSTRAINT FK_bon_de_sortie_sections FOREIGN KEY (code_section) REFERENCES sections(code_section),
     CONSTRAINT FK_bon_de_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
 );
@@ -811,39 +814,39 @@ VALUES
     ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'modele 3', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW', '06K');
 
 
-INSERT INTO bon_pour (identifiant_b_p, description_b_p, numero_courriel_origine, date_courriel_origine, etat_b_p, object_courriel_origine, numero_arrive_d_l_f, date_arrive_d_l_f, numero_arrive_b_l_m, date_arrive_b_l_m, numero_arrive_section, date_arrive_section, code_unite_douaniere, observation_b_p, code_section, date_enregistrement, matricule_agent, code_corps_agent) 
+INSERT INTO bon_pour (identifiant_b_p, description_b_p, numero_courriel_origine, date_courriel_origine, etat_b_p, object_courriel_origine, numero_arrive_d_l_f, date_arrive_d_l_f, observation_d_l_f, numero_arrive_b_l_m, date_arrive_b_l_m, observation_b_l_m, numero_arrive_section, date_arrive_section, observation_section, code_unite_douaniere, code_section, date_enregistrement, matricule_agent, code_corps_agent) 
 VALUES 
-    ('BPSG202311121243214', 'Description 1', 123, '2024-01-24', 'Etat 1', 'Objet 1', 456, '2024-01-25', 789, '2024-01-26', 101, '2024-01-27', '06Z', 'Observation 1', 'SG', CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
-    ('BPSG202311121243215', 'Description 2', 124, '2024-01-25', 'Etat 2', 'Objet 2', 457, '2024-01-26', 790, '2024-01-27', 102, '2024-01-28', '06Z', 'Observation 2', 'SG', CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
-    ('BPSG202311121243216', 'Description 3', 125, '2024-01-26', 'Etat 3', 'Objet 3', 458, '2024-01-27', 791, '2024-01-28', 103, '2024-01-29', '06K', 'Observation 3', 'SG', CURRENT_TIMESTAMP, 'MAT003', 'CP3');
+    ('BPSG202311121243214', 'Description 1', 123, '2024-01-24', 'Initial', 'Objet 1', 456, '2024-01-25', 'Observation 1', 789, '2024-01-26', 'Observation 1', 101, '2024-01-27', 'Observation 1', '06Z', 'SG', CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
+    ('BPSG202311121243215', 'Description 2', 124, '2024-01-25', 'Initial', 'Objet 2', 457, '2024-01-26', 'Observation 1', 790, '2024-01-27', 'Observation 1', 102, '2024-01-28', 'Observation 1', '06Z', 'SG', CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    ('BPSG202311121243216', 'Description 3', 125, '2024-01-26', 'Initial', 'Objet 3', 458, '2024-01-27', 'Observation 1', 791, '2024-01-28', 'Observation 1', 103, '2024-01-29', 'Observation 1', '06K', 'SG', CURRENT_TIMESTAMP, 'MAT003', 'CP3');
 
 
 INSERT INTO article_bon_pour (identifiant_b_p, code_article_bon_pour, libelle_article_bon_pour, quantite_demandee, code_type_objet, matricule_agent, code_corps_agent) 
 VALUES 
-    ('BPSG202311121243214', 'Article 1', 'Article 1', 10, 'VEHIC', 'MAT001', 'CP1'),
-    ('BPSG202311121243215', 'Article 2', 'Article 2', 20, 'VEHIC', 'MAT002', 'CP2'),
-    ('BPSG202311121243216', 'Article 3', 'Article 3', 30, 'VEHIC', 'MAT003', 'CP3');
+    ('BPSG202311121243214', 'Article 1', 'libelle article 1', 10, 'VEHIC', 'MAT001', 'CP1'),
+    ('BPSG202311121243215', 'Article 1', 'libelle article 1', 20, 'VEHIC', 'MAT002', 'CP2'),
+    ('BPSG202311121243216', 'Article 1', 'libelle article 1', 30, 'VEHIC', 'MAT003', 'CP3');
 
 
-INSERT INTO bon_de_sortie (identifiant_b_s, numero_b_s, description_b_s, date_b_s, observation_b_s, code_unite_douaniere, code_section, date_enregistrement, identifiant_b_p, code_article_bon_pour, matricule_agent, code_corps_agent) 
+INSERT INTO bon_de_sortie (identifiant_b_s, numero_b_s, description_b_s, date_b_s, observation_b_s, code_unite_douaniere, code_section, date_enregistrement, identifiant_b_p, matricule_agent, code_corps_agent) 
 VALUES 
-    ('BSSG202311121243214', 'BS001', 'Description BS1', '2024-01-24', 'Observation BS1', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
-    ('BSSG202311121243215', 'BS002', 'Description BS2', '2024-01-25', 'Observation BS2', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243215', 'Article 2', 'MAT002', 'CP2'),
-    ('BSSG202311121243216', 'BS003', 'Description BS3', '2024-01-26', 'Observation BS3', '06K', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243216', 'Article 3', 'MAT003', 'CP3');
+    ('BSSG202311121243214', 'BS001', 'Description BS1', '2024-01-24', 'Observation BS1', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243214', 'MAT001', 'CP1'),
+    ('BSSG202311121243215', 'BS002', 'Description BS2', '2024-01-25', 'Observation BS2', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243215', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'BS003', 'Description BS3', '2024-01-26', 'Observation BS3', '06K', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243216', 'MAT003', 'CP3');
 
 
 INSERT INTO article_bon_sortie (identifiant_b_s, code_article_bon_sortie, libelle_article_bon_sortie, quantite_accordee, date_article_bon_sortie, identifiant_b_e, code_article_bon_entree, matricule_agent, code_corps_agent) 
 VALUES 
     ('BSSG202311121243214', 'Article 1', 'Article BS1', 5, '2024-01-24', 'BESA202312011043210', 'Article 1', 'MAT001', 'CP1'),
-    ('BSSG202311121243215', 'Article 2', 'Article BS2', 10, '2024-01-25', 'BESM202312021143211', 'Article 1', 'MAT002', 'CP2'),
-    ('BSSG202311121243216', 'Article 3', 'Article BS3', 15, '2024-01-26', 'BESG202312031243213', 'Article 1', 'MAT003', 'CP3');
+    ('BSSG202311121243215', 'Article 1', 'Article BS2', 10, '2024-01-25', 'BESM202312021143211', 'Article 1', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'Article 1', 'Article BS3', 15, '2024-01-26', 'BESG202312031243213', 'Article 1', 'MAT003', 'CP3');
 
 
 INSERT INTO dotation_vehicule (numero_serie, date_dotation, identifiant_b_s, code_article_bon_sortie, matricule_agent, code_corps_agent)  
 VALUES 
     ('123456', CURRENT_TIMESTAMP, 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
-    ('789012', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 2', 'MAT002', 'CP2'),
-    ('789013', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 3', 'MAT003', 'CP3');
+    ('789012', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 1', 'MAT002', 'CP2'),
+    ('789013', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 1', 'MAT003', 'CP3');
 
 
 

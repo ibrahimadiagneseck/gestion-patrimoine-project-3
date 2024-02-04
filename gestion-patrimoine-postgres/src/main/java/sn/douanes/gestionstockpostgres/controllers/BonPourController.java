@@ -35,7 +35,7 @@ public class BonPourController {
     @ResponseBody
     public BonPour AjouterBonPour(@RequestBody BonPour bonPour) {
         // return BonPourService.saveBonPour(BonPour);
-        return bonPourService.ajouterBonPour(bonPour.getIdentifiantBP(), bonPour.getDescriptionBP(), bonPour.getNumeroCourrielOrigine(), bonPour.getDateCourrielOrigine(), bonPour.getEtatBP(), bonPour.getObjectCourrielOrigine(), bonPour.getNumeroArriveDLF(), bonPour.getDateArriveDLF(), bonPour.getNumeroArriveBLM(), bonPour.getDateArriveBLM(), bonPour.getNumeroArriveSection(), bonPour.getDateArriveSection(), bonPour.getObservationBP(), bonPour.getCodeUniteDouaniere(), bonPour.getCodeSection(), bonPour.getMatriculeAgent());
+        return bonPourService.ajouterBonPour(bonPour.getDescriptionBP(), bonPour.getNumeroCourrielOrigine(), bonPour.getDateCourrielOrigine(), bonPour.getEtatBP(), bonPour.getObjectCourrielOrigine(), bonPour.getNumeroArriveDLF(), bonPour.getDateArriveDLF(), bonPour.getObservationDLF(), bonPour.getNumeroArriveBLM(), bonPour.getDateArriveBLM(),bonPour.getObservationBLM() , bonPour.getNumeroArriveSection(), bonPour.getDateArriveSection(), bonPour.getObservationSection(), bonPour.getCodeUniteDouaniere(), bonPour.getCodeSection(), bonPour.getMatriculeAgent());
     }
 
 

@@ -11,7 +11,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TypeUniteDouaniereService } from 'src/app/services/type-unite-douaniere.service';
 import { TypeUniteDouaniere } from 'src/app/model/type-unite-douaniere.model';
 import { SecuriteService } from 'src/app/services/securite.service';
-import { DotationVehiculeAjouterComponent } from '../dotation-vehicule-ajouter/dotation-vehicule-ajouter.component';
+import { ArticleBonPour } from 'src/app/model/article-bon-pour.model';
+import { BonPour } from 'src/app/model/bon-pour.model';
+import { ArticleBonPourService } from 'src/app/services/article-bon-pour.service';
+import { BonPourService } from 'src/app/services/bon-pour.service';
 
 @Component({
   selector: 'app-dotation-vehicule-liste',
@@ -22,11 +25,15 @@ import { DotationVehiculeAjouterComponent } from '../dotation-vehicule-ajouter/d
 })
 export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
-  public uniteDouanieres: UniteDouaniere[] = [];
-  public uniteDouaniere: UniteDouaniere | undefined;
 
-  public typeUniteDouanieres: TypeUniteDouaniere[] = [];
-  public typeUniteDouaniere: TypeUniteDouaniere | undefined;
+
+  public articleBonPours: ArticleBonPour[] = [];
+  public articleBonPour: ArticleBonPour | undefined;
+
+  public bonPours: BonPour[] = [];
+  public bonPour: BonPour | undefined;
+
+
 
   private subscriptions: Subscription[] = [];
 
@@ -59,50 +66,49 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
   // rechercher
   searchTerms = new Subject<string>();
-  uniteDouanieres$: Observable<UniteDouaniere[]> = of();
+  articleBonPours$: Observable<ArticleBonPour[]> = of();
   // recherche custom
-  searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere = new Subject<string>();
-  termeRechercheCodeUniteDouaniereNomUniteDouaniere: string = "";
-  uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$: Observable<UniteDouaniere[]> = of();
+  searchTermsFilterDoubleNumeroCourrielOrigineEtatBP = new Subject<string>();
+  termeRechercheNumeroCourrielOrigineEtatBP: string = "";
+  articleBonPourFilterDoubleNumeroCourrielOrigineEtatBP$: Observable<ArticleBonPour[]> = of();
   /* ----------------------------------------------------------------------------------------- */
 
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
   columnsDateFormat: string[] = [
-
+    "rowDateCourrielOrigine"
   ];
   columnsToHide: string[] = [
     // "nombreArme",
     // "nombreMateriel"
 
   ];
-  dataSource = new MatTableDataSource<UniteDouaniere>();
+  dataSource = new MatTableDataSource<ArticleBonPour>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
-    "codeUniteDouaniere",
-    "nomUniteDouaniere",
-    "effectifUniteDouaniere",
-    "rowTypeUniteDouaniere"
+    "rowNumeroCourrielOrigine",
+    "rowEtatBP",
+    "rowDateCourrielOrigine",
+    "libelleArticleBonPour",
+    "quantiteDemandee",
+    
   ];
   displayedColumnsCustom: string[] = [
-    "Code unite",
-    "Nom unite",
-    "Effectif unite",
-    "Type unite"
+    "N° courriel origine",
+    "Etat bon pour",
+    "Date courriel origine",
+    "Libelle article bon pour",
+    "Quantité demandée",
   ];
   /* ----------------------------------------------------------------------------------------- */
 
   constructor(
-
     private router: Router,
-    private uniteDouaniereService: UniteDouaniereService,
+    private articleBonPourService: ArticleBonPourService,
     private securiteService: SecuriteService,
-    private typeUniteDouaniereService: TypeUniteDouaniereService,
-    private matDialog: MatDialog,
-
-
-
+    private bonPourService: BonPourService,
+    private matDialog: MatDialog
   ) { }
 
   ngOnDestroy(): void {
@@ -110,28 +116,27 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.listeVehicules();
-    this.listeUniteDouanieres();
-    // this.listeBonEntrees();
+
+    this.listeArticleBonPours();
 
     /* ----------------------------------------------------------------------------------------- */
     // rechercher
-    this.uniteDouanieres$ = this.searchTerms.pipe(
+    this.articleBonPours$ = this.searchTerms.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereList(term, this.uniteDouanieres))
+      switchMap((term) => this.articleBonPourService.searchArticleBonPourList(term, this.articleBonPours))
       // {.....List(ab)............List(abc)......}
     );
-    this.uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$ = this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.pipe(
+    this.articleBonPourFilterDoubleNumeroCourrielOrigineEtatBP$ = this.searchTermsFilterDoubleNumeroCourrielOrigineEtatBP.pipe(
       // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(300),
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.uniteDouaniereService.searchUniteDouaniereListFilterDouble(term, this.uniteDouanieres))
+      switchMap((term) => this.articleBonPourService.searchArticleBonPourListFilterDouble(term, this.articleBonPours))
       // {.....List(ab)............List(abc)......}
     );
     /* ----------------------------------------------------------------------------------------- */
@@ -185,9 +190,9 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
 
   search(term: string): void {
-    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = term;
+    this.termeRechercheNumeroCourrielOrigineEtatBP = term;
     this.searchTerms.next(term);
-    this.searchTermsFilterDoubleCodeUniteDouaniereNomUniteDouaniere.next(term);
+    this.searchTermsFilterDoubleNumeroCourrielOrigineEtatBP.next(term);
   }
 
   applyFilter(event: Event): void {
@@ -196,16 +201,16 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
 
-  FilterDoubleCodeUniteDouaniereNomUniteDouaniere(termeRechercheCodeUniteDouaniereNomUniteDouaniere: string) {
-    this.termeRechercheCodeUniteDouaniereNomUniteDouaniere = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
-    this.myInputSearch.nativeElement.value = termeRechercheCodeUniteDouaniereNomUniteDouaniere;
-    this.dataSource.filter = termeRechercheCodeUniteDouaniereNomUniteDouaniere.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
+  FilterDoubleNumeroCourrielOrigineEtatBP(termeRechercheNumeroCourrielOrigineEtatBP: string) {
+    this.termeRechercheNumeroCourrielOrigineEtatBP = termeRechercheNumeroCourrielOrigineEtatBP;
+    this.myInputSearch.nativeElement.value = termeRechercheNumeroCourrielOrigineEtatBP;
+    this.dataSource.filter = termeRechercheNumeroCourrielOrigineEtatBP.trim().toLowerCase(); // supprimer les espaces vide et mettre minuscule
     this.focusOnInput = false;
   }
 
 
-  isNumber(termeRechercheNumeroBELibelleBonEntree: string): boolean {
-    return !isNaN(Number(termeRechercheNumeroBELibelleBonEntree))
+  isNumber(termeRechercheNumeroCourrielOrigineEtatBP: string): boolean {
+    return !isNaN(Number(termeRechercheNumeroCourrielOrigineEtatBP))
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
@@ -251,15 +256,17 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
 
 
 
-  public listeUniteDouanieres(): void {
+  public listeArticleBonPours(): void {
 
-    const subscription = this.uniteDouaniereService.listeUniteDouanieres().subscribe({
-      next: (response: UniteDouaniere[]) => {
-        this.uniteDouanieres = response;
+    const subscription = this.articleBonPourService.listeArticleBonPours().subscribe({
+      next: (response: ArticleBonPour[]) => {
+        this.articleBonPours = response;
 
-        this.dataSource = new MatTableDataSource<UniteDouaniere>(this.uniteDouanieres.map((item) => ({
+        this.dataSource = new MatTableDataSource<ArticleBonPour>(this.articleBonPours.map((item) => ({
           ...item,
-          rowTypeUniteDouaniere: item.codeTypeUniteDouaniere.libelleTypeUniteDouaniere
+          rowNumeroCourrielOrigine: item.identifiantBP.numeroCourrielOrigine,
+          rowEtatBP: item.identifiantBP.etatBP,
+          rowDateCourrielOrigine: item.identifiantBP.dateCourrielOrigine,
 
         })));
 
@@ -277,28 +284,18 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------------------------------------------
 
 
-  popupAjouterUniteDouaniere(): void {
-    const dialogRef = this.matDialog.open(
-      DotationVehiculeAjouterComponent,
-      {
-        width: '80%',
-        enterAnimationDuration: '100ms',
-        exitAnimationDuration: '100ms'
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.ngOnInit();
-    });
+  popupAjouterDotation(): void {
+    this.router.navigate(['/dotation-vehicule-detail', '', '']);
   }
 
+  goToDetail(articleBonPour: ArticleBonPour): void {
+    const identifiantBP = articleBonPour.identifiantBP.identifiantBP;
+    const codeArticleBonPour = articleBonPour.codeArticleBonPour;
 
-  goToDetail(uniteDouaniere: UniteDouaniere): void {
-    const id = uniteDouaniere.codeUniteDouaniere;
-    console.log(id);
+    const encrypt1 = this.securiteService.encryptUsingAES256(identifiantBP);
+    const encrypt2 = this.securiteService.encryptUsingAES256(codeArticleBonPour);
 
-    const encrypt = this.securiteService.encryptUsingAES256(id);
-    this.router.navigate(['/dotation-vehicule-detail', encrypt]);
+    this.router.navigate(['/dotation-vehicule-detail', encrypt1, encrypt2]);
   }
 
 

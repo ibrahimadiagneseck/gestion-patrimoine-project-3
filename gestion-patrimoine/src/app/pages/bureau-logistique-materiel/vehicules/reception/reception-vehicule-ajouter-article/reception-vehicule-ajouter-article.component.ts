@@ -436,22 +436,25 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
     // VehiculeForm.value.codeUniteDouaniere = this.uniteDouanieres[0];
 
     // ARTICLE BON ENTREE
-    VehiculeForm.value.identifiantBE = this.articleBonEntree;
+    // VehiculeForm.value.identifiantBE = this.articleBonEntree;
 
 
-    console.log(VehiculeForm.value);
+
+
+    this.vehicule = VehiculeForm.value;
+    this.validerArticleBonEntree();
     
-    this.subscriptions.push(this.vehiculeService.ajouterVehicule(VehiculeForm.value).subscribe({
-        next: (response: Vehicule) => {
-          console.log(response);  
-          // VehiculeForm.reset();
-          window.location.reload();
-        },
-        error: (errorResponse: HttpErrorResponse) => {
+    // this.subscriptions.push(this.vehiculeService.ajouterVehicule(VehiculeForm.value).subscribe({
+    //     next: (response: Vehicule) => {
+    //       console.log(response);  
+    //       // VehiculeForm.reset();
+    //       window.location.reload();
+    //     },
+    //     error: (errorResponse: HttpErrorResponse) => {
 
-        }
-      })
-    );
+    //     }
+    //   })
+    // );
   }
   // --------------------------------------------------------------------------
   // --------------------------------------------------------------------------
@@ -491,13 +494,43 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
 
     ArticleBonEntreeForm.value.quantiteEntree = 1;
 
-    console.log(ArticleBonEntreeForm.value);
-    
-    this.subscriptions.push(this.articleBonEntreeService.ajouterArticleBonEntree(ArticleBonEntreeForm.value).subscribe({
+    // const marque: string = VehiculeForm.value.marque;
+    // const model: string = VehiculeForm.value.model;
+    // const numeroSerie: string = VehiculeForm.value.numeroSerie;
+    // ArticleBonEntreeForm.value.listeArticleBonEntrees = `${marque}-${model}-${numeroSerie}`
+
+    this.articleBonEntree = ArticleBonEntreeForm.value;
+    this.submitVehiculeForm();
+
+
+    // this.subscriptions.push(this.articleBonEntreeService.ajouterArticleBonEntree(ArticleBonEntreeForm.value).subscribe({
+    //     next: (response: ArticleBonEntree) => {
+    //       console.log(response);
+    //       this.articleBonEntree = response;
+    //       this.submitVehiculeForm();
+    //       // ArticleBonEntreeForm.reset();
+    //     },
+    //     error: (errorResponse: HttpErrorResponse) => {
+
+    //     }
+    //   })
+    // );
+  }
+  // --------------------------------------------------------------------------------
+
+
+  validerArticleBonEntree(): void {
+
+    const marque: string = this.vehicule.codeMarque.libelleMarque;
+    const model: string = this.vehicule.modele;
+    const numeroSerie: string = this.vehicule.numeroSerie;
+    this.articleBonEntree.libelleArticleBonEntree = `${marque}-${model}-${numeroSerie}`;
+
+    this.subscriptions.push(this.articleBonEntreeService.ajouterArticleBonEntree(this.articleBonEntree).subscribe({
         next: (response: ArticleBonEntree) => {
           console.log(response);
           this.articleBonEntree = response;
-          this.submitVehiculeForm();
+          this.validerVehicule();
           // ArticleBonEntreeForm.reset();
         },
         error: (errorResponse: HttpErrorResponse) => {
@@ -506,8 +539,25 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       })
     );
   }
-  // --------------------------------------------------------------------------------
 
+  validerVehicule(): void {
+
+    this.vehicule.identifiantBE = this.articleBonEntree;
+
+    this.subscriptions.push(this.vehiculeService.ajouterVehicule(this.vehicule).subscribe({
+      next: (response: Vehicule) => {
+        console.log(response);  
+        // VehiculeForm.reset();
+        window.location.reload();
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+
+      }
+    })
+  );
+  }
+
+  
 
   popupFermer(): void {
     this.dialogRef.close();

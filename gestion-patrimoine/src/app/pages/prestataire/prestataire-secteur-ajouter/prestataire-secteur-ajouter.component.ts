@@ -127,7 +127,7 @@ export class PrestataireSecteurAjouterComponent implements OnInit, OnDestroy {
         next: (response: Prestataires) => {
           console.log(response);
           this.popupFermer();
-          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie du prestataire`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussi du prestataire`);
         },
         error: (errorResponse: HttpErrorResponse) => {
           // console.log(errorResponse);

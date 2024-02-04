@@ -1,4 +1,5 @@
 <div class="container1 bg-mywhite">
+
     <nav>
         <app-entete></app-entete>
     </nav>
@@ -40,23 +41,23 @@
                     <div *ngIf="focusOnInput" style="position: absolute; background-color: #e7e7e7;">
 
                         <ng-container
-                            *ngFor="let uniteDouaniere of uniteDouaniereFilterDoubleCodeUniteDouaniereNomUniteDouaniere$ | async;"
+                            *ngFor="let articleBonPour of articleBonPourFilterDoubleNumeroCourrielOrigineEtatBP$ | async;"
                             style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
                             <!-- {{ bonEntree | json }}  -->
                             <ng-container
-                                *ngIf="isNumber(termeRechercheCodeUniteDouaniereNomUniteDouaniere); else nonNumeric">
-                                <ng-container *ngIf="uniteDouaniere?.codeUniteDouaniere as codeUniteDouaniere;">
-                                    <a (click)="FilterDoubleCodeUniteDouaniereNomUniteDouaniere(codeUniteDouaniere)"
+                                *ngIf="isNumber(termeRechercheNumeroCourrielOrigineEtatBP); else nonNumeric">
+                                <ng-container *ngIf="articleBonPour?.identifiantBP?.numeroCourrielOrigine as numeroCourrielOrigine;">
+                                    <a (click)="FilterDoubleNumeroCourrielOrigineEtatBP(numeroCourrielOrigine.toString())"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                                        {{ codeUniteDouaniere }}
+                                        {{ numeroCourrielOrigine }}
                                     </a>
                                 </ng-container>
                             </ng-container>
                             <ng-template #nonNumeric>
-                                <ng-container *ngIf="uniteDouaniere?.nomUniteDouaniere as nomUniteDouaniere;">
-                                    <a (click)="FilterDoubleCodeUniteDouaniereNomUniteDouaniere(nomUniteDouaniere)"
+                                <ng-container *ngIf="articleBonPour?.identifiantBP?.etatBP as etatBP;">
+                                    <a (click)="FilterDoubleNumeroCourrielOrigineEtatBP(etatBP)"
                                         style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
-                                        {{ nomUniteDouaniere }}
+                                        {{ etatBP }}
                                     </a>
                                 </ng-container>
                             </ng-template>
@@ -89,7 +90,7 @@
                 </div>
 
                 <div class="col-3 d-flex justify-content-end">
-                    <img (click)="popupAjouterUniteDouaniere()" src="../../../../../assets/add.png" alt=""
+                    <img (click)="popupAjouterDotation()" src="../../../../../assets/add.png" alt=""
                         class="icon-button">
                     <img src="../../../../../assets/fichier-pdf.png" alt="" class="icon-button">
                     <!-- <img (click)="exporter.exportTable('xlsx', {fileName:'vehicule-liste'})" src="../../../../../assets/xls.png" alt="" class="icon-button"> -->
@@ -139,7 +140,6 @@
         </div>
 
     </main>
-
 
 
 </div>

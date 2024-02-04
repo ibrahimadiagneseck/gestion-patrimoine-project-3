@@ -39,6 +39,7 @@ export class AjouterBonPourListeDetailComponent implements OnInit, OnDestroy {
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
+  rowNumber!: number; // numéro de ligne pour le tableau
   // columnsToCodeMarque: string[] = [
   //   "codeMarque"
   // ];
@@ -53,12 +54,16 @@ export class AjouterBonPourListeDetailComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<ArticleBonPour>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
+    "rowNumber",
+    // "codeArticleBonPour",
     "libelleArticleBonPour",
     "quantiteDemandee",
     "rowCodeTypeObjet"
   ];
   displayedColumnsCustom: string[] = [
-    "Libellé article bon pour",
+    "N°",
+    // "Code article",
+    "Libellé article",
     "Quantité Demandée",
     "Type objet"
   ];
@@ -163,12 +168,13 @@ export class AjouterBonPourListeDetailComponent implements OnInit, OnDestroy {
       return articleBonPour.identifiantBP.identifiantBP && bonPour.identifiantBP && articleBonPour.identifiantBP.identifiantBP === bonPour.identifiantBP;
     }).sort((a, b) => Number(a.quantiteDemandee) - Number(b.quantiteDemandee));
 
-    
+    this.rowNumber = 1;
 
     // this.dataSource = new MatTableDataSource<IVehicule>(this.vehicules);
     this.dataSource = new MatTableDataSource<ArticleBonPour>(articleBonPours.map((item) => ({
       ...item,
       rowCodeTypeObjet: item.codeTypeObjet.libelleTypeObjet,
+      rowNumber: this.rowNumber++,
     })));
 
 

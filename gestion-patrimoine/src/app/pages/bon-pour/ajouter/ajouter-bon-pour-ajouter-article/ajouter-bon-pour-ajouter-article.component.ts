@@ -27,6 +27,11 @@ import { NgForm } from '@angular/forms';
 export class AjouterBonPourAjouterArticleComponent implements OnInit, OnDestroy {
 
 
+  nombreArticle: number = 0;
+  codeArticleBonPour: string = '';
+
+
+
   public bonPours: BonPour[] = [];
   // public bonPour: BonPour | undefined;
 
@@ -66,12 +71,36 @@ export class AjouterBonPourAjouterArticleComponent implements OnInit, OnDestroy 
   ngOnInit(): void {
     this.listeTypeObjets();
     this.listeAgents();
+    this.listeArticleBonPours();
   }
 
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+  public listeArticleBonPours(): void {
+
+    const subscription = this.articleBonPourService.listeArticleBonPours().subscribe({
+      next: (response: ArticleBonPour[]) => {
+        this.articleBonPours = response;
+        // console.log(this.typeObjets);
+
+        this.nombreArticle = this.nombreArticleBonEntree(this.bonPour, this.articleBonPours);
+        this.codeArticleBonPour = 'Article ' + (++this.nombreArticle);
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+  // ---------------------------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------------
+
 
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
@@ -121,6 +150,20 @@ export class AjouterBonPourAjouterArticleComponent implements OnInit, OnDestroy 
   }
 
 
+  nombreArticleBonEntree(bonPour: BonPour, articleBonPours: ArticleBonPour[]): number {
+    let nombreArticleBonPour = 0;
+
+    for (const articleBonPour of articleBonPours) {
+      // Comparer les bonEntree ici (assurez-vous d'implémenter une méthode de comparaison dans la classe BonEntree)
+      if (bonPour && articleBonPour.identifiantBP && JSON.stringify(bonPour) === JSON.stringify(articleBonPour.identifiantBP)) {
+        nombreArticleBonPour++;
+      }
+    }
+
+    return nombreArticleBonPour;
+  }
+
+
   // --------------------------------------------------------------------------
 
   private clickButton(buttonId: string): void {
@@ -163,13 +206,18 @@ export class AjouterBonPourAjouterArticleComponent implements OnInit, OnDestroy 
     ArticleBonPourForm.value.identifiantBP = this.bonPour;
     ArticleBonPourForm.value.matriculeAgent = this.agents[0];
 
-    console.log(ArticleBonPourForm.value);
+
+    ArticleBonPourForm.value.codeArticleBonPour = this.codeArticleBonPour;
+
+
+    // console.log(ArticleBonPourForm.value);
+
     
     this.subscriptions.push(this.articleBonPourService.ajouterArticleBonPour(ArticleBonPourForm.value).subscribe({
         next: (response: ArticleBonPour) => {
           console.log(response);
           this.popupFermer();
-          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie de l'article`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussi de l'article`);
         },
         error: (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);

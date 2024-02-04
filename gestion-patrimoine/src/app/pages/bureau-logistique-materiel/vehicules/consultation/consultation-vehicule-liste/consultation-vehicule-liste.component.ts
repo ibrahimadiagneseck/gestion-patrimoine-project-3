@@ -65,6 +65,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
 
   /* ----------------------------------------------------------------------------------------- */
   // tableau
+  rowNumber!: number; // numéro de ligne pour le tableau
   // columnsToCodeMarque: string[] = [
   //   "codeMarque"
   // ];
@@ -75,15 +76,18 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "dateMiseEnCirculation"
   ];
   columnsToHide: string[] = [
+    "numeroSerie",
     "numeroImmatriculation",
-    "typeEnergie",
+    "rowPays",
     "numeroCarteGrise",
-    "rowTypeVehicule",
-    "codeUniteDouaniere"
+    "dateMiseEnCirculation",
+    "rowTypeVehicule"
   ];
   dataSource = new MatTableDataSource<Vehicule>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
+    "rowNumber",
+    "rowLibelleArticleBonEntree",
     "numeroSerie",
     "numeroImmatriculation",
     "rowEtat",
@@ -92,9 +96,10 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "numeroCarteGrise",
     "dateMiseEnCirculation",
     "rowTypeVehicule",
-    "rowMarque"
   ];
   displayedColumnsCustom: string[] = [
+    "N°",
+    "Libelle article",
     "N° serie",
     "N° immatriculation",
     "Etat vehicule",
@@ -103,7 +108,6 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "N° carte grise",
     "Date mise en circulation",
     "Type vehicule",
-    "Marque"
   ];
   /* ----------------------------------------------------------------------------------------- */
 
@@ -246,7 +250,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
         // this.vehicules = response.sort((a, b) => a.numeroChassis - b.numeroChassis);
         // this.vehicules = response.sort((a, b) => new Date(b.dateModification).getTime() - new Date(a.dateModification).getTime());
 
-
+        this.rowNumber = 1;
 
         // this.dataSource = new MatTableDataSource<IVehicule>(this.vehicules);
         this.dataSource = new MatTableDataSource<Vehicule>(this.vehicules.map((item) => ({
@@ -256,7 +260,9 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
           rowPays: item.codePays.libellePays,
           rowEtat: item.codeEtat.libelleEtat,
           rowTypeEnergie: item.codeTypeEnergie.libelleTypeEnergie,
-          rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule
+          rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule,
+          rowLibelleArticleBonEntree: item.identifiantBE.libelleArticleBonEntree,
+          rowNumber: this.rowNumber++,
         })));
         
 

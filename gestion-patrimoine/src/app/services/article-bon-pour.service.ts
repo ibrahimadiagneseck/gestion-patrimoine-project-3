@@ -19,49 +19,49 @@ export class ArticleBonPourService {
 
   // ----------------------------------------------------------------------------
   // RECHERCHER BONENTREE SANS DOUBLONS
-  // public searchBonEntreeListFilterDouble(term: string, listeBonEntrees: BonEntree[]): Observable<BonEntree[]> {
+  public searchArticleBonPourListFilterDouble(term: string, listeArticleBonPours: ArticleBonPour[]): Observable<ArticleBonPour[]> {
 
-  //   if (term.length <= 1) {
-  //     return of([]);
-  //   }
+    if (term.length <= 1) {
+      return of([]);
+    }
 
-  //   // Filtrer la liste de bonEntrees en fonction du terme de recherche
-  //   const filteredBonEntrees: BonEntree[] = listeBonEntrees.filter((bonEntree) =>
-  //     bonEntree.numeroBE.toString().includes(term.toLowerCase()) || bonEntree.libelleBonEntree.toLowerCase().includes(term.toLowerCase())
-  //   );
+    // Filtrer la liste de articleBonPours en fonction du terme de recherche
+    const filteredArticleBonPours: ArticleBonPour[] = listeArticleBonPours.filter((articleBonPour) =>
+      articleBonPour.identifiantBP.numeroCourrielOrigine.toString().includes(term.toLowerCase()) || articleBonPour.identifiantBP.etatBP.toLowerCase().includes(term.toLowerCase())
+    );
 
-  //   // Utilisation de la méthode filter() pour éliminer les doublons
-  //   const filteredBonEntrees1: BonEntree[] = filteredBonEntrees.filter((item, index, self) =>
-  //     index === self.findIndex((t) => (
-  //         t.libelleBonEntree === item.libelleBonEntree || t.numeroBE === item.numeroBE
-  //     ))
-  //   );
+    // Utilisation de la méthode filter() pour éliminer les doublons
+    const filteredArticleBonPours1: ArticleBonPour[] = filteredArticleBonPours.filter((item, index, self) =>
+      index === self.findIndex((t) => (
+          t.identifiantBP.etatBP === item.identifiantBP.etatBP || t.identifiantBP.numeroCourrielOrigine === item.identifiantBP.numeroCourrielOrigine
+      ))
+    );
 
-  //   return of(filteredBonEntrees1);
-  // }
+    return of(filteredArticleBonPours1);
+  }
 
-  // // RECHERCHER BONENTREE
-  // public searchBonEntreeList(term: string, listeBonEntrees: BonEntree[]): Observable<BonEntree[]> {
-  //   if (term.length <= 1) {
-  //     return of([]);
-  //   }
+  // RECHERCHER ArticleBonPour
+  public searchArticleBonPourList(term: string, listeArticleBonPours: ArticleBonPour[]): Observable<ArticleBonPour[]> {
+    if (term.length <= 1) {
+      return of([]);
+    }
 
-  //   // Filtrer la liste de BonEntree en fonction du terme de recherche
-  //   const filteredBonEntrees = listeBonEntrees.filter((bonEntree) =>
-  //     this.doesBonEntreeMatchTerm(bonEntree, term)
-  //   );
+    // Filtrer la liste de ArticleBonPour en fonction du terme de recherche
+    const filteredArticleBonPours = listeArticleBonPours.filter((articleBonPour) =>
+      this.doesArticleBonPourMatchTerm(articleBonPour, term)
+    );
 
-  //   return of(filteredBonEntrees);
-  // }
+    return of(filteredArticleBonPours);
+  }
 
-  // private doesBonEntreeMatchTerm(bonEntree: BonEntree, term: string): boolean {
-  //   // Vérifier si le terme de recherche correspond à n'importe lequel des attributs du bonEntree
-  //   const termLowerCase = term.toLowerCase();
-  //   return (
-  //     bonEntree.numeroBE.toString().includes(termLowerCase) || bonEntree.libelleBonEntree.toLowerCase().includes(termLowerCase)
-  //     // Ajoutez d'autres attributs à vérifier si nécessaire
-  //   );
-  // }
+  private doesArticleBonPourMatchTerm(articleBonPour: ArticleBonPour, term: string): boolean {
+    // Vérifier si le terme de recherche correspond à n'importe lequel des attributs du articleBonPour
+    const termLowerCase = term.toLowerCase();
+    return (
+      articleBonPour.identifiantBP.numeroCourrielOrigine.toString().includes(termLowerCase) || articleBonPour.identifiantBP.etatBP.toLowerCase().includes(termLowerCase)
+      // Ajoutez d'autres attributs à vérifier si nécessaire
+    );
+  }
   // ----------------------------------------------------------------------------
 
 
@@ -89,7 +89,7 @@ export class ArticleBonPourService {
   }
 
   public recupererArticleBonPourById(identifiantBP: string, codeArticleBonPour: string): Observable<ArticleBonPour> {
-    return this.httpClient.get<ArticleBonPour>(`${this.urlServeur}/RecupererBonEntreeById/${identifiantBP}/${codeArticleBonPour}`);
+    return this.httpClient.get<ArticleBonPour>(`${this.urlServeur}/RecupererArticleBonPourById/${identifiantBP}/${codeArticleBonPour}`);
   }
 
 

@@ -30,6 +30,10 @@ import { MyDate } from 'src/app/model/my-date.model';
 })
 export class AjouterBonPourAjouterComponent implements OnInit, OnDestroy {
 
+
+  etatBonPour: string = 'Initial';
+
+
   // ----------------------------------------------------------------------------------
   modelDate1: NgbDateStruct | null = null;
   modelDate2: NgbDateStruct | null = null;
@@ -228,13 +232,15 @@ export class AjouterBonPourAjouterComponent implements OnInit, OnDestroy {
     BonPourForm.value.codeSection = this.sections[1];
     BonPourForm.value.matriculeAgent = this.agents[0];
 
+    BonPourForm.value.etatBP = this.etatBonPour;
+
     console.log(BonPourForm.value);
     
     this.subscriptions.push(this.bonPourService.ajouterBonPour(BonPourForm.value).subscribe({
         next: (response: BonPour) => {
           console.log(response);
           this.popupFermer();
-          this.sendNotification(NotificationType.SUCCESS, `Ajout réussie du bon pour`);
+          this.sendNotification(NotificationType.SUCCESS, `Ajout réussi du bon pour`);
         },
         error: (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);

@@ -48,11 +48,15 @@ public class BonDeSortie {
 
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "identifiant_b_p", referencedColumnName = "identifiant_b_p"),
-            @JoinColumn(name = "code_article_bon_pour", referencedColumnName = "code_article_bon_pour")
-    })
-    private ArticleBonPour identifiantBP;
+    @JoinColumn(name = "identifiant_b_p")
+    private BonPour identifiantBP;
+
+//    @ManyToOne
+//    @JoinColumns({
+//            @JoinColumn(name = "identifiant_b_p", referencedColumnName = "identifiant_b_p"),
+//            @JoinColumn(name = "code_article_bon_pour", referencedColumnName = "code_article_bon_pour")
+//    })
+//    private ArticleBonPour identifiantBP;
 
     @ManyToOne
     @JoinColumns({
