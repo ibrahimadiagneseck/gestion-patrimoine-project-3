@@ -477,12 +477,12 @@ VALUES
 
 
 -- Insertion des données dans la table article_bon_entree
-INSERT INTO article_bon_entree (identifiant_b_e, code_article_bon_entree, code_type_objet, libelle_article_bon_entree, quantite_entree, date_enregistrement, matricule_agent, code_corps_agent)
-VALUES 
-    ('BESA202312011043210', 'Article 1', 'ARMES', 'Libelle 1', 1, CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
-    ('BESM202312021143211', 'Article 1', 'VEHIC', 'Libelle 2', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
-    ('BESM202312021143211', 'Article 2', 'VEHIC', 'Libelle 3', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
-    ('BESG202312031243213', 'Article 1', 'ARMES', 'Libelle 4', 1, CURRENT_TIMESTAMP, 'MAT003', 'CP3');
+--INSERT INTO article_bon_entree (identifiant_b_e, code_article_bon_entree, code_type_objet, libelle_article_bon_entree, quantite_entree, date_enregistrement, matricule_agent, code_corps_agent)
+--VALUES 
+   -- ('BESA202312011043210', 'Article 1', 'ARMES', 'Jeep-toyota corolla-155555', 1, CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
+    --('BESM202312021143211', 'Article 1', 'VEHIC', 'Ford-honda civic-222222', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    --('BESM202312021143211', 'Article 2', 'VEHIC', 'Chevrolet silverado-volkswagen jetta-777777', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    --('BESG202312031243213', 'Article 1', 'ARMES', 'Toyota tacoma-hyundai elantra-888888', 1, CURRENT_TIMESTAMP, 'MAT003', 'CP3');
 
 
 
@@ -806,12 +806,22 @@ VALUES
     ('USAGE', 'USAGÉ');
 
 
+    -- Insertion des données dans la table article_bon_entree
+INSERT INTO article_bon_entree (identifiant_b_e, code_article_bon_entree, code_type_objet, libelle_article_bon_entree, quantite_entree, date_enregistrement, matricule_agent, code_corps_agent)
+VALUES 
+    ('BESA202312011043210', 'Article 1', 'ARMES', 'TOYOTA-CAMRY-123456', 1, CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
+    ('BESM202312021143211', 'Article 1', 'VEHIC', 'FORD-MUSTANG-789012', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    ('BESM202312021143211', 'Article 2', 'VEHIC', 'FORD-ESCAPE-789013', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
+    ('BESG202312031243213', 'Article 1', 'ARMES', 'BMW-X5-345678', 1, CURRENT_TIMESTAMP, 'MAT003', 'CP3');
+
+
+
 INSERT INTO vehicule (numero_serie, numero_immatriculation, identifiant_b_e, code_article_bon_entree, modele, code_etat, code_type_energie, code_pays, numero_carte_grise, date_mise_en_circulation, code_type_vehicule, code_marque, code_unite_douaniere)
 VALUES 
-    ('123456', 'ABC123', 'BESA202312011043210', 'Article 1', 'modele 1', 'NEUF', 'ESSENCE', 'US', 'CG123', '2023-01-01', 'TV1', 'TOY', '06Z'),
-    ('789012', 'XYZ789', 'BESM202312021143211', 'Article 1', 'modele 2', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
-    ('789013', 'XYZ789', 'BESM202312021143211', 'Article 2', 'modele 2', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
-    ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'modele 3', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW', '06K');
+    ('123456', 'ABC123', 'BESA202312011043210', 'Article 1', 'CAMRY', 'NEUF', 'ESSENCE', 'US', 'CG123', '2023-01-01', 'TV1', 'TOY', '06Z'),
+    ('789012', 'XYZ789', 'BESM202312021143211', 'Article 1', 'MUSTANG', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
+    ('789013', 'XYZ789', 'BESM202312021143211', 'Article 2', 'ESCAPE', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
+    ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'X5', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW', '06K');
 
 
 INSERT INTO bon_pour (identifiant_b_p, description_b_p, numero_courriel_origine, date_courriel_origine, etat_b_p, object_courriel_origine, numero_arrive_d_l_f, date_arrive_d_l_f, observation_d_l_f, numero_arrive_b_l_m, date_arrive_b_l_m, observation_b_l_m, numero_arrive_section, date_arrive_section, observation_section, code_unite_douaniere, code_section, date_enregistrement, matricule_agent, code_corps_agent) 

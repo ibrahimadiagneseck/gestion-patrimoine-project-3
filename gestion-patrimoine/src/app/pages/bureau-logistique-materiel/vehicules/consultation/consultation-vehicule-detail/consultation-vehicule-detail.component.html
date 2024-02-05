@@ -17,13 +17,13 @@
                 <form class="container px-3 py-2">
                     <div class="row g-4 mb-3">
                         <div class="col-12 mx-auto">
-                            <span class="fw-bold">Libelle article</span>
-                            <div class="text-input"> {{ libelleArticleBonEntree }} </div>
+                            <span class="fw-bold">Libellé article</span>
+                            <div class="text-input text-uppercase"> {{ libelleArticleBonEntree }} </div>
                         </div>
                     </div>
                 </form>
             </div>
-            
+
             <!-- ------------------Véhicule-------------------------------------------------------- -->
             <div class="text-center fw-bolder bg-myprimary mt-1" role="alert">
                 Véhicule
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="col-3 mx-auto">
-                            <span class="fw-bold">Date bon entree</span>
+                            <span class="fw-bold">Date bon entrée</span>
                             <div class="text-input text-uppercase"> {{ dateBonEntree | date: 'dd MMMM yyyy' | uppercase }} </div>
                         </div>
 
@@ -104,7 +104,7 @@
                     <div class="row g-4 mb-3">
                         <div class="col-12 mx-auto">
                             <span class="fw-bold">Prestataire</span>
-                            <div class="text-input"> {{ raisonSociale }} </div>
+                            <div class="text-input text-uppercase"> {{ raisonSociale }} </div>
                         </div>
                     </div>
                 </form>

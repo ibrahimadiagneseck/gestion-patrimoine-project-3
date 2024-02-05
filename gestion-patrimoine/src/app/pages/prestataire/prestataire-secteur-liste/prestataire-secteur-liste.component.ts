@@ -59,7 +59,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
     }
   }
   /* ----------------------------------------------------------------------------------------- */
-  
+
 
   /* ----------------------------------------------------------------------------------------- */
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
@@ -93,7 +93,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
     "NINEA",
     "N° téléphone",
     "Adresse",
-    "Adresse email",
+    "Email",
     "Raison sociale",
   ];
   /* ----------------------------------------------------------------------------------------- */
@@ -103,7 +103,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
     private secteurActiviteService: SecteurActiviteService,
     private matDialog: MatDialog,
   ) { }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -141,7 +141,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
 
     const data: Prestataires[] = this.dataSource.filteredData;
     // console.log(data);
-    
+
 
     const doc = new jsPDF();
 
@@ -156,7 +156,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
     ]);
 
     // Configuration pour le PDF avec une taille de page personnalisée
- 
+
     const marginLeft = 10;
     const marginTop = 10;
     const marginRight = 10;
@@ -259,7 +259,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
         // console.log(this.dataSource.data);
         this.dataSource.paginator = this.paginator;
         // ---------------------------------------------
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -280,7 +280,7 @@ export class PrestataireSecteurListeComponent implements OnInit, OnDestroy {
       next: (response: SecteurActivite[]) => {
         this.secteurActivites = response;
         // console.log(this.secteurActivites);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);

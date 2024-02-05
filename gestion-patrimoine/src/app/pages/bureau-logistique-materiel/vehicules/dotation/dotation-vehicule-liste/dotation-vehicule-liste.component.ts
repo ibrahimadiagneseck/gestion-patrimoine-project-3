@@ -92,13 +92,13 @@ export class DotationVehiculeListeComponent implements OnInit, OnDestroy {
     "rowDateCourrielOrigine",
     "libelleArticleBonPour",
     "quantiteDemandee",
-    
+
   ];
   displayedColumnsCustom: string[] = [
-    "N° courriel origine",
+    "N° courrier origine",
     "Etat bon pour",
-    "Date courriel origine",
-    "Libelle article bon pour",
+    "Date courrier origine",
+    "Libellé article bon pour",
     "Quantité demandée",
   ];
   /* ----------------------------------------------------------------------------------------- */
