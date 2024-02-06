@@ -13,7 +13,7 @@
         <div class="container bg-myprimary bg-gradient py-2 my-2" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); width: 98%;">
             <div class="row">
                 <div class="col-12 text-center fw-bolder fs-5">
-                    Réception des Véhicules
+                     Consultation Réception des Véhicules
                 </div>
             </div>
         </div>
@@ -123,7 +123,7 @@
                     <!-- Header row -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <!-- Data rows -->
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-uppercase"></tr>
                 </table>
 
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons

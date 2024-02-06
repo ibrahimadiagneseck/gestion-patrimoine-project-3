@@ -129,7 +129,7 @@
                     <!-- Header row -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <!-- Data rows -->
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-uppercase"></tr>
                 </table>
 
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons

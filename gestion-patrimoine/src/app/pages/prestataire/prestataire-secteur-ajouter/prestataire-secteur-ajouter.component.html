@@ -14,33 +14,33 @@
                         <label for="ninea" class="form-label fw-bold">NINEA</label>
                         <input id="ninea" type="text" name="ninea" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
-                        <label for="adresseEmail" class="form-label fw-bold">Adresse email</label>
+                        <label for="adresseEmail" class="form-label fw-bold">Email</label>
                         <input id="adresseEmail" type="text" name="adresseEmail" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
-                        <label for="numeroTelephone" class="form-label fw-bold">Numéro téléphone</label>
+                        <label for="numeroTelephone" class="form-label fw-bold">N° téléphone</label>
                         <input type="number" name="numeroTelephone" id="numeroTelephone" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
                 </div>
-            
-            
+
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group">
                         <label for="adresse" class="form-label fw-bold">Adresse</label>
                         <input id="adresse" type="text" name="adresse" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <!-- <label for="secteurActivite" class="form-label fw-bold">Secteur d'activité</label>
                         <input (click)="popupSecteurActivite(secteurActivites, prestataire)" id="secteurActivite" type="button" name="secteurActivite" required ngModel class="text-input form-control shadow-none bg-mysecondary border border-mysecondary px-1 text-uppercase"> -->
-                    
+
                         <label for="secteurActivite" class="form-label fw-bold">Secteur d'activité</label>
                         <!-- <input (click)="popupSecteurActivite(secteurActivites, prestataire)" [ngClass]="{'secteur-activites-select': secteurActivitesSelect && secteurActivitesSelect.length > 0, 'default-secteur-activites-select': !(secteurActivitesSelect && secteurActivitesSelect.length > 0)}" id="secteurActivite" type="button" name="secteurActivite" required  class="text-input form-control shadow-none border border-mysecondary px-1 text-uppercase fw-bold" value="Sélectionner">             -->
                         <!-- <input (click)="popupSecteurActivite(secteurActivites, prestataire)" [style.backgroundColor]="(secteurActivitesSelect && secteurActivitesSelect.length > 0) ? '#f0dd99' : '#D9D9D9'" id="secteurActivite" type="button" name="secteurActivite" required  class="text-input form-control shadow-none border border-mysecondary px-1 text-uppercase fw-bold" value="Sélectionner">             -->
-                
+
                         <input
                             *ngIf="secteurActivitesSelect && secteurActivitesSelect.length > 0"
                             (click)="popupSecteurActivite(secteurActivites, prestataire, secteurActivitesSelect)"
@@ -69,19 +69,19 @@
                             <input type="checkbox" checked autocomplete="off"> Checked
                         </label> -->
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                     </div>
                 </div>
-            
+
                 <div class="row g-4 mb-3">
                     <div class="col-11 mx-auto form-group">
                         <label for="raisonSociale" class="form-label fw-bold">Raison sociale</label>
                         <textarea name="raisonSociale" id="raisonSociale" rows="2" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase" style="resize: none;"></textarea>
                     </div>
                 </div>
-            
-            
+
+
                 <div class="row">
                     <div class="col-12 text-end">
                         <button type="submit" id="prestataire-form" hidden class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
@@ -89,7 +89,7 @@
                         </button>
                     </div>
                 </div>
-            
+
             </form>
         </div>
 
@@ -99,7 +99,7 @@
                     <button (click)="submitForm()" type="button" [disabled]="PrestataireForm.invalid || !(secteurActivitesSelect && secteurActivitesSelect.length > 0)" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
                         Valider
                     </button>
-        
+
                     <button (click)="popupFermer()" type="button" class="btn btn-mysecondary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour retourner">
                         Retour
                     </button>

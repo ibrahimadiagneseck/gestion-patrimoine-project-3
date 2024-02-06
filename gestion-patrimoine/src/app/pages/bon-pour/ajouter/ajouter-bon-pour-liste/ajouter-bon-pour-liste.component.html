@@ -39,7 +39,7 @@
 
                     <div *ngIf="focusOnInput" style="position: absolute; background-color: #e7e7e7;">
 
-                        
+
 
                         <ng-container *ngFor="let bonPour of bonPourFilterDoubleNumeroCourrielOrigineObjectCourrielOrigine$ | async;" style="cursor: pointer; display: block; color: gray; background-color: #fff; margin: 5px; text-decoration: none;">
                             <!-- {{ bonPour | json }}  -->
@@ -125,7 +125,7 @@
                     <!-- Header row -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <!-- Data rows -->
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-uppercase"></tr>
                 </table>
 
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons

@@ -41,7 +41,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
   public prestataires: Prestataires[] = [];
   public prestataire: Prestataires = new Prestataires();
-  
+
   public bonEntrees: BonEntree[] = [];
   public bonEntree: BonEntree | undefined;
 
@@ -94,21 +94,21 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
   displayedColumnsCustom: string[] = [
     // "N°",
     "N°",
-    "Libelle article",
+    "Libellé article",
     // "Marque",
     // "Modèle",
     "N° serie",
     "N° immatriculation",
-    "Etat vehicule",
-    "Type energie",
+    "Etat véhicule",
+    "Type énergie",
     "Provenance",
     "N° carte grise",
     "Date mise en circulation",
-    "Type vehicule"
-    
+    "Type véhicule"
+
   ];
   /* ----------------------------------------------------------------------------------------- */
-  
+
 
   constructor(
     private bonEntreeService: BonEntreeService,
@@ -139,7 +139,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
     // console.log(id);
     // console.log(decrypt);
-    
+
 
 
     if (decrypt) {
@@ -221,9 +221,9 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
         } else {
           console.error('bonEntree is undefined');
         }
-        
-        
-        
+
+
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -249,7 +249,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
 
     return nombreArticleBonEntree;
   }
-  
+
 
   filtreVehiculeBonEntree(vehicules: Vehicule[], bonEntree: BonEntree): void {
 
@@ -259,7 +259,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
       return vehicule.identifiantBE && bonEntree.identifiantBE && vehicule.identifiantBE.identifiantBE.identifiantBE === bonEntree.identifiantBE;
     });
 
-    
+
 
     // this.dataSource = new MatTableDataSource<IVehicule>(this.vehicules);
     this.dataSource = new MatTableDataSource<Vehicule>(vehicules.map((item) => ({
@@ -280,7 +280,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
   }
 
-  
+
 
   popupAjouterArticle(bonEntree: BonEntree | undefined): void {
     const dialogRef = this.matDialog.open(
@@ -313,7 +313,7 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
       this.ngOnInit();
     });
   }
-  
+
 
   popupDetail(vehicule: Vehicule): void {
     const dialogRef = this.matDialog.open(
@@ -336,12 +336,12 @@ export class ReceptionVehiculeDetailComponent implements OnInit, OnDestroy {
     if (!date) {
       return '';
     }
-  
+
     if (typeof date === 'string') {
       return this.myDateService.formatterMyDateFromString(date);
     } else {
       return this.myDateService.formatterMyDate(date);
     }
   }
-  
+
 }

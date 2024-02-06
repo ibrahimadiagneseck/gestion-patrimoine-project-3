@@ -63,7 +63,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
     }
   }
   /* ----------------------------------------------------------------------------------------- */
-  
+
 
   /* ----------------------------------------------------------------------------------------- */
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
@@ -102,7 +102,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
   ];
   displayedColumnsCustom: string[] = [
     "N° bon d\'entrée",
-    "Libelle bon d\'entrée",
+    "Libellé bon d\'entrée",
     "Date bon d\'entrée",
     "Observation bon d\'entrée",
     "Raison sociale",
@@ -118,7 +118,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
     private securiteService: SecuriteService,
     private matDialog: MatDialog,
   ) { }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -156,7 +156,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
 
     const data: BonEntree[] = this.dataSource.filteredData;
     // console.log(data);
-    
+
 
     const months = ['JANV.', 'FÉVR.', 'MARS', 'AVR.', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
 
@@ -172,7 +172,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
     ]);
 
     // Configuration pour le PDF avec une taille de page personnalisée
- 
+
     const marginLeft = 10;
     const marginTop = 10;
     const marginRight = 10;
@@ -228,7 +228,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
 
   //   const subscription = this.vehiculeService.listeVehicules().subscribe({
   //     next: (response: Vehicule[]) => {
-        
+
   //       this.vehicules = response;
   //       // this.vehicules = response.sort((a, b) => parseInt(a.numeroImmatriculation) - parseInt(b.numeroImmatriculation));
   //       // this.vehicules = response.sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
@@ -238,7 +238,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
 
   //       // recuperer la liste des bon entrees qui se trouvent dans la liste de vehicules
   //       this.filtreBonEntreeVehicule(this.vehicules, this.articleBonEntrees);
-        
+
   //     },
   //     error: (errorResponse: HttpErrorResponse) => {
   //       // console.log(errorResponse);
@@ -286,7 +286,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
           raisonSociale: item.identifiantBL.ninea ? item.identifiantBL.ninea.raisonSociale : '---',
           rowNombreArticleBonEntree: this.nombreArticleBonEntree(item, this.articleBonEntrees)
         })).sort((a, b) => a.rowNombreArticleBonEntree - b.rowNombreArticleBonEntree));
-    
+
         // console.log(this.dataSource.data);
         this.dataSource.paginator = this.paginator;
       },
@@ -299,7 +299,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
   }
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
-  
+
 
   // popupAjouterBordereauLivraisonBonEntree(): void {
   //   const dialogRef = this.matDialog.open(
@@ -315,8 +315,8 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
   //     this.ngOnInit();
   //   });
   // }
-  
-  
+
+
   goToDetail(bonEntree: BonEntree): void {
     const id = bonEntree.identifiantBE;
     const encrypt = this.securiteService.encryptUsingAES256(id);
@@ -327,7 +327,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
 
 
   // filtreBonEntreeVehicule(vehicules: Vehicule[], articleBonEntrees: ArticleBonEntree[]): void {
-    
+
 
   //   const listeBonEntree: BonEntree[] = vehicules.map((vehicule: Vehicule) => vehicule.identifiantBE.identifiantBE);
   //   // Supprimer les doublons en se basant sur la propriété identifiantBE
@@ -340,7 +340,7 @@ export class ConsultationReceptionVehiculeListeComponent implements OnInit, OnDe
   //     (elementActuel, indexActuel, tableauOriginal) =>
   //       tableauOriginal.findIndex((elementPrecedent) => elementPrecedent.identifiantBE === elementActuel.identifiantBE) === indexActuel
   //   );
-    
+
 
   //   this.dataSource = new MatTableDataSource<BonEntree>(listeBonEntreeUnique.map((item) => ({
   //     ...item,

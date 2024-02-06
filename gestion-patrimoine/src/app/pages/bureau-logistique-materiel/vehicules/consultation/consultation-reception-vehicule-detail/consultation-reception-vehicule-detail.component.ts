@@ -38,7 +38,7 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
 
   public prestataires: Prestataires[] = [];
   public prestataire: Prestataires = new Prestataires();
-  
+
   public bonEntrees: BonEntree[] = [];
   public bonEntree: BonEntree | undefined;
 
@@ -94,18 +94,18 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
     "Libelle article",
     // "Marque",
     // "Modèle",
-    "N° serie",
+    "N° série",
     "N° immatriculation",
-    "Etat vehicule",
-    "Type energie",
+    "Etat véhicule",
+    "Type énergie",
     "Provenance",
     "N° carte grise",
     "Date mise en circulation",
-    "Type vehicule"
-    
+    "Type véhicule"
+
   ];
   /* ----------------------------------------------------------------------------------------- */
-  
+
 
   constructor(
     private bonEntreeService: BonEntreeService,
@@ -136,7 +136,7 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
 
     // console.log(id);
     // console.log(decrypt);
-    
+
 
 
     if (decrypt) {
@@ -238,9 +238,9 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
         } else {
           console.error('bonEntree is undefined');
         }
-        
-        
-        
+
+
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -266,7 +266,7 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
 
     return nombreArticleBonEntree;
   }
-  
+
 
 
   filtreVehiculeBonEntree(vehicules: Vehicule[], bonEntree: BonEntree): void {
@@ -277,7 +277,7 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
       return vehicule.identifiantBE && bonEntree.identifiantBE && vehicule.identifiantBE.identifiantBE.identifiantBE === bonEntree.identifiantBE;
     });
 
-    
+
 
     // this.dataSource = new MatTableDataSource<IVehicule>(this.vehicules);
     this.dataSource = new MatTableDataSource<Vehicule>(vehicules.map((item) => ({
@@ -298,8 +298,8 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
     this.dataSource.paginator = this.paginator;
   }
 
-  
-  
+
+
 
   popupDetail(vehicule: Vehicule): void {
     const dialogRef = this.matDialog.open(
@@ -322,12 +322,12 @@ export class ConsultationReceptionVehiculeDetailComponent implements OnInit, OnD
     if (!date) {
       return '';
     }
-  
+
     if (typeof date === 'string') {
       return this.myDateService.formatterMyDateFromString(date);
     } else {
       return this.myDateService.formatterMyDate(date);
     }
   }
-  
+
 }

@@ -18,12 +18,12 @@
                         <label for="numeroBL" class="form-label fw-bold">N° bordereau</label>
                         <input id="numeroBL" type="text" name="numeroBL" required [(ngModel)]="bonEntree!.identifiantBL.numeroBL" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <!-- <div class="col-3 mx-auto form-group">
                         <label for="dateBL" class="form-label fw-bold">Date bordereau</label>
                         <input type="date" name="dateBL" id="dateBL" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required ngModel class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                     </div> -->
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="dateBL" class="form-label fw-bold">Date bordereau</label>
                         <input type="text" name="dateBL" id="dateBL" autocomplete="off" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required [(ngModel)]="modelDate1" [value]="formatterNgbDateStructToString(modelDate1)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
@@ -39,13 +39,13 @@
                         <input type="text" name="dateBL" id="dateBL" [formControl]="dateBLControl" autocomplete="off" ngbDatepicker #dp1="ngbDatepicker" (click)="dp1.toggle()" required [(ngModel)]="modelDate1" [value]="formatterNgbDateStructToString(modelDate1)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                     </div>
                      -->
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="lieuDeLivraison" class="form-label fw-bold">Lieu de livraison</label>
                         <input type="text" name="lieuDeLivraison" id="lieuDeLivraison" required [(ngModel)]="bonEntree!.identifiantBL.lieuDeLivraison" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
                 </div>
-            
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group d-none">
                         <label for="conformiteBL" class="form-label fw-bold">Conformite bordereau</label>
@@ -54,12 +54,12 @@
                             <option value="NON">NON</option>
                         </select>
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="nomLivreur" class="form-label fw-bold">Nom livreur</label>
                         <input type="text" name="nomLivreur" id="nomLivreur" required [(ngModel)]="bonEntree!.identifiantBL.nomLivreur" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <!-- <div class="col-7 mx-auto form-group">
                         <label for="ninea" class="form-label fw-bold">Prestataire</label>
                         <select name="ninea" id="ninea" required [(ngModel)]="bonEntree!.identifiantBL.ninea" class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
@@ -75,16 +75,16 @@
                             <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire.raisonSociale" [selected]="comparerSelected(prestataire.raisonSociale, bonEntree!.identifiantBL.ninea.raisonSociale)">
                                 {{ prestataire.raisonSociale }}
                             </option>
-                        </select>                
+                        </select>
                     </div> -->
-                    
+
                     <!-- <div class="col-7 mx-auto form-group">
                         <label for="ninea" class="form-label fw-bold">Prestataire</label>
                         <select name="ninea" id="ninea" required [(ngModel)]="bonEntree!.identifiantBL.ninea" class="form-select text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                             <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire.raisonSociale" [selected]="comparerSelected(prestataire.raisonSociale, bonEntree!.identifiantBL.ninea.raisonSociale)">
                                 {{ prestataire.raisonSociale }}
                             </option>
-                        </select>                
+                        </select>
                     </div> -->
 
                     <ng-container *ngIf="bonEntree!.identifiantBL.ninea; else pasDePrestataires">
@@ -94,7 +94,7 @@
                                 <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire.raisonSociale">
                                     {{ prestataire.raisonSociale }}
                                 </option>
-                            </select>                
+                            </select>
                         </div>
                     </ng-container>
                     <ng-template #pasDePrestataires>
@@ -104,20 +104,20 @@
                                 <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire.raisonSociale">
                                     {{ prestataire.raisonSociale }}
                                 </option>
-                            </select>                
+                            </select>
                         </div>
                     </ng-template>
 
                 </div>
-            
+
                 <div class="row g-4">
                     <div class="col-11 mx-auto form-group">
                         <label for="descriptionBL" class="form-label fw-bold">Description bordereau</label>
                         <textarea name="descriptionBL" id="descriptionBL" rows="2" required [(ngModel)]="bonEntree!.identifiantBL.descriptionBL" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase" style="resize: none;"></textarea>
                     </div>
                 </div>
-            
-            
+
+
                 <div class="row">
                     <div class="col-12 text-end">
                         <button type="submit" [disabled]="BordereauLivraisonForm.invalid" id="bordereau-livraison-form" hidden class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour valider">
@@ -125,7 +125,7 @@
                         </button>
                     </div>
                 </div>
-            
+
             </form>
         </div>
 
@@ -142,7 +142,7 @@
                         <label for="numeroBE" class="form-label fw-bold">N° bon d'entrée</label>
                         <input id="numeroBE" type="text" name="numeroBE" required [(ngModel)]="bonEntree!.numeroBE" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-                    
+
                     <div class="col-3 mx-auto form-group">
                         <label for="dateBonEntree" class="form-label fw-bold">Date bon d'entrée</label>
                         <input type="text" name="dateBonEntree" id="dateBonEntree" autocomplete="off" ngbDatepicker #dp2="ngbDatepicker" (click)="dp2.toggle()" required [(ngModel)]="modelDate2" [value]="formatterNgbDateStructToString(modelDate2)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
@@ -152,21 +152,21 @@
                         <label for="dateBonEntree" class="form-label fw-bold">Date bon d'entrée</label>
                         <input type="text" name="dateBonEntree" id="dateBonEntree" formControlName="due_date" autocomplete="off" ngbDatepicker #dp2="ngbDatepicker" (click)="dp2.toggle()" required [(ngModel)]="modelDate2" [value]="formatterNgbDateStructToString(modelDate2)" class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase">
                     </div> -->
-            
+
                     <div class="col-3 mx-auto form-group">
-                        <label for="libelleBonEntree" class="form-label fw-bold">Libelle bon d'entrée</label>
+                        <label for="libelleBonEntree" class="form-label fw-bold">Libellé bon d'entrée</label>
                         <input type="text" name="libelleBonEntree" id="libelleBonEntree" required [(ngModel)]="bonEntree!.libelleBonEntree" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
                 </div>
-            
-            
+
+
                 <div class="row g-4">
                     <div class="col-11 mx-auto form-group">
                         <label for="observationBonEntree" class="form-label fw-bold">Observation bon d'entrée</label>
                         <textarea name="observationBonEntree" id="observationBonEntree" rows="2" required [(ngModel)]="bonEntree!.observationBonEntree" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase" style="resize: none;"></textarea>
                     </div>
                 </div>
-            
+
                 <div class="row">
                     <div class="col-12 text-end">
                         <button type="submit" [disabled]="BonEntreeForm.invalid" id="bon-entree-form" hidden class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour valider">
@@ -174,7 +174,7 @@
                         </button>
                     </div>
                 </div>
-            
+
             </form>
         </div>
 
@@ -184,7 +184,7 @@
                     <button (click)="submitForm()" [disabled]="BonEntreeForm.invalid || BordereauLivraisonForm.invalid" type="button" class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour ajouter">
                         Valider
                     </button>
-        
+
                     <button (click)="popupFermer()" type="button" class="btn btn-mysecondary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour retourner">
                         Retour
                     </button>
