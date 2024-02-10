@@ -8,6 +8,7 @@ import sn.douanes.gestionstockpostgres.services.VehiculeService;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -61,6 +62,7 @@ public class VehiculeServiceImpl implements VehiculeService {
             MarqueVehicule codeMarque,
             UniteDouaniere codeUniteDouaniere,
             ArticleBonEntree identifiantBE
+
     ) {
 
         Vehicule vehicule = new Vehicule();
@@ -77,6 +79,21 @@ public class VehiculeServiceImpl implements VehiculeService {
         vehicule.setCodeMarque(codeMarque);
         vehicule.setCodeUniteDouaniere(codeUniteDouaniere);
         vehicule.setIdentifiantBE(identifiantBE);
+
+
+        vehiculeRepository.save(vehicule);
+        return vehicule;
+    }
+
+    @Override
+    public Vehicule ajouterVehiculeDotation(
+
+            Vehicule vehicule,
+            Set<DotationVehicule> dotationVehicule
+    ) {
+
+
+        vehicule.setDotationVehicule(dotationVehicule);
 
         vehiculeRepository.save(vehicule);
         return vehicule;

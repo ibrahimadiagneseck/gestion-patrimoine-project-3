@@ -12,7 +12,7 @@ export class BordereauLivraison {
   public lieuDeLivraison: string;
   public dateBL: MyDate;
   public conformiteBL: string;
-  public nomLivreur: string;
+  public representantPrestataire: string;
   public codeSection: Sections;
   public ninea: Prestataires;
   public matriculeAgent: Agent;
@@ -40,7 +40,7 @@ export class BordereauLivraison {
     lieuDeLivraison: string = '',
     dateBL: MyDate = new MyDate(),
     conformiteBL: string = '',
-    nomLivreur: string = '',
+    representantPrestataire: string = '',
     codeSection: Sections = new Sections(),
     ninea: Prestataires = new Prestataires(),
     matriculeAgent: Agent = new Agent()
@@ -51,10 +51,10 @@ export class BordereauLivraison {
     this.lieuDeLivraison = lieuDeLivraison;
     this.dateBL = dateBL;
     this.conformiteBL = conformiteBL;
-    this.nomLivreur = nomLivreur;
+    this.representantPrestataire = representantPrestataire;
     this.codeSection = codeSection;
     this.ninea = ninea;
     this.matriculeAgent = matriculeAgent;
   }
-  
+
 }

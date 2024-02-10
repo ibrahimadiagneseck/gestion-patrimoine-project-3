@@ -5,6 +5,7 @@ import sn.douanes.gestionstockpostgres.entities.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface VehiculeService {
 
@@ -17,6 +18,7 @@ public interface VehiculeService {
 
 
     Vehicule ajouterVehicule(String numeroSerie, String numeroImmatriculation, String modele, EtatVehicule codeEtat, TypeEnergie codeTypeEnergie, String numeroCarteGrise, Date dateMiseEnCirculation, Pays codePays, TypeVehicule codeTypeVehicule, MarqueVehicule codeMarque, UniteDouaniere codeUniteDouaniere, ArticleBonEntree identifiantBE);
+    Vehicule ajouterVehiculeDotation(Vehicule vehicule,Set<DotationVehicule> dotationVehicule );
 
 
 }

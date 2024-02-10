@@ -12,11 +12,11 @@ import { DotationVehiculeAjouterBonSortieComponent } from './vehicules/dotation/
 import { DotationVehiculeDetailBonSortieDetailComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie-detail/dotation-vehicule-detail-bon-sortie-detail.component';
 
 const routes: Routes = [
-  
+
   { path: 'consultation-vehicule', component: ConsultationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
-  
+
   { path: 'reception-vehicule', component: ReceptionVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
@@ -34,7 +34,7 @@ const routes: Routes = [
   }},
 
 
-  { path: 'dotation-vehicule', component: DotationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
+  { path: 'affectation-vehicule', component: DotationVehiculeListeComponent, canActivate: [AuthKeyClockGuard], data: {
     roles: ['USER']
   }},
   { path: 'dotation-vehicule-detail/:identifiantBP/:codeArticleBonPour', component: DotationVehiculeDetailComponent, canActivate: [AuthKeyClockGuard], data: {
@@ -47,7 +47,7 @@ const routes: Routes = [
     roles: ['USER']
   }},
 
-  
+
 
 
 

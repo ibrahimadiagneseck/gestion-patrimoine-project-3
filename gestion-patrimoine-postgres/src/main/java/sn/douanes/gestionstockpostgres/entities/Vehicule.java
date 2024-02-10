@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "vehicule")
@@ -69,6 +71,17 @@ public class Vehicule {
             @JoinColumn(name = "code_article_bon_entree", referencedColumnName = "code_article_bon_entree")
     })
     private ArticleBonEntree identifiantBE;
+
+
+
+        @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "vehiculeDotation")
+    private Set<DotationVehicule> dotationVehicule = new HashSet<>();
+
 
 //    @ManyToOne
 //    @JoinColumns({

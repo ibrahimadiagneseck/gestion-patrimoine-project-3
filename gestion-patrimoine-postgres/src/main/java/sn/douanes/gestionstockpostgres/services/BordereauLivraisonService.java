@@ -17,7 +17,7 @@ public interface BordereauLivraisonService {
     BordereauLivraison getBordereauLivraisonById(String id);
     List<BordereauLivraison> getAllBordereauLivraisons();
 
-    BordereauLivraison ajouterBordereauLivraison(String numeroBL, String descriptionBL, String lieuDeLivraison, Date dateBL, String conformiteBL, String nomLivreur, Sections codeSection, Prestataires ninea, Agent matriculeAgent);
+    BordereauLivraison ajouterBordereauLivraison(String numeroBL, String descriptionBL, String lieuDeLivraison, Date dateBL, String conformiteBL, String representantPrestataire, Sections codeSection, Prestataires ninea, Agent matriculeAgent);
 
     List<BordereauLivraison> getAllBordereauByNinea(Prestataires ninea);
 }

@@ -1,20 +1,24 @@
 package sn.douanes.gestionstockpostgres.services;
 
 import sn.douanes.gestionstockpostgres.entities.*;
+import sn.douanes.gestionstockpostgres.exception.entities.PrestatairesExistException;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface DotationVehiculeService {
 
-    DotationVehicule saveDotationVehicule(DotationVehicule a);
-    DotationVehicule updateDotationVehicule(DotationVehicule a);
-    void deleteDotationVehicule(DotationVehicule a);
-    void deleteDotationVehiculeById(Date dateDotation, Vehicule numeroSerie);
-    DotationVehicule getDotationVehiculeById(Date dateDotation, Vehicule numeroSerie);
+    DotationVehicule saveDotationVehicule(DotationVehicule d);
+    DotationVehicule updateDotationVehicule(DotationVehicule d);
+    void deleteDotationVehicule(DotationVehicule d);
+    void deleteDotationVehiculeById(String id);
+    DotationVehicule getDotationVehiculeById(String id);
     List<DotationVehicule> getAllDotationVehicules();
 
-    DotationVehicule ajouterDotationVehicule(Vehicule numeroSerie, ArticleBonSortie identifiantBS, Agent matriculeAgent);
+    DotationVehicule ajouterDotationVehicule(ArticleBonSortie identifiantBS, Agent matriculeAgent, Set<Vehicule> vehiculeDotation);
+
+
 
 
 }

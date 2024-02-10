@@ -18,6 +18,18 @@ ALTER TABLE bon_entree DROP CONSTRAINT IF EXISTS FK_bon_entree_bordereau_livrais
 ALTER TABLE article_bon_entree DROP CONSTRAINT IF EXISTS FK_article_bon_entree_agent;
 ALTER TABLE article_bon_entree DROP CONSTRAINT IF EXISTS FK_article_bon_entree_type_objet;
 ALTER TABLE article_bon_entree DROP CONSTRAINT IF EXISTS FK_article_bon_entree_bon_entree;
+ALTER TABLE article_bon_entree DROP CONSTRAINT IF EXISTS FK_article_bon_entree_lieu_stockage_vehicule;
+
+
+ALTER TABLE dotation_vehicule DROP CONSTRAINT IF EXISTS FK_dotation_vehicule_vehicule;
+ALTER TABLE dotation_vehicule DROP CONSTRAINT IF EXISTS FK_dotation_vehicule_bon_de_sortie;
+ALTER TABLE dotation_vehicule DROP CONSTRAINT IF EXISTS FK_dotation_vehicule_agent;
+
+
+ALTER TABLE dotation_vehicule_vehicule DROP CONSTRAINT IF EXISTS FK_dotation_vehicule_vehicule_vehicule;
+ALTER TABLE dotation_vehicule_vehicule DROP CONSTRAINT IF EXISTS FK_dotation_vehicule_vehicule_dotation_vehicule;
+
+
 
 ALTER TABLE vehicule DROP CONSTRAINT IF EXISTS FK_vehicule_pays;
 ALTER TABLE vehicule DROP CONSTRAINT IF EXISTS FK_vehicule_article_bon_entree;
@@ -56,6 +68,11 @@ DROP TABLE IF EXISTS sections;
 DROP TABLE IF EXISTS type_unite_douaniere;
 DROP TABLE IF EXISTS corps_agent;
 DROP TABLE IF EXISTS fonction_agent;
+DROP TABLE IF EXISTS lieu_stockage_vehicule;
+DROP TABLE IF EXISTS bon_de_sortie;
+DROP TABLE IF EXISTS dotation_vehicule;
+DROP TABLE IF EXISTS dotation_vehicule_vehicule;
+
 
 
 
@@ -198,7 +215,7 @@ CREATE TABLE bordereau_livraison ( -- exemple : BLSA202311121243214 (SA+heure en
     lieu_de_livraison VARCHAR(255),
     date_b_l DATE,
     conformite_b_l VARCHAR(3),
-    nom_livreur VARCHAR(512),
+    representant_prestataire VARCHAR(255),
     code_section VARCHAR(3),
     ninea VARCHAR(20),
     matricule_agent VARCHAR(7),
@@ -224,8 +241,10 @@ CREATE TABLE bon_entree ( -- exemple : BESG202311121243214 (SG+heure en Timestam
 
 
 CREATE TABLE article_bon_entree (
+
     identifiant_b_e VARCHAR(25),
     code_article_bon_entree VARCHAR(25),
+    code_lieu_vh VARCHAR,
     code_type_objet VARCHAR(5),
     libelle_article_bon_entree VARCHAR(255),
     quantite_entree INT,
@@ -235,7 +254,19 @@ CREATE TABLE article_bon_entree (
     PRIMARY KEY (identifiant_b_e, code_article_bon_entree),
     CONSTRAINT FK_article_bon_entree_bon_entree FOREIGN KEY (identifiant_b_e) REFERENCES bon_entree(identifiant_b_e),
     CONSTRAINT FK_article_bon_entree_type_objet FOREIGN KEY (code_type_objet) REFERENCES type_objet(code_type_objet),
+    CONSTRAINT FK_article_bon_entree_lieu_stockage_vehicule FOREIGN KEY (code_lieu_vh) REFERENCES lieu_stockage_vehicule(code_lieu_vh),
     CONSTRAINT FK_article_bon_entree_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+);
+
+
+
+CREATE TABLE lieu_stockage_vehicule (
+
+    code_lieu_vh VARCHAR(3),
+    libellle_lieu_vh VARCHAR(100),
+    nombre_limite_stockage_vh INT,
+    PRIMARY KEY (code_lieu_vh),
+   
 );
 
 
@@ -307,7 +338,6 @@ CREATE TABLE  bon_pour  (
 
 
 
-
 CREATE TABLE  article_bon_pour  (
     identifiant_b_p VARCHAR(25), 
     code_article_bon_pour VARCHAR(25),
@@ -362,17 +392,30 @@ CREATE TABLE  article_bon_sortie  (
 
 
 CREATE TABLE  dotation_vehicule (
-    numero_serie VARCHAR(30),
+    identifiant_d_v VARCHAR(25),-- exemple : DVSG202311121243214 (SG+heure en timestamp)
     date_dotation TIMESTAMP,
     identifiant_b_s VARCHAR(25), 
     code_article_bon_sortie VARCHAR(25),
     matricule_agent  VARCHAR(7),
     code_corps_agent VARCHAR(3),
-    PRIMARY KEY (numero_serie, date_dotation),
-    CONSTRAINT FK_dotation_vehicule_vehicule FOREIGN KEY (numero_serie) REFERENCES vehicule(numero_serie),
+    PRIMARY KEY (identifiant_d_v),
+   
     CONSTRAINT FK_dotation_vehicule_article_bon_sortie FOREIGN KEY (identifiant_b_s, code_article_bon_sortie) REFERENCES article_bon_sortie(identifiant_b_s, code_article_bon_sortie),
-    CONSTRAINT FK_dotation_vehicule FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
+    CONSTRAINT FK_dotation_vehicule_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
 );
+
+CREATE TABLE  dotation_vehicule_vehicule (
+
+    numero_serie VARCHAR(30),
+    identifiant_d_v VARCHAR(25),
+   
+
+    PRIMARY KEY (numero_serie,  identifiant_d_v),
+    CONSTRAINT FK_vehicule_dotation_vehicule_vehicule FOREIGN KEY (numero_serie) REFERENCES vehicule(numero_serie),
+    CONSTRAINT FK_vehicule_dotation_vehicule_dotation_vehicule FOREIGN KEY ( identifiant_d_v) REFERENCES dotation_vehicule ( identifiant_d_v)
+    
+);
+
 
 
 
@@ -462,7 +505,7 @@ VALUES
     ('MAT003', 'AGT03', 'Nom Agent 3', 'Prenom Agent 3', 555555555, 'FCT3', '06K', 'CP3');
 
 
-INSERT INTO bordereau_livraison (identifiant_b_l, numero_b_l, description_b_l, lieu_de_livraison, date_b_l, conformite_b_l, nom_livreur, code_section, ninea, matricule_agent, date_enregistrement, code_corps_agent)
+INSERT INTO bordereau_livraison (identifiant_b_l, numero_b_l, description_b_l, lieu_de_livraison, date_b_l, conformite_b_l, representant_prestataire, code_section, ninea, matricule_agent, date_enregistrement, code_corps_agent)
 VALUES 
     ('BLSA202312011043210', '001', 'Description BL 1', 'Lieu 1', '2023-12-01', 'OUI', 'Livreur 1', 'SA', '005177614', 'MAT001', CURRENT_TIMESTAMP, 'CP1'),
     ('BLSM202312021143211', '002', 'Description BL 2', 'Lieu 2', '2023-12-02', 'OUI', 'Livreur 2', 'SM', '005174222', 'MAT002', CURRENT_TIMESTAMP, 'CP2'),
@@ -806,13 +849,22 @@ VALUES
     ('USAGE', 'USAGÉ');
 
 
+
+INSERT INTO lieu_stockage_vehicule (code_lieu_vh, libellle_lieu_vh,nombre_limite_stockage_vh)
+VALUES ('PKN', 'pikine',50),
+       ('CLB', 'colobane',100),
+       ('LB6', 'liberté 6',200),
+       ('HGY', 'hlm grand yoff',40);
+
+
+   
     -- Insertion des données dans la table article_bon_entree
-INSERT INTO article_bon_entree (identifiant_b_e, code_article_bon_entree, code_type_objet, libelle_article_bon_entree, quantite_entree, date_enregistrement, matricule_agent, code_corps_agent)
+INSERT INTO article_bon_entree (identifiant_b_e, code_article_bon_entree, code_type_objet, libelle_article_bon_entree, quantite_entree, date_enregistrement, matricule_agent, code_corps_agent,code_lieu_vh)
 VALUES 
-    ('BESA202312011043210', 'Article 1', 'ARMES', 'TOYOTA-CAMRY-123456', 1, CURRENT_TIMESTAMP, 'MAT001', 'CP1'),
-    ('BESM202312021143211', 'Article 1', 'VEHIC', 'FORD-MUSTANG-789012', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
-    ('BESM202312021143211', 'Article 2', 'VEHIC', 'FORD-ESCAPE-789013', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2'),
-    ('BESG202312031243213', 'Article 1', 'ARMES', 'BMW-X5-345678', 1, CURRENT_TIMESTAMP, 'MAT003', 'CP3');
+    ('BESA202312011043210', 'Article 1', 'ARMES', 'TOYOTA-CAMRY-123456', 1, CURRENT_TIMESTAMP, 'MAT001', 'CP1','PKN'),
+    ('BESM202312021143211', 'Article 1', 'VEHIC', 'FORD-MUSTANG-789012', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2','CLB'),
+    ('BESM202312021143211', 'Article 2', 'VEHIC', 'FORD-ESCAPE-789013', 1, CURRENT_TIMESTAMP, 'MAT002', 'CP2','LB6'),
+    ('BESG202312031243213', 'Article 1', 'ARMES', 'BMW-X5-345678', 1, CURRENT_TIMESTAMP, 'MAT003', 'CP3','HGY');
 
 
 
@@ -852,11 +904,23 @@ VALUES
     ('BSSG202311121243216', 'Article 1', 'Article BS3', 15, '2024-01-26', 'BESG202312031243213', 'Article 1', 'MAT003', 'CP3');
 
 
-INSERT INTO dotation_vehicule (numero_serie, date_dotation, identifiant_b_s, code_article_bon_sortie, matricule_agent, code_corps_agent)  
+INSERT INTO dotation_vehicule ( identifiant_d_v, date_dotation, identifiant_b_s, code_article_bon_sortie, matricule_agent, code_corps_agent)  
 VALUES 
-    ('123456', CURRENT_TIMESTAMP, 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
-    ('789012', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 1', 'MAT002', 'CP2'),
-    ('789013', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 1', 'MAT003', 'CP3');
+    ('DVSG202311121243214', CURRENT_TIMESTAMP, 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
+    ('DVSG202311121243215', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 1', 'MAT002', 'CP2'),
+    ('DVSG202311121243216', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 1', 'MAT003', 'CP3');
+
+
+
+
+
+
+INSERT INTO dotation_vehicule_vehicule ( numero_serie, identifiant_d_v)  
+VALUES 
+    ( '123456', 'DVSG202311121243214'),
+    ( '789012', 'DVSG202311121243215'),
+    ( '789013', 'DVSG202311121243216');
+
 
 
 

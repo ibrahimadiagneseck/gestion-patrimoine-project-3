@@ -39,6 +39,14 @@ public class VehiculeController {
         return vehiculeService.ajouterVehicule(vehicule.getNumeroSerie(), vehicule.getNumeroImmatriculation(), vehicule.getModele(), vehicule.getCodeEtat(), vehicule.getCodeTypeEnergie(), vehicule.getNumeroCarteGrise(), vehicule.getDateMiseEnCirculation(), vehicule.getCodePays(), vehicule.getCodeTypeVehicule(), vehicule.getCodeMarque(), vehicule.getCodeUniteDouaniere(), vehicule.getIdentifiantBE());
     }
 
+    @PostMapping("/ajouterVehiculeDotation")
+    @ResponseBody
+    public Vehicule ajouterVehiculeDotation(@RequestBody Vehicule vehicule) {
+
+        return vehiculeService.ajouterVehiculeDotation(vehicule, vehicule.getDotationVehicule());
+    }
+
+
     @PostMapping("/AjouterRequestParamVehicule")
     public ResponseEntity<Vehicule> ajouterVehicule(
             @RequestParam("numeroSerie") String numeroSerie,

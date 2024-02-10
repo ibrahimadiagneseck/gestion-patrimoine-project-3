@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -20,28 +21,28 @@ public class DotationVehiculeServiceImpl implements DotationVehiculeService {
     DotationVehiculeRepository dotationVehiculeRepository;
 
     @Override
-    public DotationVehicule saveDotationVehicule(DotationVehicule a) {
-        return dotationVehiculeRepository.save(a);
+    public DotationVehicule saveDotationVehicule(DotationVehicule d) {
+        return dotationVehiculeRepository.save(d);
     }
 
     @Override
-    public DotationVehicule updateDotationVehicule(DotationVehicule a) {
-        return dotationVehiculeRepository.save(a);
+    public DotationVehicule updateDotationVehicule(DotationVehicule d) {
+        return dotationVehiculeRepository.save(d);
     }
 
     @Override
-    public void deleteDotationVehicule(DotationVehicule a) {
-        dotationVehiculeRepository.delete(a);
+    public void deleteDotationVehicule(DotationVehicule d) {
+        dotationVehiculeRepository.delete(d);
     }
 
     @Override
-    public void deleteDotationVehiculeById(Date dateDotation, Vehicule numeroSerie) {
-        dotationVehiculeRepository.deleteById(new DotationVehiculeId(dateDotation, numeroSerie));
+    public void deleteDotationVehiculeById(String id) {
+        dotationVehiculeRepository.deleteById(id);
     }
 
     @Override
-    public DotationVehicule getDotationVehiculeById(Date dateDotation, Vehicule numeroSerie) {
-        return dotationVehiculeRepository.findById(new DotationVehiculeId(dateDotation, numeroSerie)).isPresent() ? dotationVehiculeRepository.findById(new DotationVehiculeId(dateDotation, numeroSerie)).get() : null;
+    public DotationVehicule getDotationVehiculeById(String id) {
+        return dotationVehiculeRepository.findById(id).isPresent() ? dotationVehiculeRepository.findById(id).get() : null;
     }
 
 
@@ -54,20 +55,36 @@ public class DotationVehiculeServiceImpl implements DotationVehiculeService {
 
     @Override
     public DotationVehicule ajouterDotationVehicule(
-            Vehicule numeroSerie,
+
             ArticleBonSortie identifiantBS,
-            Agent matriculeAgent
+            Agent matriculeAgent,
+            Set<Vehicule> vehiculeDotation
     ) {
 
         DotationVehicule dotationVehicule = new DotationVehicule();
 
         dotationVehicule.setDateDotation(new Timestamp(System.currentTimeMillis()));
+        dotationVehicule.setIdentifiantDV(genererIdentifiantDV("SG", genererDateEnregistrement(dotationVehicule.getDateDotation())));
 
-        dotationVehicule.setNumeroSerie(numeroSerie);
+
+
         dotationVehicule.setIdentifiantBS(identifiantBS);
         dotationVehicule.setMatriculeAgent(matriculeAgent);
+        dotationVehicule.setVehiculeDotation(vehiculeDotation);
 
         return dotationVehiculeRepository.save(dotationVehicule);
+    }
+
+    private String genererIdentifiantDV(String codeSection, String dateDotation) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        return "DV" + codeSection + dateDotation;
+    }
+
+
+    private String genererDateEnregistrement(Timestamp dateEnregistrement) {
+        // Timestamp t = new Timestamp(System.currentTimeMillis())
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        return dateEnregistrement.toLocalDateTime().format(formatter);
     }
 
 

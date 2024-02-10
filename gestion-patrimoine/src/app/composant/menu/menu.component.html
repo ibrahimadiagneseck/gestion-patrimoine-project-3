@@ -20,11 +20,23 @@
             <button [routerLink]="'/consultation-reception-vehicule'" class="menu-button" href="#" style="padding-left: 80px;">
               Consultation Réception
             </button>
-            <button [routerLink]="'/maintenance-vehicule'" class="menu-button" href="#" style="padding-left: 80px;">
-              Maintenance Véhicule
+            <button class="collapsible menu-button">
+              <mat-icon class="me-4">directions_car</mat-icon> Maintenance Véhicule <mat-icon class="fa-solid fa-chevron-down ms-auto">expand_more</mat-icon>
             </button>
-            <button [routerLink]="'/dotation-vehicule'" class="menu-button" href="#" style="padding-left: 80px;">
-              Dotation Véhicule
+            <div class="content">
+
+                <button  class="menu-button" href="#" style="padding-left: 80px;">
+                  Réparation
+                </button>
+
+                <button  class="menu-button" href="#" style="padding-left: 80px;">
+                  Entretient
+                </button>
+
+            </div>
+
+            <button [routerLink]="'/affectation-vehicule'" class="menu-button" href="#" style="padding-left: 80px;">
+             Affectation des véhicules
             </button>
             <button [routerLink]="'/dotation-vehicule'" class="menu-button" href="#" style="padding-left: 80px;">
               Consultation Dotation

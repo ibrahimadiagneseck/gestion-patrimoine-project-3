@@ -46,7 +46,7 @@ public class BordereauLivraisonController {
     public BordereauLivraison AjouterBordereauLivraison(@RequestBody BordereauLivraison bordereauLivraison) {
 
         // return bordereauLivraisonService.saveBordereauLivraison(bordereauLivraison);
-        return bordereauLivraisonService.ajouterBordereauLivraison(bordereauLivraison.getNumeroBL(), bordereauLivraison.getDescriptionBL(), bordereauLivraison.getLieuDeLivraison(), bordereauLivraison.getDateBL(), bordereauLivraison.getConformiteBL(), bordereauLivraison.getNomLivreur(), bordereauLivraison.getCodeSection(), bordereauLivraison.getNinea(), bordereauLivraison.getMatriculeAgent());
+        return bordereauLivraisonService.ajouterBordereauLivraison(bordereauLivraison.getNumeroBL(), bordereauLivraison.getDescriptionBL(), bordereauLivraison.getLieuDeLivraison(), bordereauLivraison.getDateBL(), bordereauLivraison.getConformiteBL(), bordereauLivraison.getRepresentantPrestataire(), bordereauLivraison.getCodeSection(), bordereauLivraison.getNinea(), bordereauLivraison.getMatriculeAgent());
     }
 
 
@@ -58,7 +58,7 @@ public class BordereauLivraisonController {
             @RequestParam("lieuDeLivraison") String lieuDeLivraison,
             @RequestParam("dateBL") String dateBL,
             @RequestParam("conformiteBL") String conformiteBL,
-            @RequestParam("nomLivreur") String nomLivreur,
+            @RequestParam("representantPrestataire") String representantPrestataire,
             @RequestParam(value = "codeSection") String codeSectionString,
             @RequestParam(value = "ninea") String nineaString,
             @RequestParam(value = "matriculeAgent") String matriculeAgentString,
@@ -74,7 +74,7 @@ public class BordereauLivraisonController {
         Agent agent = agentService.getAgentById(matriculeAgentString, corpsAgent);
 
 
-        BordereauLivraison bordereauLivraison = bordereauLivraisonService.ajouterBordereauLivraison(numeroBL, descriptionBL, lieuDeLivraison, Date.valueOf(dateBL), conformiteBL, nomLivreur, sections, prestataires, agent);
+        BordereauLivraison bordereauLivraison = bordereauLivraisonService.ajouterBordereauLivraison(numeroBL, descriptionBL, lieuDeLivraison, Date.valueOf(dateBL), conformiteBL, representantPrestataire, sections, prestataires, agent);
         return new ResponseEntity<>(bordereauLivraison, OK);
     }
 

@@ -7,9 +7,10 @@ import sn.douanes.gestionstockpostgres.entities.keys.DotationVehiculeId;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@IdClass(DotationVehiculeId.class)
 @Table(name = "dotation_vehicule")
 @Data
 @NoArgsConstructor
@@ -18,14 +19,18 @@ import java.sql.Timestamp;
 @ToString
 public class DotationVehicule {
 
+
     @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // @Column(name = "identifiant_b_e", nullable = false, updatable = false)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "identifiant_d_v", length = 25)
+    private String identifiantDV;
+
+
     @Column(name = "date_dotation")
     private Timestamp dateDotation;
 
-    @Id
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "numero_serie")
-    private Vehicule numeroSerie;
 
 
     @ManyToOne
@@ -43,6 +48,19 @@ public class DotationVehicule {
             @JoinColumn(name = "code_corps_agent", referencedColumnName = "code_corps_agent")
     })
     private Agent matriculeAgent;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "dotation_vehicule_vehicule",
+            joinColumns = @JoinColumn(name = "identifiant_d_v"),
+            inverseJoinColumns = @JoinColumn(name = "numero_serie")
+    )
+    private Set<Vehicule> vehiculeDotation = new HashSet<>();
+
 
 
 }

@@ -35,7 +35,7 @@ public class DotationVehiculeController {
     @ResponseBody
     public DotationVehicule AjouterDotationVehicule(@RequestBody DotationVehicule dotationVehicule) {
         // return DotationVehiculeService.saveDotationVehicule(dotationVehicule);
-        return dotationVehiculeService.ajouterDotationVehicule(dotationVehicule.getNumeroSerie(), dotationVehicule.getIdentifiantBS(), dotationVehicule.getMatriculeAgent());
+        return dotationVehiculeService.ajouterDotationVehicule(dotationVehicule.getIdentifiantBS(), dotationVehicule.getMatriculeAgent(),dotationVehicule.getVehiculeDotation());
     }
 
 
@@ -56,24 +56,23 @@ public class DotationVehiculeController {
 
     @PutMapping("/ModifierDotationVehicule")
     @ResponseBody
-    public DotationVehicule ModifierDotationVehicule(@RequestBody DotationVehicule b) {
-        return dotationVehiculeService.updateDotationVehicule(b);
+    public DotationVehicule ModifierDotationVehicule(@RequestBody DotationVehicule d) {
+        return dotationVehiculeService.updateDotationVehicule(d);
     }
 
-    @DeleteMapping("SupprimerDotationVehiculeById/{dateDotation}/{numeroSerie}")
-    public void SupprimerArticleBonEntree(
-            @PathVariable("codeArticleBonEntree") Date dateDotation,
-            @PathVariable("identifiantBE") Vehicule numeroSerie
-    ) {
-        dotationVehiculeService.deleteDotationVehiculeById(dateDotation, numeroSerie);
+    @DeleteMapping("SupprimerDotationVehiculeById/{id}")
+    public void SupprimerDotationVehiculeById(@PathVariable("id") String identifiantDV) {
+
+        dotationVehiculeService.deleteDotationVehiculeById(identifiantDV);
     }
 
-    @GetMapping("RecupererDotationVehiculeById/{dateDotation}/{numeroSerie}")
+
+
+    @GetMapping("RecupererDotationVehiculeById/{id}")
     public DotationVehicule RecupererDotationVehiculeById(
-            @PathVariable("codeArticleBonEntree") Date dateDotation,
-            @PathVariable("identifiantBE") Vehicule numeroSerie
-    ) {
-        return dotationVehiculeService.getDotationVehiculeById(dateDotation, numeroSerie);
+            @PathVariable("id") String identifiantDV) {
+
+        return dotationVehiculeService.getDotationVehiculeById(identifiantDV);
     }
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {

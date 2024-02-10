@@ -44,19 +44,21 @@
                         </select>
                     </div>
 
+                    <div class="col-7 mx-auto form-group">
+                      <label for="ninea" class="form-label fw-bold">Prestataire</label>
+                      <select name="ninea" id="ninea" required ngModel class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
+                          <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire">
+                              {{ prestataire.raisonSociale }}
+                          </option>
+                      </select>
+                   </div>
+
                     <div class="col-3 mx-auto form-group">
-                        <label for="nomLivreur" class="form-label fw-bold">Nom livreur</label>
-                        <input type="text" name="nomLivreur" id="nomLivreur" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
+                        <label for="representantPrestataire" class="form-label fw-bold">Représentant prestataire</label>
+                        <input type="text" name="representantPrestataire" id="representantPrestataire" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
 
-                    <div class="col-7 mx-auto form-group">
-                        <label for="ninea" class="form-label fw-bold">Prestataire</label>
-                        <select name="ninea" id="ninea" required ngModel class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
-                            <option *ngFor="let prestataire of prestataires" [ngValue]="prestataire">
-                                {{ prestataire.raisonSociale }}
-                            </option>
-                        </select>
-                    </div>
+
 
 
                 </div>

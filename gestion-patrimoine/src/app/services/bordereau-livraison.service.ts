@@ -51,19 +51,19 @@ export class BordereauLivraisonService {
     formData.append('lieuDeLivraison', bordereauLivraison.lieuDeLivraison);
     formData.append('dateBL', formattedDate);
     formData.append('conformiteBL', bordereauLivraison.conformiteBL);
-    formData.append('nomLivreur', bordereauLivraison.nomLivreur);
+    formData.append('representantPrestataire', bordereauLivraison.representantPrestataire);
     formData.append('codeSection', bordereauLivraison.codeSection.codeSection);
     formData.append('ninea', bordereauLivraison.ninea.ninea);
     formData.append('matriculeAgent', bordereauLivraison.matriculeAgent.matriculeAgent);
     formData.append('codeCorpsAgent', bordereauLivraison.matriculeAgent.codeCorpsAgent.codeCorpsAgent);
-    
+
     return formData;
   }
 
 
   public formatterMyDate(myDate: MyDate): string  {
       if (!myDate || !myDate.year || !myDate.month || !myDate.day) {
-          return ''; 
+          return '';
       }
 
       const { year, month, day } = myDate;
@@ -73,5 +73,5 @@ export class BordereauLivraisonService {
       const formattedDate = datePipe.transform(date, 'yyyy-MM-dd') || '';
       return formattedDate;
   }
-  
+
 }

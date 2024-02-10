@@ -42,6 +42,10 @@ public class ArticleBonEntree {
     @JoinColumn(name = "code_type_objet")
     private TypeObjet codeTypeObjet;
 
+    @ManyToOne
+    @JoinColumn(name = "code_lieu_vh")
+    private LieuStockageVehicule codeLieuVH;
+
 
     @ManyToOne
     @JoinColumns({

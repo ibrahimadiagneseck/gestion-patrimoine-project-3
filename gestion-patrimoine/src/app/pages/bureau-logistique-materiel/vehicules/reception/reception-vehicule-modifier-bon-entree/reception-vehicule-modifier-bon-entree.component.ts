@@ -37,7 +37,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
   //   this.formatDate(new Date(2024, 0, 25)),
   //   Validators.required
   // );
-  
+
   modelDate1: NgbDateStruct | null = null;
   modelDate2: NgbDateStruct | null = null;
 
@@ -69,7 +69,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
 
   public bordereauLivraisons: BordereauLivraison[] = [];
   public bordereauLivraison: BordereauLivraison = new BordereauLivraison();
-  
+
 
   // ---------------------BORDEREAU LIVRAISON--------------------------------
   selectedValueConformiteBL: string = 'OUI';
@@ -112,7 +112,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     const dateBonEntree = this.bonEntree.dateBonEntree.toString();
     this.modelDate2 = this.formatterStringToNgbDateStruct(dateBonEntree);
 
-    
+
     this.listePrestataires();
     this.listeAgent();
     this.listeSections();
@@ -128,7 +128,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
       next: (response: BordereauLivraison[]) => {
         this.bordereauLivraisons = response;
         // console.log(this.bordereauLivraisons);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -148,7 +148,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
       next: (response: Agent[]) => {
         this.agents = response;
         // console.log(this.agents);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -169,7 +169,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
       next: (response: Prestataires[]) => {
         this.prestataires = response;
         // console.log(this.prestataires);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -189,7 +189,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
       next: (response: Sections[]) => {
         this.sections = response;
         // console.log(this.prestataires);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -209,7 +209,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
       next: (response: Agent[]) => {
         this.agents = response;
         // console.log(this.prestataires);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -223,7 +223,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
 
 
 
-  
+
 
   // --------------------------------------------------------------------------
   private clickButton(buttonId: string): void {
@@ -231,7 +231,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
   }
 
   // pour envoyer tous les formulaires
-  public submitForm(): void { 
+  public submitForm(): void {
 
 
     this.submitBordereauLivraisonForm();
@@ -242,10 +242,10 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
   }
 
 
-  
+
   // --------------------------------------------------------------------------
   // pour executer ajouterBordereauLivraison
-  public submitBordereauLivraisonForm(): void { 
+  public submitBordereauLivraisonForm(): void {
     this.clickButton('bordereau-livraison-form')
   }
 
@@ -257,7 +257,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     // this.subscriptions.push(this.bordereauLivraisonService.ajouterBordereauLivraisonRequestParam(formData).subscribe({
     //     next: (response: BordereauLivraison) => {
     //       console.log(response);
-          
+
     //     },
     //     error: (errorResponse: HttpErrorResponse) => {
 
@@ -272,7 +272,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     // const bordereauLivraisonForm1: NgForm = BordereauLivraisonForm;
     // BordereauLivraisonForm.control.get('dateBL')?.patchValue(formattedDate);
     // BordereauLivraisonForm.control.get('dateBL')?.setValue(formattedDate);
-    
+
 
     if (formattedDate) {
       BordereauLivraisonForm.value.dateBL = formattedDate;
@@ -280,7 +280,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
 
     BordereauLivraisonForm.value.identifiantBL = this.bonEntree.identifiantBL.identifiantBL;
     // BordereauLivraisonForm.value.matriculeAgent = this.bonEntree.identifiantBL.;
-    
+
     // SECTION ET AGENT
     BordereauLivraisonForm.value.codeSection = this.sections[0];
     BordereauLivraisonForm.value.matriculeAgent = this.agents[0];
@@ -293,9 +293,9 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
 
     // console.log(BordereauLivraisonForm.value);
     // console.log(this.bonEntree.identifiantBL);
-    
-    
-    
+
+
+
     this.subscriptions.push(this.bordereauLivraisonService.modifierBordereauLivraison(BordereauLivraisonForm.value).subscribe({
         next: (response: BordereauLivraison) => {
           this.bordereauLivraison = response;
@@ -317,7 +317,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
 
   // --------------------------------------------------------------------------
   // pour executer ajouterBonEntree
-  public submitBonEntreeForm(): void { 
+  public submitBonEntreeForm(): void {
     this.clickButton('bon-entree-form')
   }
 
@@ -329,7 +329,7 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     // this.subscriptions.push(this.bonEntreeService.ajouterBonEntreeRequestParam(formData).subscribe({
     //     next: (response: BonEntree) => {
     //       console.log(response);
-          
+
     //     },
     //     error: (errorResponse: HttpErrorResponse) => {
 
@@ -342,25 +342,25 @@ export class ReceptionVehiculeModifierBonEntreeComponent implements OnInit, OnDe
     const formattedDate = this.bonEntreeService.formatterMyDate(dateBL);
 
     // console.log(dateBL);
-    
+
 
     // const bordereauLivraisonForm1: NgForm = bordereauLivraisonForm;
     // bordereauLivraisonForm.control.get('dateBL')?.patchValue(formattedDate);
     // bordereauLivraisonForm.control.get('dateBL')?.setValue(formattedDate);
-    
+
 
     if (formattedDate) {
       bonEntreeForm.value.dateBonEntree = formattedDate;
     }
 
     bonEntreeForm.value.identifiantBE = this.bonEntree.identifiantBE;
-    
+
     // BORDEREAU LIVRAISON
     bonEntreeForm.value.identifiantBL = this.bordereauLivraison;
 
     console.log(bonEntreeForm.value);
-    
-    
+
+
     this.subscriptions.push(this.bonEntreeService.modifierBonEntree(bonEntreeForm.value).subscribe({
         next: (response: BonEntree) => {
           this.bonEntree = response;

@@ -61,7 +61,7 @@ public class BordereauLivraisonServiceImpl implements BordereauLivraisonService 
             String lieuDeLivraison,
             Date dateBL,
             String conformiteBL,
-            String nomLivreur,
+            String representantPrestataire,
             Sections codeSection,
             Prestataires ninea,
             Agent matriculeAgent
@@ -77,7 +77,7 @@ public class BordereauLivraisonServiceImpl implements BordereauLivraisonService 
         bordereauLivraison.setLieuDeLivraison(lieuDeLivraison);
         bordereauLivraison.setDateBL(dateBL);
         bordereauLivraison.setConformiteBL(conformiteBL);
-        bordereauLivraison.setNomLivreur(nomLivreur);
+        bordereauLivraison.setRepresentantPrestataire(representantPrestataire);
         bordereauLivraison.setCodeSection(codeSection);
         bordereauLivraison.setNinea(ninea);
         bordereauLivraison.setMatriculeAgent(matriculeAgent);

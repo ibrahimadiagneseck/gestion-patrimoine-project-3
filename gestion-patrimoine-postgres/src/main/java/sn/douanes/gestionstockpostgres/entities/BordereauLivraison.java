@@ -39,8 +39,8 @@ public class BordereauLivraison {
     private String conformiteBL;
 
 
-    @Column(name = "nom_livreur", length = 512)
-    private String nomLivreur;
+    @Column(name = "representant_prestataire")
+    private String representantPrestataire;
 
 
     @ManyToOne

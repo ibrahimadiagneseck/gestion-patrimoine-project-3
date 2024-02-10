@@ -9,6 +9,6 @@ import sn.douanes.gestionstockpostgres.entities.keys.DotationVehiculeId;
 
 
 @Repository
-public interface DotationVehiculeRepository extends JpaRepository<DotationVehicule, DotationVehiculeId> {
+public interface DotationVehiculeRepository extends JpaRepository<DotationVehicule, String> {
 
 }

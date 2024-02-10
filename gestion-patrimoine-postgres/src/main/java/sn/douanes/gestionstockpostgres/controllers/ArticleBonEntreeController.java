@@ -31,7 +31,7 @@ public class ArticleBonEntreeController {
     @PostMapping("/AjouterArticleBonEntree")
     @ResponseBody
     public ArticleBonEntree AjouterArticleBonEntree(@RequestBody ArticleBonEntree articleBonEntree) {
-        return articleBonEntreeService.ajouterArticleBonEntree(articleBonEntree.getIdentifiantBE(), articleBonEntree.getCodeArticleBonEntree(), articleBonEntree.getLibelleArticleBonEntree(), articleBonEntree.getQuantiteEntree(), articleBonEntree.getCodeTypeObjet(), articleBonEntree.getMatriculeAgent());
+        return articleBonEntreeService.ajouterArticleBonEntree(articleBonEntree.getIdentifiantBE(), articleBonEntree.getCodeArticleBonEntree(), articleBonEntree.getLibelleArticleBonEntree(), articleBonEntree.getQuantiteEntree(), articleBonEntree.getCodeTypeObjet(),articleBonEntree.getCodeLieuVH(), articleBonEntree.getMatriculeAgent());
     }
 
 
@@ -42,9 +42,10 @@ public class ArticleBonEntreeController {
             @RequestParam("libelleArticleBonEntree") String libelleArticleBonEntree,
             @RequestParam("quantiteEntree") Integer quantiteEntree,
             @RequestParam("codeTypeObjet") TypeObjet codeTypeObjet,
+            @RequestParam("codeLieuVH") LieuStockageVehicule codeLieuVH,
             @RequestParam("matriculeAgent") Agent matriculeAgent
     ) {
-        ArticleBonEntree articleBonEntree = articleBonEntreeService.ajouterArticleBonEntree(identifiantBE, codeArticleBonEntree, libelleArticleBonEntree, quantiteEntree, codeTypeObjet, matriculeAgent);
+        ArticleBonEntree articleBonEntree = articleBonEntreeService.ajouterArticleBonEntree(identifiantBE, codeArticleBonEntree, libelleArticleBonEntree, quantiteEntree, codeTypeObjet,codeLieuVH, matriculeAgent);
         return new ResponseEntity<>(articleBonEntree, OK);
     }
 

@@ -59,7 +59,9 @@ public class ArticleBonEntreeServiceImpl implements ArticleBonEntreeService {
             String libelleArticleBonEntree,
             Integer quantiteEntree,
             TypeObjet codeTypeObjet,
+            LieuStockageVehicule codeLieuVH,
             Agent matriculeAgent
+
     ) {
 
         ArticleBonEntree articleBonEntree = new ArticleBonEntree();
@@ -71,7 +73,9 @@ public class ArticleBonEntreeServiceImpl implements ArticleBonEntreeService {
         articleBonEntree.setLibelleArticleBonEntree(libelleArticleBonEntree);
         articleBonEntree.setQuantiteEntree(quantiteEntree);
         articleBonEntree.setCodeTypeObjet(codeTypeObjet);
+        articleBonEntree.setCodeLieuVH(codeLieuVH);
         articleBonEntree.setMatriculeAgent(matriculeAgent);
+
 
         return articleBonEntreeRepository.save(articleBonEntree);
     }
