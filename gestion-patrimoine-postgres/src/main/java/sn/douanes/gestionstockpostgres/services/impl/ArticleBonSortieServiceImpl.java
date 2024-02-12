@@ -55,8 +55,6 @@ public class ArticleBonSortieServiceImpl implements ArticleBonSortieService {
             String codeArticleBonSortie,
             String libelleArticleBonSortie,
             Integer quantiteAccordee,
-            Date dateArticleBonSortie,
-            ArticleBonEntree identifiantBE,
             Agent matriculeAgent
     ) {
 
@@ -66,8 +64,8 @@ public class ArticleBonSortieServiceImpl implements ArticleBonSortieService {
         articleBonSortie.setCodeArticleBonSortie(codeArticleBonSortie);
         articleBonSortie.setLibelleArticleBonSortie(libelleArticleBonSortie);
         articleBonSortie.setQuantiteAccordee(quantiteAccordee);
-        articleBonSortie.setDateArticleBonSortie(dateArticleBonSortie);
-        articleBonSortie.setIdentifiantBE(identifiantBE);
+        articleBonSortie.setDateArticleBonSortie(new Date(System.currentTimeMillis()));
+
         articleBonSortie.setMatriculeAgent(matriculeAgent);
 
         return articleBonSortieRepository.save(articleBonSortie);

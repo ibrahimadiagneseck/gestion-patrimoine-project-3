@@ -34,6 +34,8 @@ import { PaysService } from 'src/app/services/pays.service';
 import { MyDate } from 'src/app/model/my-date.model';
 import { ReceptionVehiculeListeDetailComponent } from '../reception-vehicule-liste-detail/reception-vehicule-liste-detail.component';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { LieuStockageVehicule } from 'src/app/model/lieu-stockage-vehicule.model';
+import { LieuStockageVehiculeService } from 'src/app/services/lieu-stockage-vehicule.service';
 
 
 @Component({
@@ -64,7 +66,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   nombreArticle: number = 0;
   codeArticleBonEntree: string = '';
 
-  // libelleTypeObjet: string = ''; 
+  // libelleTypeObjet: string = '';
 
 
   // onCodeTypeObjetChange(typeObjet: TypeObjet): void {
@@ -75,6 +77,11 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
 
   public typeVehicules: TypeVehicule[] = [];
   public typeVehicule: TypeVehicule = new TypeVehicule();
+
+  public lieuStockageVehicules: LieuStockageVehicule[] = [];
+  public lieuStockageVehicule: LieuStockageVehicule = new LieuStockageVehicule();
+
+
 
   public typeEnergies: TypeEnergie[] = [];
   public typeEnergie: TypeEnergie = new TypeEnergie();
@@ -157,6 +164,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
     private datePipe: DatePipe,
     private typeVehiculeService: TypeVehiculeService,
     private typeEnergieService: TypeEnergieService,
+    private lieuStockageVehiculeService: LieuStockageVehiculeService,
     private etatVehiculeService: EtatVehiculeService,
     private marqueVehiculeService: MarqueVehiculeService,
     private uniteDouaniereService: UniteDouaniereService,
@@ -179,6 +187,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   ngOnInit(): void {
     this.listeTypeVehicules();
     this.listeTypeEnergies();
+    this.listeLieuStockageVehicules();
     this.listeEtatVehicules();
     this.listeMarqueVehicules();
     this.listeUniteDouanieres();
@@ -198,9 +207,26 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: ArticleBonEntree[]) => {
         this.articleBonEntrees = response;
         // console.log(this.articleBonEntrees);
-        
+
         this.nombreArticle = this.nombreArticleBonEntree(this.bonEntree, this.articleBonEntrees);
         this.codeArticleBonEntree = 'Article ' + (++this.nombreArticle);
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+  public listeLieuStockageVehicules(): void {
+
+    const subscription = this.lieuStockageVehiculeService.listeLieuStockageVehicules().subscribe({
+      next: (response: LieuStockageVehicule[]) => {
+        this.lieuStockageVehicules = response;
+        // console.log(this.articleBonEntrees);
+
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -221,7 +247,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: TypeObjet[]) => {
         this.typeObjets = response;
         // console.log(this.typeObjets);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -241,7 +267,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: Agent[]) => {
         this.agents = response;
         // console.log(this.agents);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -261,7 +287,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: TypeVehicule[]) => {
         this.typeVehicules = response;
         // console.log(this.typeVehicules);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -281,7 +307,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: TypeEnergie[]) => {
         this.typeEnergies = response;
         // console.log(this.typeEnergies);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -301,7 +327,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: EtatVehicule[]) => {
         this.etatVehicules = response;
         // console.log(this.etatVehicules);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -321,7 +347,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: MarqueVehicule[]) => {
         this.marqueVehicules = response;
         // console.log(this.marqueVehicules);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -333,7 +359,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
 
-  
+
   // ---------------------------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------
   public listeUniteDouanieres(): void {
@@ -342,7 +368,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: UniteDouaniere[]) => {
         this.uniteDouanieres = response;
         // console.log(this.uniteDouanieres);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -364,7 +390,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
       next: (response: Pays[]) => {
         this.pays = response;
         // console.log(this.pays);
-        
+
       },
       error: (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse);
@@ -398,7 +424,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   }
 
   // pour executer ajouterBonEntree
-  public submitVehiculeForm(): void { 
+  public submitVehiculeForm(): void {
     this.clickButton('vehicule-form')
   }
 
@@ -410,7 +436,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
     // this.subscriptions.push(this.vehiculeService.ajouterVehiculeRequestParam(formData).subscribe({
     //     next: (response: Vehicule) => {
     //       console.log(response);
-          
+
     //     },
     //     error: (errorResponse: HttpErrorResponse) => {
 
@@ -425,12 +451,12 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
     // const bordereauLivraisonForm1: NgForm = bordereauLivraisonForm;
     // bordereauLivraisonForm.control.get('dateBL')?.patchValue(formattedDate);
     // bordereauLivraisonForm.control.get('dateBL')?.setValue(formattedDate);
-    
+
 
     if (formattedDate) {
       VehiculeForm.value.dateMiseEnCirculation = formattedDate;
     }
-    
+
 
     // UNITE DOUANIERE
     // VehiculeForm.value.codeUniteDouaniere = this.uniteDouanieres[0];
@@ -443,10 +469,10 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
 
     this.vehicule = VehiculeForm.value;
     this.validerArticleBonEntree();
-    
+
     // this.subscriptions.push(this.vehiculeService.ajouterVehicule(VehiculeForm.value).subscribe({
     //     next: (response: Vehicule) => {
-    //       console.log(response);  
+    //       console.log(response);
     //       // VehiculeForm.reset();
     //       window.location.reload();
     //     },
@@ -460,7 +486,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   // --------------------------------------------------------------------------
 
   // pour executer ajouterBonEntree
-  public submitArticleBonEntreeForm(): void { 
+  public submitArticleBonEntreeForm(): void {
     this.clickButton('article-bon-entree-form')
   }
 
@@ -472,7 +498,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
     // this.subscriptions.push(this.articleBonEntreeService.ajouterArticleBonEntree(formData).subscribe({
     //     next: (response: ArticleBonEntree) => {
     //       console.log(response);
-          
+
     //     },
     //     error: (errorResponse: HttpErrorResponse) => {
 
@@ -546,7 +572,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
 
     this.subscriptions.push(this.vehiculeService.ajouterVehicule(this.vehicule).subscribe({
       next: (response: Vehicule) => {
-        console.log(response);  
+        console.log(response);
         // VehiculeForm.reset();
         window.location.reload();
       },
@@ -557,7 +583,7 @@ export class ReceptionVehiculeAjouterArticleComponent implements OnInit, OnDestr
   );
   }
 
-  
+
 
   popupFermer(): void {
     this.dialogRef.close();

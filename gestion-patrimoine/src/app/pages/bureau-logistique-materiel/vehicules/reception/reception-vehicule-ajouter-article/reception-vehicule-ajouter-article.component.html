@@ -11,7 +11,7 @@
 
         <div class="container px-3 py-2">
             <form class="form" #ArticleBonEntreeForm="ngForm" (ngSubmit)="ajouterArticleBonEntree(ArticleBonEntreeForm)">
-            
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group" *ngIf="typeObjets && typeObjets[1]; else emptyTypeObjet">
                         <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
@@ -21,7 +21,7 @@
                             </option>
                         </select>
                     </div>
-                    
+
                     <ng-template #emptyTypeObjet>
                         <div class="col-3 mx-auto form-group">
                             <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
@@ -30,7 +30,7 @@
                             </select>
                         </div>
                     </ng-template>
-                    
+
 
                     <!-- <div class="col-3 mx-auto form-group">
                         <label for="codeTypeObjet" class="form-label fw-bold">Type objet</label>
@@ -40,7 +40,7 @@
                             </option>
                         </select>
                     </div> -->
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="codeArticleBonEntree" class="form-label fw-bold">N° article</label>
                         <input id="codeArticleBonEntree" type="text" name="codeArticleBonEntree" disabled required [(ngModel)]="codeArticleBonEntree" class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
@@ -52,14 +52,21 @@
                     </div>
 
                     <div class="col-3 mx-auto form-group">
-                    </div>
-            
+                      <label for="codeLieuVH" class="form-label fw-bold">Lieu stockage vehicule</label>
+                      <select id="codeLieuVH" name="codeLieuVH" required ngModel
+                          class="form-select text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
+                          <option *ngFor="let lieuStockageVehicule of lieuStockageVehicules" [ngValue]="lieuStockageVehicule">
+                              {{ lieuStockageVehicule?.libellleLieuVH }}
+                          </option>
+                      </select>
+                  </div>
+
                     <!-- <div class="col-3 mx-auto form-group">
                         <label for="libelleArticleBonEntree" class="form-label fw-bold">Libellé article</label>
                         <input id="libelleArticleBonEntree" type="text" name="libelleArticleBonEntree" required ngModel class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div> -->
                 </div>
-            
+
                 <div class="row">
                     <div class="col-12 text-end">
                         <button type="submit" [disabled]="ArticleBonEntreeForm.invalid" id="article-bon-entree-form" hidden class="btn btn-myprimary fw-bold mx-2" data-bs-toggle="tooltip" title="cliquer ici pour valider">
@@ -67,7 +74,7 @@
                         </button>
                     </div>
                 </div>
-            
+
             </form>
         </div>
 
@@ -77,14 +84,14 @@
 
         <div class="container px-3 py-2">
             <form class="form" #VehiculeForm="ngForm" (ngSubmit)="ajouterVehicule(VehiculeForm)">
-            
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group">
                         <label for="numeroSerie" class="form-label fw-bold">N° série</label>
                         <input id="numeroSerie" type="text" name="numeroSerie" required ngModel
                             class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="numeroImmatriculation" class="form-label fw-bold">N° immatriculation</label>
                         <input id="numeroImmatriculation" type="text" name="numeroImmatriculation" required ngModel
@@ -98,17 +105,17 @@
 
                     <div class="col-3 mx-auto form-group">
                         <label for="dateMiseEnCirculation" class="form-label fw-bold">Date mise en circulation</label>
-                        <input type="text" name="dateMiseEnCirculation" id="dateMiseEnCirculation" 
-                          autocomplete="off" 
-                          ngbDatepicker 
-                          #dp1="ngbDatepicker" 
-                          (click)="dp1.toggle()" 
-                          required 
+                        <input type="text" name="dateMiseEnCirculation" id="dateMiseEnCirculation"
+                          autocomplete="off"
+                          ngbDatepicker
+                          #dp1="ngbDatepicker"
+                          (click)="dp1.toggle()"
+                          required
                           [(ngModel)]="modelDate" [value]="formatDate(modelDate)"
                           class="text-input form-control bg-mywhite border border-myprimary px-1 text-uppercase"
                         >
                       </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="codeTypeVehicule" class="form-label fw-bold">Type véhicule</label>
                         <select id="codeTypeVehicule" name="codeTypeVehicule" required ngModel
@@ -118,11 +125,11 @@
                             </option>
                         </select>
                     </div>
-            
-            
+
+
                 </div>
-            
-            
+
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group">
                         <label for="codeMarque" class="form-label fw-bold">Marque</label>
@@ -133,13 +140,13 @@
                             </option>
                         </select>
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="modele" class="form-label fw-bold">Modèle</label>
                         <input id="modele" type="text" name="modele" required ngModel
                             class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="codeEtat" class="form-label fw-bold">Etat véhicule</label>
                         <select id="codeEtat" name="codeEtat" required ngModel
@@ -160,8 +167,8 @@
                         </select>
                     </div>
                 </div>
-            
-            
+
+
                 <div class="row g-4 mb-3">
                     <div class="col-3 mx-auto form-group">
                         <label for="codePays" class="form-label fw-bold">Provenance</label>
@@ -172,21 +179,21 @@
                             </option>
                         </select>
                     </div>
-            
+
                     <div class="col-3 mx-auto form-group">
                         <label for="numeroCarteGrise" class="form-label fw-bold">N° carte grise</label>
                         <input id="numeroCarteGrise" type="text" name="numeroCarteGrise" required ngModel
                             class="text-input form-control bg-mywhite border  border-myprimary px-1 text-uppercase">
                     </div>
 
-                    
+
                     <div class="col-3 mx-auto form-group">
                     </div>
 
                     <div class="col-3 mx-auto form-group">
                     </div>
                 </div>
-            
+
                 <div class="row">
                     <div class="col-12 text-end">
                         <button type="submit" [disabled]="VehiculeForm.invalid" id="vehicule-form" hidden
@@ -195,7 +202,7 @@
                         </button>
                     </div>
                 </div>
-            
+
             </form>
         </div>
 

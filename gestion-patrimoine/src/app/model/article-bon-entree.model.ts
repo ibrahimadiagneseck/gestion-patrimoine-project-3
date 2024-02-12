@@ -1,5 +1,6 @@
 import { Agent } from "./agent.model";
 import { BonEntree } from "./bon-entree.model";
+import { LieuStockageVehicule } from "./lieu-stockage-vehicule.model";
 import { MyDate } from "./my-date.model";
 import { TypeObjet } from "./type-objet.model";
 
@@ -12,6 +13,8 @@ export class ArticleBonEntree {
   public quantiteEntree: number;
   public dateEnregistrement: MyDate;
   public codeTypeObjet: TypeObjet;
+  public codeLieuVH: LieuStockageVehicule;
+
   public matriculeAgent: Agent;
 
 
@@ -22,6 +25,7 @@ export class ArticleBonEntree {
     quantiteEntree = 0,
     dateEnregistrement = new MyDate(),
     codeTypeObjet = new TypeObjet(),
+    codeLieuVH = new LieuStockageVehicule(),
     matriculeAgent = new Agent()
   ) {
     this.identifiantBE = identifiantBE;
@@ -30,6 +34,7 @@ export class ArticleBonEntree {
     this.quantiteEntree = quantiteEntree;
     this.dateEnregistrement = dateEnregistrement;
     this.codeTypeObjet = codeTypeObjet;
+    this.codeLieuVH = codeLieuVH;
     this.matriculeAgent = matriculeAgent;
   }
 

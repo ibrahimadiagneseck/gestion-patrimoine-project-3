@@ -32,21 +32,6 @@ public class BonDeSortie {
     @Column(name = "date_b_s")
     private Date dateBS;
 
-    @Column(name = "observation_b_s")
-    private String observationBS;
-
-    @ManyToOne
-    @JoinColumn(name = "code_unite_douaniere")
-    private UniteDouaniere codeUniteDouaniere;
-
-    @ManyToOne
-    @JoinColumn(name = "code_section")
-    private Sections codeSection;
-
-    @Column(name = "date_enregistrement")
-    private Timestamp dateEnregistrement;
-
-
     @ManyToOne
     @JoinColumn(name = "identifiant_b_p")
     private BonPour identifiantBP;

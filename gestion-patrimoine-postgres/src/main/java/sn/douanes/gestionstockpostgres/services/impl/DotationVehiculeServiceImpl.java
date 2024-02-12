@@ -63,12 +63,13 @@ public class DotationVehiculeServiceImpl implements DotationVehiculeService {
 
         DotationVehicule dotationVehicule = new DotationVehicule();
 
-        dotationVehicule.setDateDotation(new Timestamp(System.currentTimeMillis()));
-        dotationVehicule.setIdentifiantDV(genererIdentifiantDV("SG", genererDateEnregistrement(dotationVehicule.getDateDotation())));
+
+        dotationVehicule.setIdentifiantDV(genererIdentifiantDV("SG", genererDateEnregistrement(new Timestamp(System.currentTimeMillis()))));
 
 
 
         dotationVehicule.setIdentifiantBS(identifiantBS);
+        dotationVehicule.setDateDotation(new Date(System.currentTimeMillis()));
         dotationVehicule.setMatriculeAgent(matriculeAgent);
         dotationVehicule.setVehiculeDotation(vehiculeDotation);
 

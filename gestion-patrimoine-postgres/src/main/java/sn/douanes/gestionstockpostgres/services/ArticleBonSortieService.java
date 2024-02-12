@@ -15,6 +15,6 @@ public interface ArticleBonSortieService {
     ArticleBonSortie getArticleBonSortieById(String codeArticleBonSortie, BonDeSortie identifiantBS);
     List<ArticleBonSortie> getAllArticleBonSorties();
 
-    ArticleBonSortie ajouterArticleBonSortie(BonDeSortie identifiantBS, String codeArticleBonSortie, String libelleArticleBonSortie, Integer quantiteAccordee, Date dateArticleBonSortie, ArticleBonEntree identifiantBE, Agent matriculeAgent);
+    ArticleBonSortie ajouterArticleBonSortie(BonDeSortie identifiantBS, String codeArticleBonSortie, String libelleArticleBonSortie, Integer quantiteAccordee, Agent matriculeAgent);
 
 }

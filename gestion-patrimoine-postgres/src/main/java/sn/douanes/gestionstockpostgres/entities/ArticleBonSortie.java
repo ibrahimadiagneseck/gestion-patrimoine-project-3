@@ -38,15 +38,6 @@ public class ArticleBonSortie {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "identifiant_b_e", referencedColumnName = "identifiant_b_e"),
-            @JoinColumn(name = "code_article_bon_entree", referencedColumnName = "code_article_bon_entree")
-    })
-    private ArticleBonEntree identifiantBE;
-
-
-
-    @ManyToOne
-    @JoinColumns({
             @JoinColumn(name = "matricule_agent", referencedColumnName = "matricule_agent"),
             @JoinColumn(name = "code_corps_agent", referencedColumnName = "code_corps_agent")
     })

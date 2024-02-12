@@ -29,7 +29,7 @@ public class DotationVehicule {
 
 
     @Column(name = "date_dotation")
-    private Timestamp dateDotation;
+    private Date dateDotation;
 
 
 

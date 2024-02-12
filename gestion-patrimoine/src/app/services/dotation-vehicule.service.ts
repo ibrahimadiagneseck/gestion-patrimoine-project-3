@@ -85,12 +85,12 @@ export class DotationVehiculeService {
     return this.httpClient.put<DotationVehicule>(`${this.urlServeur}/ModifierDotationVehicule`, dotationVehicule);
   }
 
-  public supprimerDotationVehiculeById(identifiantBE: string): Observable<CustomHttpRespone> {
-    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerDotationVehiculeById/${identifiantBE}`);
+  public supprimerDotationVehiculeById(identifiantDV: string): Observable<CustomHttpRespone> {
+    return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerDotationVehiculeById/${identifiantDV}`);
   }
 
-  public recupererDotationVehiculeById(dateDotation: string, numeroSerie: Vehicule): Observable<DotationVehicule> {
-    return this.httpClient.get<DotationVehicule>(`${this.urlServeur}/RecupererDotationVehiculeById/${dateDotation}/${numeroSerie}`);
+  public recupererDotationVehiculeById(identifiantDV: string): Observable<DotationVehicule> {
+    return this.httpClient.get<DotationVehicule>(`${this.urlServeur}/RecupererDotationVehiculeById/${identifiantDV}`);
   }
 
 
@@ -111,7 +111,7 @@ export class DotationVehiculeService {
 
   public formatterMyDate(myDate: MyDate): string  {
     if (!myDate || !myDate.year || !myDate.month || !myDate.day) {
-        return ''; 
+        return '';
     }
 
     const { year, month, day } = myDate;

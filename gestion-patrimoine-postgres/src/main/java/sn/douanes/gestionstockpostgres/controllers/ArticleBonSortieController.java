@@ -31,7 +31,7 @@ public class ArticleBonSortieController {
     @PostMapping("/AjouterArticleBonSortie")
     @ResponseBody
     public ArticleBonSortie AjouterArticleBonEntree(@RequestBody ArticleBonSortie articleBonSortie) {
-        return articleBonSortieService.ajouterArticleBonSortie(articleBonSortie.getIdentifiantBS(), articleBonSortie.getCodeArticleBonSortie(), articleBonSortie.getLibelleArticleBonSortie(), articleBonSortie.getQuantiteAccordee(), articleBonSortie.getDateArticleBonSortie(), articleBonSortie.getIdentifiantBE(), articleBonSortie.getMatriculeAgent());
+        return articleBonSortieService.ajouterArticleBonSortie(articleBonSortie.getIdentifiantBS(), articleBonSortie.getCodeArticleBonSortie(), articleBonSortie.getLibelleArticleBonSortie(), articleBonSortie.getQuantiteAccordee(),  articleBonSortie.getMatriculeAgent());
     }
 
     @PutMapping("/ModifierArticleBonSortie")

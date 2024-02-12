@@ -354,22 +354,18 @@ CREATE TABLE  article_bon_pour  (
 
 
 
+à modifier dans la base de donné: bon_de_sortie, article_bon_sortie
+
 CREATE TABLE  bon_de_sortie  (
     identifiant_b_s  VARCHAR(25), -- exemple : BSSG202311121243214 (SG+heure en timestamp)
     numero_b_s  VARCHAR(100), 
     description_b_s VARCHAR(255),
     date_b_s DATE,
-    observation_b_s VARCHAR(255),
-    code_unite_douaniere VARCHAR(3),
-    code_section VARCHAR(3),
-    date_enregistrement  Timestamp,
     identifiant_b_p VARCHAR(25), 
     matricule_agent  VARCHAR(7),
     code_corps_agent VARCHAR(3),
     PRIMARY KEY (identifiant_b_s),
-    CONSTRAINT FK_bon_de_sortie_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere),
     CONSTRAINT FK_bon_de_sortie_bon_pour FOREIGN KEY (identifiant_b_p) REFERENCES bon_pour(identifiant_b_p),
-    CONSTRAINT FK_bon_de_sortie_sections FOREIGN KEY (code_section) REFERENCES sections(code_section),
     CONSTRAINT FK_bon_de_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
 );
 
@@ -380,20 +376,18 @@ CREATE TABLE  article_bon_sortie  (
     libelle_article_bon_sortie VARCHAR(100), 
     quantite_accordee INT,
     date_article_bon_sortie DATE,
-    identifiant_b_e VARCHAR(25), 
-    code_article_bon_entree VARCHAR(25),
     matricule_agent  VARCHAR(7),
     code_corps_agent VARCHAR(3),
     PRIMARY KEY (identifiant_b_s, code_article_bon_sortie),
     CONSTRAINT FK_article_bon_sortie_bon_de_sortie FOREIGN KEY (identifiant_b_s) REFERENCES bon_de_sortie(identifiant_b_s),
-    CONSTRAINT FK_article_bon_sortie_article_bon_entree FOREIGN KEY (identifiant_b_e, code_article_bon_entree) REFERENCES article_bon_entree(identifiant_b_e, code_article_bon_entree),
     CONSTRAINT FK_article_bon_sortie_agent FOREIGN KEY (matricule_agent, code_corps_agent) REFERENCES agent(matricule_agent, code_corps_agent)
 );
 
 
+
 CREATE TABLE  dotation_vehicule (
     identifiant_d_v VARCHAR(25),-- exemple : DVSG202311121243214 (SG+heure en timestamp)
-    date_dotation TIMESTAMP,
+    date_dotation DATE,
     identifiant_b_s VARCHAR(25), 
     code_article_bon_sortie VARCHAR(25),
     matricule_agent  VARCHAR(7),
@@ -890,28 +884,25 @@ VALUES
     ('BPSG202311121243216', 'Article 1', 'libelle article 1', 30, 'VEHIC', 'MAT003', 'CP3');
 
 
-INSERT INTO bon_de_sortie (identifiant_b_s, numero_b_s, description_b_s, date_b_s, observation_b_s, code_unite_douaniere, code_section, date_enregistrement, identifiant_b_p, matricule_agent, code_corps_agent) 
+INSERT INTO bon_de_sortie (identifiant_b_s, numero_b_s, description_b_s, date_b_s, identifiant_b_p, matricule_agent, code_corps_agent) 
 VALUES 
-    ('BSSG202311121243214', 'BS001', 'Description BS1', '2024-01-24', 'Observation BS1', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243214', 'MAT001', 'CP1'),
-    ('BSSG202311121243215', 'BS002', 'Description BS2', '2024-01-25', 'Observation BS2', '06Z', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243215', 'MAT002', 'CP2'),
-    ('BSSG202311121243216', 'BS003', 'Description BS3', '2024-01-26', 'Observation BS3', '06K', 'SG', CURRENT_TIMESTAMP, 'BPSG202311121243216', 'MAT003', 'CP3');
+    ('BSSG202311121243214', 'BS001', 'Description BS1', '2024-01-24',  'BPSG202311121243214', 'MAT001', 'CP1'),
+    ('BSSG202311121243215', 'BS002', 'Description BS2', '2024-01-25',  'BPSG202311121243215', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'BS003', 'Description BS3', '2024-01-26',  'BPSG202311121243216', 'MAT003', 'CP3');
 
 
-INSERT INTO article_bon_sortie (identifiant_b_s, code_article_bon_sortie, libelle_article_bon_sortie, quantite_accordee, date_article_bon_sortie, identifiant_b_e, code_article_bon_entree, matricule_agent, code_corps_agent) 
+INSERT INTO article_bon_sortie (identifiant_b_s, code_article_bon_sortie, libelle_article_bon_sortie, quantite_accordee, date_article_bon_sortie, matricule_agent, code_corps_agent) 
 VALUES 
-    ('BSSG202311121243214', 'Article 1', 'Article BS1', 5, '2024-01-24', 'BESA202312011043210', 'Article 1', 'MAT001', 'CP1'),
-    ('BSSG202311121243215', 'Article 1', 'Article BS2', 10, '2024-01-25', 'BESM202312021143211', 'Article 1', 'MAT002', 'CP2'),
-    ('BSSG202311121243216', 'Article 1', 'Article BS3', 15, '2024-01-26', 'BESG202312031243213', 'Article 1', 'MAT003', 'CP3');
+    ('BSSG202311121243214', 'Article 1', 'Article BS1', 5, '2024-01-24', 'MAT001', 'CP1'),
+    ('BSSG202311121243215', 'Article 1', 'Article BS2', 10, '2024-01-25', 'MAT002', 'CP2'),
+    ('BSSG202311121243216', 'Article 1', 'Article BS3', 15, '2024-01-26', 'MAT003', 'CP3');
 
 
 INSERT INTO dotation_vehicule ( identifiant_d_v, date_dotation, identifiant_b_s, code_article_bon_sortie, matricule_agent, code_corps_agent)  
 VALUES 
-    ('DVSG202311121243214', CURRENT_TIMESTAMP, 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
-    ('DVSG202311121243215', CURRENT_TIMESTAMP, 'BSSG202311121243215', 'Article 1', 'MAT002', 'CP2'),
-    ('DVSG202311121243216', CURRENT_TIMESTAMP, 'BSSG202311121243216', 'Article 1', 'MAT003', 'CP3');
-
-
-
+    ('DVSG202311121243214', '2024-01-24', 'BSSG202311121243214', 'Article 1', 'MAT001', 'CP1'),
+    ('DVSG202311121243215', '2024-01-23', 'BSSG202311121243215', 'Article 1', 'MAT002', 'CP2'),
+    ('DVSG202311121243216', '2024-01-22', 'BSSG202311121243216', 'Article 1', 'MAT003', 'CP3');
 
 
 

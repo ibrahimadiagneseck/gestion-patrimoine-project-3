@@ -53,25 +53,19 @@ public class BonDeSortieServiceImpl implements BonDeSortieService {
     public BonDeSortie ajouterBonDeSortie(
             String numeroBS,
             String descriptionBS,
-            Date dateBS,
-            String observationBS,
-            UniteDouaniere codeUniteDouaniere,
-            Sections codeSection,
             BonPour identifiantBP,
             Agent matriculeAgent
     ) {
 
         BonDeSortie bonDeSortie = new BonDeSortie();
 
-        bonDeSortie.setDateEnregistrement(new Timestamp(System.currentTimeMillis()));
-        bonDeSortie.setIdentifiantBS(genererIdentifiantBS(codeSection.getCodeSection(), genererDateEnregistrement(new Timestamp(System.currentTimeMillis()))));
+
+
+        bonDeSortie.setIdentifiantBS(genererIdentifiantBS("SG", genererDateEnregistrement(new Timestamp(System.currentTimeMillis()))));
 
         bonDeSortie.setNumeroBS(numeroBS);
         bonDeSortie.setDescriptionBS(descriptionBS);
-        bonDeSortie.setDateBS(dateBS);
-        bonDeSortie.setObservationBS(observationBS);
-        bonDeSortie.setCodeUniteDouaniere(codeUniteDouaniere);
-        bonDeSortie.setCodeSection(codeSection);
+        bonDeSortie.setDateBS(new Date(System.currentTimeMillis()));
         bonDeSortie.setIdentifiantBP(identifiantBP);
         bonDeSortie.setMatriculeAgent(matriculeAgent);
 
