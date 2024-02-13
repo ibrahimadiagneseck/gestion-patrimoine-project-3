@@ -95,7 +95,7 @@ export const MY_DATE_FORMATS = {
     ConnexionComponent,
 
     ErreurComponent,
-    
+
     PrestataireSecteurListeComponent,
     PrestataireSecteurAjouterComponent,
     PrestataireSecteurDetailComponent,
@@ -110,8 +110,8 @@ export const MY_DATE_FORMATS = {
     UniteDouaniereListeComponent,
     UniteDouaniereAjouterComponent,
     UniteDouaniereDetailComponent,
-    
-    
+
+
   ],
   imports: [
     BrowserModule,
@@ -128,7 +128,7 @@ export const MY_DATE_FORMATS = {
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
     }),
-    
+
     NgToastModule,
     // NotifierModule.withConfig(
     //   // customNotifierOptions1 // Custom options in here
@@ -147,7 +147,7 @@ export const MY_DATE_FORMATS = {
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
-    
+
 
     // MatTableExporterModule,
 
@@ -155,11 +155,11 @@ export const MY_DATE_FORMATS = {
 
     BureauLogistiqueMaterielModule,
     AppRoutingModule
-    
+
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    { 
+    {
       provide: LOCALE_ID, useValue: "fr-FR"
     },
     {
@@ -169,7 +169,7 @@ export const MY_DATE_FORMATS = {
       deps: [KeycloakService],
    },
    DatePipe,
-    
+
   ],
   bootstrap: [AppComponent]
 })

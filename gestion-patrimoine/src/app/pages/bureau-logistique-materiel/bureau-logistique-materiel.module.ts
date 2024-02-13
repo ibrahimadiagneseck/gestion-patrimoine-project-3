@@ -35,11 +35,12 @@ import { DotationVehiculeNonDoteListeComponent } from './vehicules/dotation/dota
 import { DotationVehiculeDetailBonSortieComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie/dotation-vehicule-detail-bon-sortie.component';
 import { DotationVehiculeDetailBonSortieDetailComponent } from './vehicules/dotation/dotation-vehicule-detail-bon-sortie-detail/dotation-vehicule-detail-bon-sortie-detail.component';
 import { DotationVehiculeNonDoteAjouterComponent } from './vehicules/dotation/dotation-vehicule-non-dote-ajouter/dotation-vehicule-non-dote-ajouter.component';
+import { DotationVehiculeVehiculeAjouterComponent } from './vehicules/dotation/dotation-vehicule-vehicule-ajouter/dotation-vehicule-vehicule-ajouter.component';
 
 
 @NgModule({
   declarations: [
-    
+
     ReceptionVehiculeAjouterBonEntreeComponent,
     ReceptionVehiculeModifierBonEntreeComponent,
     ReceptionVehiculeAjouterArticleComponent,
@@ -58,8 +59,9 @@ import { DotationVehiculeNonDoteAjouterComponent } from './vehicules/dotation/do
     DotationVehiculeAjouterBonSortieComponent,
     DotationVehiculeDetailBonSortieComponent,
     DotationVehiculeDetailBonSortieDetailComponent,
-    DotationVehiculeNonDoteAjouterComponent
-    
+    DotationVehiculeNonDoteAjouterComponent,
+    DotationVehiculeVehiculeAjouterComponent
+
   ],
   imports: [
     BrowserModule,

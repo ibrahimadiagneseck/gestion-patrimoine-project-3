@@ -62,7 +62,7 @@
 
               <!-- -------------------- Bon de sortie------------------------------------------------------ -->
               <div class="container">
-                  <ng-container  *ngIf="bonDeSortie== null; else detailFormBonSortie">
+                  <ng-container  *ngIf="bonDeSortie.identifiantBS== ''; else detailFormBonSortie">
 
                         <div class="text-center fw-bolder bg-myprimary mt-1" role="alert">
                           Bon de sortie
@@ -139,7 +139,7 @@
 
                             <div class="col-11 mx-auto">
                                 <span class="fw-bold"> Description bon sortie</span>
-                                <div class="text-input"> {{ bonDeSortie?.descriptionBS }} </div>
+                                <div class="text-input"> {{ bonDeSortie.descriptionBS }} </div>
                             </div>
 
 
@@ -154,7 +154,7 @@
                           <div class="col-12 text-end">
                               <button type="button" class="btn btn-mybrown me-2" >Désactiver</button>
 
-                              <button [routerLink]="'/dotation-vehicule-ajouter-bon-sortie'" type="button"
+                              <button (click)="popupAjouter(vehicules, bonDeSortie, vehiculesSelect)" type="button"
                                   class="btn btn-mysecondary fw-bold mx-2"   data-bs-toggle="tooltip"
                                   title="cliquer ici pour ajouter article">
                                   Ajouter article

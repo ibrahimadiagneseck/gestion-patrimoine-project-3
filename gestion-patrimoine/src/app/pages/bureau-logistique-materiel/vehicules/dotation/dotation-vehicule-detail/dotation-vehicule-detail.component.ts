@@ -24,6 +24,13 @@ import { Agent } from 'src/app/model/agent.model';
 import { AgentService } from 'src/app/services/agent.service';
 import { DotationVehicule } from 'src/app/model/dotation-vehicule.model';
 import { DotationVehiculeService } from 'src/app/services/dotation-vehicule.service';
+import { DotationVehiculeVehiculeAjouterComponent } from '../dotation-vehicule-vehicule-ajouter/dotation-vehicule-vehicule-ajouter.component';
+import { PopupSecteurActiviteComponent } from 'src/app/composant/secteur-activite/popup-secteur-activite/popup-secteur-activite.component';
+import { SecteurActivite } from 'src/app/model/secteur-activite.model';
+import { Prestataires } from 'src/app/model/prestataires.model';
+import { SecteurActiviteService } from 'src/app/services/secteur-activite.service';
+import { Vehicule } from 'src/app/model/vehicule.model';
+import { VehiculeService } from 'src/app/services/vehicule.service';
 
 @Component({
   selector: 'app-dotation-vehicule-detail',
@@ -37,7 +44,7 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
 
 
   public bonDeSorties: BonDeSortie[] = [];
-  public bonDeSortie: BonDeSortie | undefined  | null= new BonDeSortie();
+  public bonDeSortie: BonDeSortie = new BonDeSortie();
 
   public articleBonPours: ArticleBonPour[] = [];
   public articleBonPour: ArticleBonPour = new ArticleBonPour();
@@ -56,6 +63,12 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
 
   public agents: Agent[] = [];
   public agent: Agent = new Agent();
+
+  public vehiculesSelect: Vehicule[] = [];
+
+  public vehicules: Vehicule[] = [];
+  public vehicule: Vehicule = new Vehicule();
+
 
   private subscriptions: Subscription[] = [];
 
@@ -95,8 +108,8 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
   constructor(
     private articleBonPourService: ArticleBonPourService,
     private bonDeSortieService: BonDeSortieService,
+    private vehiculeService: VehiculeService,
     private dotationVehiculeService: DotationVehiculeService,
-
     private agentService: AgentService,
     private matDialog: MatDialog,
     private route: ActivatedRoute,
@@ -119,6 +132,7 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
     // this.listeBonDeSorties();
      this.listeAgents();
      this.listeDotations();
+     this.listeVehicules();
     // --------------------------------------------------------------------------------
     const identifiantBP = this.route.snapshot.paramMap.get('identifiantBP') ?? '';
     const codeArticleBonPour = this.route.snapshot.paramMap.get('codeArticleBonPour') ?? '';
@@ -172,6 +186,23 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
   }
 
 
+  public listeVehicules(): void {
+
+    const subscription = this.vehiculeService.listeVehicules().subscribe({
+      next: (response: Vehicule[]) => {
+        this.vehicules = response;
+        // console.log(this.secteurActivites);
+
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+
   public listeAgents(): void {
 
     const subscription = this.agentService.listeAgents().subscribe({
@@ -188,7 +219,7 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  AfficherFormBonSortie(bonPour: BonPour, bonDeSorties: BonDeSortie[]): BonDeSortie | null{
+  AfficherFormBonSortie(bonPour: BonPour, bonDeSorties: BonDeSortie[]): BonDeSortie {
 
 
     for (const bonDeSortie of bonDeSorties) {
@@ -201,7 +232,7 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
     }
 
 
-    return null;
+    return new BonDeSortie();
   }
 
 
@@ -375,6 +406,37 @@ export class DotationVehiculeDetailComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subscription);
+  }
+
+
+  popupAjouter(vehicules: Vehicule[], bonDeSortie: BonDeSortie, vehiculesSelect?: Vehicule[]): void {
+    const dialogRef = this.matDialog.open(
+      DotationVehiculeVehiculeAjouterComponent,
+      {
+        width: '80%',
+        height: 'auto',
+        enterAnimationDuration: '100ms',
+        exitAnimationDuration: '100ms',
+
+        data:  {
+          vehicules: vehicules,
+          bonDeSortie: bonDeSortie,
+          vehiculesSelected: vehiculesSelect
+        }
+      }
+
+    );
+
+    dialogRef.afterClosed().subscribe(() => {
+      // ----------------------------------
+      // Accéder à this.secteurActivitesForm après la fermeture du popup
+      // if (dialogRef.componentInstance instanceof DotationVehiculeVehiculeAjouterComponent) {
+      //   this.vehiculesSelect = dialogRef.componentInstance.vehiculesSelect;
+      //   // console.log(this.secteurActivitesSelect);
+      // }
+      // ----------------------------------
+      this.ngOnInit();
+    });
   }
 
 

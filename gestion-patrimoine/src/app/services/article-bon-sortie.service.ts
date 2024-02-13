@@ -75,8 +75,8 @@ export class ArticleBonSortieService {
     return this.httpClient.get<ArticleBonSortie[]>(`${this.urlServeur}/ArticleBonSorties`);
   }
 
-  public ajouterArticleBonSortie(articleBonSortie: ArticleBonSortie): Observable<ArticleBonSortie> {
-    return this.httpClient.post<ArticleBonSortie>(`${this.urlServeur}/AjouterArticleBonSortie`, articleBonSortie);
+  public ajouterArticleBonSortie(articleBonSortie: ArticleBonSortie): Observable<string> {
+    return this.httpClient.post<string>(`${this.urlServeur}/AjouterArticleBonSortie`, articleBonSortie);
   }
 
   // public ajouterArticleBonSortieRequestParam(formData: FormData): Observable<ArticleBonSortie> {
@@ -109,7 +109,7 @@ export class ArticleBonSortieService {
 
 public formatterMyDate(myDate: MyDate): string  {
   if (!myDate || !myDate.year || !myDate.month || !myDate.day) {
-      return ''; 
+      return '';
   }
 
   const { year, month, day } = myDate;

@@ -1,10 +1,11 @@
 import { Agent } from "./agent.model";
 import { ArticleBonEntree } from "./article-bon-entree.model";
+import { BonDeSortie } from "./bonDeSortie.model";
 import { MyDate } from "./my-date.model";
 
 export class ArticleBonSortie {
 
-  public identifiantBS: string;
+  public identifiantBS: BonDeSortie;
   public codeArticleBonSortie: string;
   public libelleArticleBonSortie: string;
   public quantiteAccordee: number;
@@ -14,13 +15,13 @@ export class ArticleBonSortie {
 
 
   constructor(
-    identifiantBS = '',
+    identifiantBS = new BonDeSortie(),
     codeArticleBonSortie = '',
     libelleArticleBonSortie = '',
     quantiteAccordee = 0,
     dateArticleBonSortie = new MyDate(),
     identifiantBE = new ArticleBonEntree(),
-    matriculeAgent = new Agent
+    matriculeAgent = new Agent()
   ) {
     this.identifiantBS = identifiantBS;
     this.codeArticleBonSortie = codeArticleBonSortie;
