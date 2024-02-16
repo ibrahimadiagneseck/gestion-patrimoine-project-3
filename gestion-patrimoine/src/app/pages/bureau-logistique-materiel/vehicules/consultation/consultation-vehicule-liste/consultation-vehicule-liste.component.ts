@@ -104,7 +104,8 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "rowPays",
     "numeroCarteGrise",
     "dateMiseEnCirculation",
-    "rowTypeVehicule"
+    "rowTypeVehicule",
+    "rowUniteDouaniere"
   ];
   dataSource = new MatTableDataSource<Vehicule>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -164,6 +165,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     this.listeVehicules();
     this.listeLieuStockageVehicules();
     this.listeUniteDouanieres();
+    this.listeDotationVehiculeVehicule();
 
 
     /* ----------------------------------------------------------------------------------------- */
@@ -330,6 +332,10 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
         // this.dataSource = new MatTableDataSource<IVehicule>(this.vehicules);
         this.dataSource = new MatTableDataSource<Vehicule>(this.vehicules.map((item) => ({
           ...item,
+
+
+
+
           // vehicule: [] as Vehicule[],
           rowMarque: item.codeMarque.libelleMarque,
           rowPays: item.codePays.libellePays,
@@ -338,8 +344,8 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
           rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule,
           rowLibelleArticleBonEntree: item.identifiantBE.libelleArticleBonEntree,
           rowLieuStockageVehicule: item.identifiantBE.codeLieuVH.libellleLieuVH,
-          rowUniteDouaniere: JSON.stringify(this.recupererDotation(item)),
-           rowNombreAgeVehicule: this.calculerAgeVehicule(new Date(item.dateMiseEnCirculation.toString())),
+          rowUniteDouaniere: this.libelleUniteDouaniere(item, this.dotationVehiculeVehicules),
+          rowNombreAgeVehicule: this.calculerAgeVehicule(new Date(item.dateMiseEnCirculation.toString())),
           rowNumber: this.rowNumber++,
         })));
 
@@ -378,6 +384,22 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
       next: (response: UniteDouaniere[]) => {
         this.uniteDouanieres = response;
         // console.log(this.secteurActivites);
+
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+  public listeDotationVehiculeVehicule(): void {
+
+    const subscription = this.dotationVehiculeVehiculeService.listeDotationVehiculeVehicule().subscribe({
+      next: (response: DotationVehiculeVehicule[]) => {
+        this.dotationVehiculeVehicules = response;
+        // this.listeVehicules();
 
       },
       error: (errorResponse: HttpErrorResponse) => {
@@ -453,10 +475,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
 
 
 
-public recupererDotationByVehiculeId( vehicule: Vehicule): void {
 
-
-}
 
 // public recupererDotation( vehicule: Vehicule): any {
 
@@ -486,37 +505,51 @@ public recupererDotationByVehiculeId( vehicule: Vehicule): void {
 // }
 
 
-public recupererDotation(vehicule: Vehicule): any {
-  return this.dotationVehiculeVehiculeService.recupererDotationByVehiculeId(vehicule.numeroSerie).pipe(
-    tap((response: DotationVehiculeVehicule) => {
-      this.dotationVehiculeVehicule = response;
-      console.log(this.dotationVehiculeVehicule);
-    }),
-    map((unite: any) => {
-      console.log(unite);
-      return unite?.identifiantDV?.identifiantBS?.identifiantBS?.identifiantBP?.codeUniteDouaniere?.nomUniteDouaniere;
-    }),
-    catchError((errorResponse: HttpErrorResponse) => {
-      // Gérer l'erreur ici
-      // console.log(errorResponse);
-      return throwError(errorResponse); // Si vous voulez relancer l'erreur
-    })
-  );
-}
-
-
-// libelleUniteDouaniere(bonEntree: BonEntree, articleBonEntrees: ArticleBonEntree[]): number {
-//   let nombreArticleBonEntree = 0;
-
-//   for (const articleBonEntree of articleBonEntrees) {
-//     // Comparer les bonEntree ici (assurez-vous d'implémenter une méthode de comparaison dans la classe BonEntree)
-//     if (bonEntree && articleBonEntree.identifiantBE && JSON.stringify(bonEntree) === JSON.stringify(articleBonEntree.identifiantBE)) {
-//       nombreArticleBonEntree++;
-//     }
-//   }
-
-//   return nombreArticleBonEntree;
+// public recupererDotation(vehicule: Vehicule): any {
+//   return this.dotationVehiculeVehiculeService.recupererDotationByVehiculeId(vehicule.numeroSerie).pipe(
+//     tap((response: DotationVehiculeVehicule) => {
+//       this.dotationVehiculeVehicule = response;
+//       console.log(this.dotationVehiculeVehicule);
+//     }),
+//     map((unite: any) => {
+//       console.log(unite);
+//       return unite?.identifiantDV?.identifiantBS?.identifiantBS?.identifiantBP?.codeUniteDouaniere?.nomUniteDouaniere;
+//     }),
+//     catchError((errorResponse: HttpErrorResponse) => {
+//       // Gérer l'erreur ici
+//       // console.log(errorResponse);
+//       return throwError(errorResponse); // Si vous voulez relancer l'erreur
+//     })
+//   );
 // }
+
+
+libelleUniteDouaniere( vehicule: Vehicule, dotationVehiculeVehicules: DotationVehiculeVehicule[]): string {
+  // let nombreArticleBonEntree = 0;
+
+  for (let dotationVehiculeVehicule of dotationVehiculeVehicules) {
+
+    console.log(dotationVehiculeVehicule.identifiantDV.identifiantBS.identifiantBS.identifiantBP.codeUniteDouaniere.nomUniteDouaniere);
+    console.log(vehicule);
+
+
+
+
+          if ( vehicule.numeroSerie ===  dotationVehiculeVehicule.numeroSerie.numeroSerie ) {
+
+            // console.log(dotationVehiculeVehicule);
+
+
+             return dotationVehiculeVehicule.identifiantDV.identifiantBS.identifiantBS.identifiantBP.codeUniteDouaniere.nomUniteDouaniere;
+
+
+
+      }
+
+  }
+
+  return " ";
+}
 
 
 
