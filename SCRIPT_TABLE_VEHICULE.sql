@@ -290,15 +290,14 @@ CREATE TABLE vehicule (
     date_mise_en_circulation DATE,
     code_type_vehicule VARCHAR(25),
     code_marque VARCHAR(25),
-    code_unite_douaniere VARCHAR(3),
     PRIMARY KEY (numero_serie),
     CONSTRAINT FK_vehicule_pays FOREIGN KEY (code_pays) REFERENCES pays(code_pays),
     CONSTRAINT FK_vehicule_article_bon_entree FOREIGN KEY (identifiant_b_e, code_article_bon_entree) REFERENCES article_bon_entree(identifiant_b_e, code_article_bon_entree),
     CONSTRAINT FK_vehicule_type_vehicule FOREIGN KEY (code_type_vehicule) REFERENCES type_vehicule(code_type_vehicule),
     CONSTRAINT FK_vehicule_type_energie FOREIGN KEY (code_type_energie) REFERENCES type_energie(code_type_energie),
     CONSTRAINT FK_vehicule_marque_vehicule FOREIGN KEY (code_marque) REFERENCES marque_vehicule(code_marque),
-    CONSTRAINT FK_vehicule_etat_vehicule FOREIGN KEY (code_etat) REFERENCES etat_vehicule(code_etat),
-    CONSTRAINT FK_vehicule_unite_douaniere FOREIGN KEY (code_unite_douaniere) REFERENCES unite_douaniere(code_unite_douaniere)
+    CONSTRAINT FK_vehicule_etat_vehicule FOREIGN KEY (code_etat) REFERENCES etat_vehicule(code_etat)
+    
 );
 
 
@@ -862,12 +861,12 @@ VALUES
 
 
 
-INSERT INTO vehicule (numero_serie, numero_immatriculation, identifiant_b_e, code_article_bon_entree, modele, code_etat, code_type_energie, code_pays, numero_carte_grise, date_mise_en_circulation, code_type_vehicule, code_marque, code_unite_douaniere)
+INSERT INTO vehicule (numero_serie, numero_immatriculation, identifiant_b_e, code_article_bon_entree, modele, code_etat, code_type_energie, code_pays, numero_carte_grise, date_mise_en_circulation, code_type_vehicule, code_marque)
 VALUES 
-    ('123456', 'ABC123', 'BESA202312011043210', 'Article 1', 'CAMRY', 'NEUF', 'ESSENCE', 'US', 'CG123', '2023-01-01', 'TV1', 'TOY', '06Z'),
-    ('789012', 'XYZ789', 'BESM202312021143211', 'Article 1', 'MUSTANG', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
-    ('789013', 'XYZ789', 'BESM202312021143211', 'Article 2', 'ESCAPE', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR', '06K'),
-    ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'X5', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW', '06K');
+    ('123456', 'ABC123', 'BESA202312011043210', 'Article 1', 'CAMRY', 'NEUF', 'ESSENCE', 'US', 'CG123', '2023-01-01', 'TV1', 'TOY'),
+    ('789012', 'XYZ789', 'BESM202312021143211', 'Article 1', 'MUSTANG', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR'),
+    ('789013', 'XYZ789', 'BESM202312021143211', 'Article 2', 'ESCAPE', 'NEUF', 'GASOIL', 'JP', 'CG789', '2023-02-02', 'TV2', 'FOR'),
+    ('345678', 'DEF345', 'BESG202312031243213', 'Article 1', 'X5', 'USAGE', 'HYBRIDE', 'FR', 'CG345', '2023-03-03', 'TV3', 'BMW');
 
 
 INSERT INTO bon_pour (identifiant_b_p, description_b_p, numero_courriel_origine, date_courriel_origine, etat_b_p, object_courriel_origine, numero_arrive_d_l_f, date_arrive_d_l_f, observation_d_l_f, numero_arrive_b_l_m, date_arrive_b_l_m, observation_b_l_m, numero_arrive_section, date_arrive_section, observation_section, code_unite_douaniere, code_section, date_enregistrement, matricule_agent, code_corps_agent) 

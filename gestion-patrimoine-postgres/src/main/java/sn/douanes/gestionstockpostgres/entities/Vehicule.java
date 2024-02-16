@@ -60,10 +60,6 @@ public class Vehicule {
     @JoinColumn(name = "code_marque")
     private MarqueVehicule codeMarque;
 
-    @ManyToOne
-    @JoinColumn(name = "code_unite_douaniere")
-    private UniteDouaniere codeUniteDouaniere;
-
 
     @ManyToOne
     @JoinColumns({

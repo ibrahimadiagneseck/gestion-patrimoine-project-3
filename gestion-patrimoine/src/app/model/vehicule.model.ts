@@ -24,7 +24,6 @@ export class Vehicule {
   public dateMiseEnCirculation: MyDate;
   public codeTypeVehicule: TypeVehicule;
   public codeMarque: MarqueVehicule;
-  public codeUniteDouaniere: UniteDouaniere;
   public rowPays: String;
   public rowMarque: String;
   public rowEtat: String;
@@ -43,7 +42,6 @@ export class Vehicule {
     codePays = new Pays(),
     numeroCarteGrise = '',
     dateMiseEnCirculation = new MyDate(),
-    codeUniteDouaniere = new UniteDouaniere(),
     identifiantBE = new ArticleBonEntree(),
     rowPays = '',
     rowMarque = '',
@@ -61,7 +59,6 @@ export class Vehicule {
     this.codePays = codePays;
     this.numeroCarteGrise = numeroCarteGrise;
     this.dateMiseEnCirculation = dateMiseEnCirculation;
-    this.codeUniteDouaniere = codeUniteDouaniere;
     this.identifiantBE = identifiantBE;
     this.rowPays = rowPays;
     this.rowMarque = rowMarque;

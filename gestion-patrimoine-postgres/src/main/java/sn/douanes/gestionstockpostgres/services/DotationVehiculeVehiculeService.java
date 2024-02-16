@@ -16,6 +16,8 @@ public interface DotationVehiculeVehiculeService {
     DotationVehiculeVehicule getDotationVehiculeVehiculeById(Vehicule numeroSerie, DotationVehicule identifiantDV);
     List<DotationVehiculeVehicule> getAllDotationVehiculeVehicule();
 
+    DotationVehiculeVehicule getDotationVehiculeVehiculeById(Vehicule numeroSerie);
+
 
     DotationVehiculeVehicule ajouterDotationVehiculeVehicule(Vehicule numeroSerie, DotationVehicule identifiantDV);
 }

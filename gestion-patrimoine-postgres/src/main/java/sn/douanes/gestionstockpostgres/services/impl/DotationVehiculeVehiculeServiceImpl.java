@@ -44,6 +44,11 @@ public class DotationVehiculeVehiculeServiceImpl implements DotationVehiculeVehi
     }
 
     @Override
+    public DotationVehiculeVehicule getDotationVehiculeVehiculeById(Vehicule numeroSerie) {
+        return dotationVehiculeVehiculeRepository.findByNumeroSerie(numeroSerie);
+    }
+
+    @Override
     public List<DotationVehiculeVehicule> getAllDotationVehiculeVehicule() {
         return dotationVehiculeVehiculeRepository.findAll();
     }

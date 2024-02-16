@@ -9,6 +9,7 @@ import sn.douanes.gestionstockpostgres.entities.DotationVehiculeVehicule;
 import sn.douanes.gestionstockpostgres.entities.HttpResponse;
 import sn.douanes.gestionstockpostgres.entities.Vehicule;
 import sn.douanes.gestionstockpostgres.services.DotationVehiculeVehiculeService;
+import sn.douanes.gestionstockpostgres.services.VehiculeService;
 
 
 import java.util.List;
@@ -25,10 +26,22 @@ public class DotationVehiculeVehiculeController {
     @Autowired
     DotationVehiculeVehiculeService dotationVehiculeVehiculeService;
 
+    @Autowired
+    VehiculeService vehiculeService;
+
 
     @GetMapping("/DotationVehiculeVehicules")
     public ResponseEntity<List<DotationVehiculeVehicule>> getAllDotationVehiculeVehiscules() {
         List<DotationVehiculeVehicule> dotationVehiculeVehicule = dotationVehiculeVehiculeService.getAllDotationVehiculeVehicule();
+        return new ResponseEntity<>(dotationVehiculeVehicule, OK);
+    }
+
+
+    @GetMapping("RecupererDotationByVehiculeId/{numeroSerie}")
+    public ResponseEntity<DotationVehiculeVehicule> RecupererDotationByVehiculeId(@PathVariable("numeroSerie") String numeroSerie) {
+
+        Vehicule vehicule =  vehiculeService.getVehiculeById(numeroSerie);
+        DotationVehiculeVehicule  dotationVehiculeVehicule =  dotationVehiculeVehiculeService.getDotationVehiculeVehiculeById(vehicule);
         return new ResponseEntity<>(dotationVehiculeVehicule, OK);
     }
 

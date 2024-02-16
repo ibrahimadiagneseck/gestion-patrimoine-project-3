@@ -105,24 +105,24 @@ export class VehiculeService {
     formData.append('dateMiseEnCirculation', formattedDate);
     formData.append('codeTypeVehicule', vehicule.codeTypeVehicule.codeTypeVehicule);
     formData.append('codeMarque', vehicule.codeMarque.codeMarque);
-    formData.append('codeUniteDouaniere', vehicule.codeUniteDouaniere.codeUniteDouaniere);
+
 
     return formData;
   }
 
   public formatterMyDate(myDate: MyDate): string  {
     if (!myDate || !myDate.year || !myDate.month || !myDate.day) {
-        return ''; 
+        return '';
     }
-  
+
     const { year, month, day } = myDate;
     const date = new Date(year, month - 1, day);
-  
+
     const datePipe = new DatePipe('en-US');
     const formattedDate = datePipe.transform(date, 'yyyy-MM-dd') || '';
     return formattedDate;
   }
-  
+
 
 }
 // ----------------------------------------------------------------------------

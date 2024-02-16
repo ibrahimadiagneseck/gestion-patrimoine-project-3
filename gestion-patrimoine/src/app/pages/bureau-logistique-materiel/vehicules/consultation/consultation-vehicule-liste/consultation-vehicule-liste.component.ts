@@ -1,9 +1,9 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe } from '@angular/common';
 import { Vehicule } from 'src/app/model/vehicule.model';
 import { VehiculeService } from 'src/app/services/vehicule.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, debounceTime, distinctUntilChanged, map, of, switchMap, tap, throwError } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,14 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ReceptionVehiculeAjouterBonEntreeComponent } from '../../reception/reception-vehicule-ajouter-bon-entree/reception-vehicule-ajouter-bon-entree.component';
 import { ConsultationVehiculeDetailComponent } from '../consultation-vehicule-detail/consultation-vehicule-detail.component';
+import { LieuStockageVehicule } from 'src/app/model/lieu-stockage-vehicule.model';
+import { LieuStockageVehiculeService } from 'src/app/services/lieu-stockage-vehicule.service';
+import { MyDate } from 'src/app/model/my-date.model';
+import { UniteDouaniere } from 'src/app/model/unite-douaniere.model';
+import { UniteDouaniereService } from 'src/app/services/unite-douaniere.service';
+import { DotationVehicule } from 'src/app/model/dotation-vehicule.model';
+import { DotationVehiculeVehiculeService } from 'src/app/services/dotation-vehicule-vehicule.service';
+import { DotationVehiculeVehicule } from 'src/app/model/dotation-vehicule-vehicule.model';
 
 @Component({
   selector: 'app-consultation-vehicule-liste',
@@ -23,6 +31,21 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
 
   public vehicules: Vehicule[] = [];
   public vehicule: Vehicule | undefined;
+
+  public uniteDouanieres: UniteDouaniere[] = [];
+  public uniteDouaniere: UniteDouaniere | undefined;
+
+  public dotationVehiculeVehicules: DotationVehiculeVehicule[] = [];
+  public dotationVehiculeVehicule: DotationVehiculeVehicule | undefined;
+
+
+
+
+
+  public lieuStockageVehicules: LieuStockageVehicule[] = [];
+  public lieuStockageVehicule: LieuStockageVehicule | undefined;
+
+
 
   private subscriptions: Subscription[] = [];
 
@@ -49,7 +72,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     }
   }
   /* ----------------------------------------------------------------------------------------- */
-  
+
 
   /* ----------------------------------------------------------------------------------------- */
   @ViewChild('myInputSearch') myInputSearch!: ElementRef;
@@ -88,6 +111,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     "rowNumber",
     "rowLibelleArticleBonEntree",
+    "rowLieuStockageVehicule",
     "numeroSerie",
     "numeroImmatriculation",
     "rowEtat",
@@ -96,10 +120,15 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "numeroCarteGrise",
     "dateMiseEnCirculation",
     "rowTypeVehicule",
+    "rowUniteDouaniere",
+     "rowNombreAgeVehicule"
+
+
   ];
   displayedColumnsCustom: string[] = [
     "N°",
     "Libelle article",
+    "Lieu stockage vehicule",
     "N° serie",
     "N° immatriculation",
     "Etat vehicule",
@@ -108,21 +137,34 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     "N° carte grise",
     "Date mise en circulation",
     "Type vehicule",
+    "Nom unite",
+     "Age (années)"
+
+
   ];
   /* ----------------------------------------------------------------------------------------- */
 
   constructor(
     private vehiculeService: VehiculeService,
+    private lieuStockageVehiculeService: LieuStockageVehiculeService,
+    private uniteDouaniereService: UniteDouaniereService,
+    private dotationVehiculeVehiculeService: DotationVehiculeVehiculeService,
+
+
+
+
     private matDialog: MatDialog,
   ) { }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ngOnInit(): void {
     this.listeVehicules();
-    
+    this.listeLieuStockageVehicules();
+    this.listeUniteDouanieres();
+
 
     /* ----------------------------------------------------------------------------------------- */
     // rechercher
@@ -154,7 +196,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     // const data: any[] = this.dataSource.filteredData;
 
     // console.log(data);
-    
+
 
     // const months = ['JANV.', 'FÉVR.', 'MARS', 'AVR.', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
     const months = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCEMBRE'];
@@ -163,7 +205,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     // Créez un tableau de données pour autoTable
     const tableData = data.map((item: Vehicule) => [
     // const tableData = data.map((item: any) => [
-      
+
       item.numeroSerie,
       item.numeroImmatriculation,
       item.modele || 'N/A',
@@ -179,7 +221,7 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     ]);
 
     // Configuration pour le PDF avec une taille de page personnalisée
- 
+
     const marginLeft = 10;
     const marginTop = 10;
     const marginRight = 10;
@@ -236,13 +278,46 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
   }
 
 
+  filtrerParLieuStockageVehicule(event: any) {
+    const value: string = event.target.value;
+    if (value) {
+      this.dataSource.filter = value.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
+    }
+  }
+
+  filtrerParUniteDouaniere(event: any) {
+    const value: string = event.target.value;
+    if (value) {
+      this.dataSource.filter = value.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
+    }
+  }
+
+  filtrerParAgeVehicule(event: any) {
+    const value: string = event.target.value;
+    if (value) {
+      this.dataSource.filter = value.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
+    }
+  }
+
+
+
+
+
+
+
   public listeVehicules(): void {
 
     const subscription = this.vehiculeService.listeVehicules().subscribe({
       next: (response: Vehicule[]) => {
-        
+
         // console.log(response);
-        
+
 
         // this.vehicules = response.sort((a, b) => parseInt(a.numeroImmatriculation) - parseInt(b.numeroImmatriculation));
         this.vehicules = response.sort((a, b) => Number(a.numeroImmatriculation) - Number(b.numeroImmatriculation));
@@ -262,9 +337,12 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
           rowTypeEnergie: item.codeTypeEnergie.libelleTypeEnergie,
           rowTypeVehicule: item.codeTypeVehicule.libelleTypeVehicule,
           rowLibelleArticleBonEntree: item.identifiantBE.libelleArticleBonEntree,
+          rowLieuStockageVehicule: item.identifiantBE.codeLieuVH.libellleLieuVH,
+          rowUniteDouaniere: JSON.stringify(this.recupererDotation(item)),
+           rowNombreAgeVehicule: this.calculerAgeVehicule(new Date(item.dateMiseEnCirculation.toString())),
           rowNumber: this.rowNumber++,
         })));
-        
+
 
         // console.log(this.dataSource.data);
         this.dataSource.paginator = this.paginator;
@@ -277,9 +355,46 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
+  public listeLieuStockageVehicules(): void {
+
+    const subscription = this.lieuStockageVehiculeService.listeLieuStockageVehicules().subscribe({
+      next: (response: LieuStockageVehicule[]) => {
+        this.lieuStockageVehicules = response;
+        // console.log(this.secteurActivites);
+
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
 
 
-  
+  public listeUniteDouanieres(): void {
+
+    const subscription = this.uniteDouaniereService.listeUniteDouanieres().subscribe({
+      next: (response: UniteDouaniere[]) => {
+        this.uniteDouanieres = response;
+        // console.log(this.secteurActivites);
+
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        // console.log(errorResponse);
+      },
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -303,5 +418,110 @@ export class ConsultationVehiculeListeComponent implements OnInit, OnDestroy {
   compare(value1: String, value2: String): boolean {
     return value1 === value1;
   }
+
+
+
+
+  calculerAgeVehicule(dateMiseEnCirculation: Date ): number {
+
+    if (!dateMiseEnCirculation) {
+      return 0; // Gérer le cas où la conversion échoue
+  }
+
+
+    // if (!dateMiseEnCirculation || !dateMiseEnCirculation.year || !dateMiseEnCirculation.month || !dateMiseEnCirculation.day) {
+    //   return 0;
+    // }
+
+
+
+
+
+
+    console.log(dateMiseEnCirculation);
+
+    // const dateMiseEnCirculationAsDate = this.convertMyDateToDate(dateMiseEnCirculation); // Convertir MyDate en Date
+
+
+    const diffEnMs = Math.abs(dateMiseEnCirculation.getTime() - new Date().getTime());
+    const annees = Math.floor(diffEnMs / (1000 * 60 * 60 * 24 * 365)); // Nombre d'années écoulées
+    const moisRestants = Math.floor((diffEnMs % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30.44)); // Mois restants après le calcul des années
+    return annees;
+}
+
+
+
+
+
+public recupererDotationByVehiculeId( vehicule: Vehicule): void {
+
+
+}
+
+// public recupererDotation( vehicule: Vehicule): any {
+
+
+
+
+//   let unite: any = this.dotationVehiculeVehiculeService.recupererDotationByVehiculeId(vehicule.numeroSerie).pipe(
+//     tap((response: DotationVehiculeVehicule) => {
+//         this.dotationVehiculeVehicule = response;
+//         console.log(this.dotationVehiculeVehicule);
+//     }),
+//     catchError((errorResponse: HttpErrorResponse) => {
+//         // Gérer l'erreur ici
+//         // console.log(errorResponse);
+//         return throwError(errorResponse); // Si vous voulez relancer l'erreur
+//     })
+
+// );
+
+// console.log(unite );
+
+
+// return unite?.identifiantDV?.identifiantBS?.identifiantBS?.identifiantBP?.codeUniteDouaniere?.nomUniteDouaniere;
+
+
+
+// }
+
+
+public recupererDotation(vehicule: Vehicule): any {
+  return this.dotationVehiculeVehiculeService.recupererDotationByVehiculeId(vehicule.numeroSerie).pipe(
+    tap((response: DotationVehiculeVehicule) => {
+      this.dotationVehiculeVehicule = response;
+      console.log(this.dotationVehiculeVehicule);
+    }),
+    map((unite: any) => {
+      console.log(unite);
+      return unite?.identifiantDV?.identifiantBS?.identifiantBS?.identifiantBP?.codeUniteDouaniere?.nomUniteDouaniere;
+    }),
+    catchError((errorResponse: HttpErrorResponse) => {
+      // Gérer l'erreur ici
+      // console.log(errorResponse);
+      return throwError(errorResponse); // Si vous voulez relancer l'erreur
+    })
+  );
+}
+
+
+// libelleUniteDouaniere(bonEntree: BonEntree, articleBonEntrees: ArticleBonEntree[]): number {
+//   let nombreArticleBonEntree = 0;
+
+//   for (const articleBonEntree of articleBonEntrees) {
+//     // Comparer les bonEntree ici (assurez-vous d'implémenter une méthode de comparaison dans la classe BonEntree)
+//     if (bonEntree && articleBonEntree.identifiantBE && JSON.stringify(bonEntree) === JSON.stringify(articleBonEntree.identifiantBE)) {
+//       nombreArticleBonEntree++;
+//     }
+//   }
+
+//   return nombreArticleBonEntree;
+// }
+
+
+
+
+
+
 
 }

@@ -17,7 +17,7 @@ public interface VehiculeService {
     List<Vehicule> getAllVehicules();
 
 
-    Vehicule ajouterVehicule(String numeroSerie, String numeroImmatriculation, String modele, EtatVehicule codeEtat, TypeEnergie codeTypeEnergie, String numeroCarteGrise, Date dateMiseEnCirculation, Pays codePays, TypeVehicule codeTypeVehicule, MarqueVehicule codeMarque, UniteDouaniere codeUniteDouaniere, ArticleBonEntree identifiantBE);
+    Vehicule ajouterVehicule(String numeroSerie, String numeroImmatriculation, String modele, EtatVehicule codeEtat, TypeEnergie codeTypeEnergie, String numeroCarteGrise, Date dateMiseEnCirculation, Pays codePays, TypeVehicule codeTypeVehicule, MarqueVehicule codeMarque, ArticleBonEntree identifiantBE);
     Vehicule ajouterVehiculeDotation(Vehicule vehicule,Set<DotationVehicule> dotationVehicule );
 
 

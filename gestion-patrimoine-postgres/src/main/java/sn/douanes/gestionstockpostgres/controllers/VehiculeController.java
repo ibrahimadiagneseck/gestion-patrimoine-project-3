@@ -36,7 +36,7 @@ public class VehiculeController {
     @ResponseBody
     public Vehicule AjouterVehicule(@RequestBody Vehicule vehicule) {
 
-        return vehiculeService.ajouterVehicule(vehicule.getNumeroSerie(), vehicule.getNumeroImmatriculation(), vehicule.getModele(), vehicule.getCodeEtat(), vehicule.getCodeTypeEnergie(), vehicule.getNumeroCarteGrise(), vehicule.getDateMiseEnCirculation(), vehicule.getCodePays(), vehicule.getCodeTypeVehicule(), vehicule.getCodeMarque(), vehicule.getCodeUniteDouaniere(), vehicule.getIdentifiantBE());
+        return vehiculeService.ajouterVehicule(vehicule.getNumeroSerie(), vehicule.getNumeroImmatriculation(), vehicule.getModele(), vehicule.getCodeEtat(), vehicule.getCodeTypeEnergie(), vehicule.getNumeroCarteGrise(), vehicule.getDateMiseEnCirculation(), vehicule.getCodePays(), vehicule.getCodeTypeVehicule(), vehicule.getCodeMarque(), vehicule.getIdentifiantBE());
     }
 
     @PostMapping("/ajouterVehiculeDotation")
@@ -59,10 +59,9 @@ public class VehiculeController {
             @RequestParam("codePays") Pays codePays,
             @RequestParam("codeTypeVehicule") TypeVehicule codeTypeVehicule,
             @RequestParam("codeMarque") MarqueVehicule codeMarque,
-            @RequestParam("codeUniteDouaniere") UniteDouaniere codeUniteDouaniere,
             @RequestParam("identifiantBE") ArticleBonEntree identifiantBE
     ) {
-        Vehicule vehicule = vehiculeService.ajouterVehicule(numeroSerie, numeroImmatriculation, modele, codeEtat, codeTypeEnergie, numeroCarteGrise, dateMiseEnCirculation, codePays, codeTypeVehicule, codeMarque, codeUniteDouaniere, identifiantBE);
+        Vehicule vehicule = vehiculeService.ajouterVehicule(numeroSerie, numeroImmatriculation, modele, codeEtat, codeTypeEnergie, numeroCarteGrise, dateMiseEnCirculation, codePays, codeTypeVehicule, codeMarque, identifiantBE);
         return new ResponseEntity<>(vehicule, OK);
     }
 

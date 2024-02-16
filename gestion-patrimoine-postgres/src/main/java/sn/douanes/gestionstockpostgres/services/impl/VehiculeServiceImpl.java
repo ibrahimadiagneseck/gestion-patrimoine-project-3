@@ -60,7 +60,6 @@ public class VehiculeServiceImpl implements VehiculeService {
             Pays codePays,
             TypeVehicule codeTypeVehicule,
             MarqueVehicule codeMarque,
-            UniteDouaniere codeUniteDouaniere,
             ArticleBonEntree identifiantBE
 
     ) {
@@ -77,7 +76,6 @@ public class VehiculeServiceImpl implements VehiculeService {
         vehicule.setCodePays(codePays);
         vehicule.setCodeTypeVehicule(codeTypeVehicule);
         vehicule.setCodeMarque(codeMarque);
-        vehicule.setCodeUniteDouaniere(codeUniteDouaniere);
         vehicule.setIdentifiantBE(identifiantBE);
 
 

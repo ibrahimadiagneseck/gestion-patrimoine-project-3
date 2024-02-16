@@ -88,6 +88,10 @@ export class DotationVehiculeVehiculeService {
     return this.httpClient.delete<CustomHttpRespone>(`${this.urlServeur}/SupprimerDotationVehiculeVehiculeById/${numeroSerie}/${identifiantDV}`);
   }
 
+  public recupererDotationByVehiculeId(numeroSerie: string): Observable<DotationVehiculeVehicule> {
+    return this.httpClient.get<DotationVehiculeVehicule>(`${this.urlServeur}/RecupererDotationByVehiculeId/${numeroSerie}`);
+  }
+
 
   // public createPrestatairesFormData(prestataires: Prestataires): FormData {
 
